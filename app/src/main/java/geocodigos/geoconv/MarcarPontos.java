@@ -1,5 +1,6 @@
 package geocodigos.geoconv;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,12 +28,12 @@ import geocodigos.geoconv.model.PointModel;
 public class MarcarPontos extends Fragment implements LocationListener {
     LocationManager locationManager;
     String provider;
-    public String strLatitude, strLongitude, strPrecisao;
+    public String strLatitude, strLongitude, strPrecisao, strAltitude;
     ImageButton ibMarcar;
     DatabaseHelper database;
-    public TextView tvLatitude, tvLongitude, tvPrecisao;
-        EditText etRegistro;
-        public ArrayList<PointModel> al;
+    public TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude;//private
+    EditText etRegistro;
+    public ArrayList<PointModel> al;
 
         public View onCreateView(LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
@@ -49,11 +50,10 @@ public class MarcarPontos extends Fragment implements LocationListener {
                 int numId;
                 @Override
                 public void onClick(View v) {
+                    ArrayList<PointModel> al = new ArrayList<PointModel>();
+                    al.clear();
 
                     if (!etRegistro.getText().toString().isEmpty()) {
-
-                        ArrayList<PointModel> al = new ArrayList<PointModel>();
-                        al.clear();
 
                         if (!tvLatitude.getText().toString().isEmpty()) {
 
@@ -62,33 +62,35 @@ public class MarcarPontos extends Fragment implements LocationListener {
                                 database = new DatabaseHelper(getActivity());
                                 database.getWritableDatabase();
                                 al = database.pegarPontos();
-
+                                Log.i("al = database.pegarPontos()", al.toString());
                                 //procedimento para ver qual id esta disponivel
                                 //esse procedimento pode ser substituido por uma funcao
                                 //em DatabaseHelper com Select id From table
                                 numId=0;
                                 aux=false;
-                                do {
-                                    for (int i=0; i< al.size(); i++){
+                                if(al.size() > 0 ) {
+                                    do {
+                                        for (int i = 0; i < al.size(); i++) {
 
-                                        String strId = Integer.toString(i);
-                                        String strDb = al.get(i).getId();
-                                        Log.i("strDb: ", strDb);
-                                        Log.i("strId: ", strId);
-                                        if(strId != strDb) {
-                                            numId=i+1;
-                                            Log.i("numId:", Integer.toString(numId));
-                                            aux=true;
+                                            String strId = Integer.toString(i);
+                                            String strDb = al.get(i).getId();
+                                            Log.i("strDb: ", strDb);
+                                            Log.i("strId: ", strId);
+                                            if (strId != strDb) {
+                                                numId = i;
+                                                Log.i("numId:", Integer.toString(numId));
+                                                aux = true;
+                                            }
                                         }
-                                    }
-                                } while (aux==false);
-                                ////
+                                    } while (aux == false);
+                                }
 
                                 PointModel pm = new PointModel();
                                 pm.setId(Integer.toString(numId));
                                 pm.setRegistro(etRegistro.getText().toString());
                                 pm.setLatidude(tvLatitude.getText().toString());
                                 pm.setLongitude(tvLongitude.getText().toString());
+
                                 Log.i("MarcarPonto: id:", Integer.toString(al.size()+1));
                                 al.add(pm);
 
@@ -97,7 +99,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
                                 Log.i("id", pm.id);
                                 Log.i("Registro ", pm.registro);
                                 Log.i("Latitude ", pm.latitude);
-                                //database.close();
+                                database.close();
 
                             } else {
                                 Toast.makeText(getActivity(), "Não foi possível obter a "+
@@ -126,16 +128,29 @@ public class MarcarPontos extends Fragment implements LocationListener {
         Location location = locationManager.getLastKnownLocation(provider);
 
         if (location != null) {
-            System.out.println("Provider: "+provider+ "foi selecionado.");
+            System.out.println("Provider: "+provider+ " foi selecionado.");
             onLocationChanged(location);
             Log.i("provider:", provider);
         } else {
-            //dizer nos textview que esta desativado
-            //mostrar dialogo se quer ativar
-            //se for ativar:
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("GPS desativado");
+            builder.setMessage("Deseja ativar?");
+            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int i) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("Não", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int i) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
             Log.i("provider:", provider);
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+
         }
 
         return view;
@@ -155,16 +170,18 @@ public class MarcarPontos extends Fragment implements LocationListener {
         double altitude = (double) (location.getAltitude());
         double precisao = (double) (location.getAccuracy());
 
-        Log.i("Localização: ", latitude+" "+longitude+" "+altitude);
+        Log.i("Localização: ", latitude+" "+longitude+" "+altitude+" "+precisao);
+
+        //colocar procedimentos para converter coordenadas aqui
 
         strLatitude = String.valueOf(latitude);
         strLongitude = String.valueOf(longitude);
         strPrecisao = String.valueOf(precisao);
+        strAltitude = String.valueOf(altitude);
         tvLatitude.setText(strLatitude);
         tvLongitude.setText(strLongitude);
         tvPrecisao.setText(strPrecisao);
-
-
+        tvAltitude.setText(strAltitude);
     }
 
     @Override

@@ -9,22 +9,19 @@
     import android.view.ViewGroup;
     import android.widget.BaseAdapter;
     import android.widget.ImageButton;
-    import android.widget.ListAdapter;
     import android.widget.ListView;
     import android.widget.TextView;
-
     import java.io.IOException;
     import java.util.ArrayList;
-
-    import geocodigos.geoconv.R;
     import geocodigos.geoconv.Database.DatabaseHelper;
     import geocodigos.geoconv.kml.ExportarKML;
     import geocodigos.geoconv.model.PointModel;
 
     public class VerPontos extends Fragment {
         DatabaseHelper database;
-        ImageButton ibExportar;
-        TextView tvPontos;
+        private ImageButton ibExportar;
+        private TextView tvPontos, tvAltitude, tvPrecisao, tvLongitude,
+            in_altitude, in_precisao, in_longitude, in_latitude;
         private ListView listView;
         public ArrayList<PointModel> campos = new ArrayList<PointModel>();
 
@@ -137,28 +134,38 @@
 
                 if (convertView == null ){
 
-                    convertView = View.inflate(getActivity(), R.layout.linha_listview, null);
+                    convertView = View.inflate(getActivity(), R.layout.frag_informacoes, null);
 
                     viewHolder = new ViewHolder();
-                    viewHolder.tvRegistro = (TextView) convertView.findViewById(R.id.tv_registro);
-                    viewHolder.tvLatitude = (TextView) convertView.findViewById(R.id.tv_latitude);
+                    viewHolder.tvLatitude = (TextView) convertView.findViewById(R.id.in_latitude);
+                    viewHolder.tvPrecisao = (TextView) convertView.findViewById(R.id.in_precisao);
+                    viewHolder.tvLongitude = (TextView) convertView.findViewById(R.id.in_longitude);
+                    viewHolder.tvAltitude  = (TextView) convertView.findViewById(R.id.in_altitude);
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
 
-                viewHolder.tvRegistro.setText(campos.get(position).getRegistro().trim());
                 viewHolder.tvLatitude.setText(campos.get(position).getlatitude().trim());
+                viewHolder.tvLongitude.setText(campos.get(position).getLongitude().trim());
+                viewHolder.tvPrecisao.setText(campos.get(position).getPrecisao().trim());
+                viewHolder.tvAltitude.setText(campos.get(position).getAltitude().trim());
 
                 final int temp = position;
                 return convertView;
             }
 
             private class ViewHolder {
-                TextView tvRegistro;
                 TextView tvLatitude;
-            }
+                TextView tvLongitude;
+                TextView tvPrecisao;
+                TextView tvAltitude;
 
+                TextView in_latitude;
+                TextView in_longitude;
+                TextView in_precisao;
+                TextView in_altitude;
+            }
         }
 
     }

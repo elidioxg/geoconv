@@ -1,54 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tv_latitude"
-        android:text="@string/latitude"
+    <RelativeLayout
+        android:id="@+id/layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        />
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/margem">
 
-    <TextView
-        android:id="@+id/tv_longitude"
-        android:text="@string/longitude"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        />
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/tv_hora"
+            android:layout_margin="@dimen/margem"
+            />
 
-    <ScrollView
+        <TextView
+            android:id="@+id/tv_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Data"
+            android:layout_margin="@dimen/margem"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_centerVertical="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/layout"
+        android:layout_margin="@dimen/margem">
+
+        <TextView
+            android:id="@+id/tv_altitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/altitude"
+            android:textSize="@dimen/texto"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/in_altitude"
+            android:layout_toRightOf="@+id/tv_altitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/tv_precisao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/precisao"
+            android:textSize="@dimen/texto"
+            android:layout_toLeftOf="@+id/in_precisao"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/in_precisao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margem"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layout1"
+        android:layout_margin="@dimen/margem">
+
+        <TextView
+            android:id="@+id/tv_latitude"
+            android:text="@string/latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/texto"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/in_latitude"
+            android:layout_toRightOf="@+id/tv_latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/tv_longitude"
+            android:text="@string/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/in_longitude"
+            android:textSize="@dimen/texto"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/in_longitude"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_margin="@dimen/margem"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/margem"
+        android:layout_marginTop="10dp"
         >
+
+        <TextView
+            android:id="@+id/tv_norte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Norte"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/texto"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/tv_leste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leste"
+            android:layout_toLeftOf="@+id/in_leste"
+            android:textSize="@dimen/texto"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/in_leste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/tv_quadrante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quadrante"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_norte"
+            android:textSize="@dimen/texto"
+            android:layout_margin="@dimen/margem"
+            />
+
+        <TextView
+            android:id="@+id/in_quadrante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_quadrante"
+            android:text=""
+            android:layout_margin="@dimen/margem"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margem">
 
         <EditText
             android:id="@+id/et_registro"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/registro"
+            android:layout_margin="@dimen/margem"
             />
-
-
-    </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
 
         <ImageButton
             android:id="@+id/ib_marcar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:contentDescription="@string/marcar_ponto"
             android:src="@drawable/ic_launcher"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/et_registro"
+            android:layout_margin="@dimen/margem"
             />
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
 
-<!-- From: file:/home/natalia/AndroidStudioProjects/Geoconv/app/src/main/res/layout/marcar_pontos.xml -->
+<!-- From: file:/home/elidioxg/Desenvolvimento/geoconv/app/src/main/res/layout/marcar_pontos.xml -->

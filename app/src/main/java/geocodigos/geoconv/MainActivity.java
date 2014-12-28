@@ -38,11 +38,11 @@ public class MainActivity extends Activity {
                 ActionBar.NAVIGATION_MODE_TABS);
         tabConverter = actionbar.newTab().setText(R.string.converter_coord);
         tabMarcar = actionbar.newTab().setText(R.string.marcar_ponto);
-        tabPontos = actionbar.newTab().setText(R.string.ver_pontos);
+        tabPontos = actionbar.newTab().setText(R.string.pontos_marcados);
 
         tabConverter.setTabListener(new tabListener(fragConverter));
         tabMarcar.setTabListener(new tabListener(fragMarcar));
-        tabConverter.setTabListener(new tabListener(fragConverter));
+        tabPontos.setTabListener(new tabListener(fragPontos));
 
         actionbar.addTab(tabConverter);
         actionbar.addTab(tabMarcar);
