@@ -3,7 +3,8 @@
     public class PointModel {
         public String id="",registro="", descricao="", latitude="",
                 longitude="", norte="", leste="", setorN="",
-                setorL="", altitude="", precisao = "";
+                setorL="", altitude="", precisao = "",
+                data="", hora="";
 
         public String getId() {
             return id;
@@ -91,6 +92,18 @@
 
         public void setPrecisao(String precisao) {
             this.precisao = precisao;
+        }
+
+        public String getData() { return data; }
+
+        public void setData(String data) {
+            this.data=data;
+        }
+
+        public String getHora() {return hora; }
+
+        public void setHora(String hora) {
+            this.hora = hora;
         }
 
 }

@@ -10,6 +10,14 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -35,6 +43,14 @@
         <activity
             android:name="geocodigos.geoconv.ConverterCoordenadas"
             android:parentActivityName="geocodigos.geoconv.MainActivity" >
+        </activity>
+        <activity
+            android:name="geocodigos.geoconv.kml.kmlActivity"
+            android:label="@string/title_activity_kml"
+            android:parentActivityName="geocodigos.geoconv.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="geocodigos.geoconv.MainActivity" />
         </activity>
     </application>
 

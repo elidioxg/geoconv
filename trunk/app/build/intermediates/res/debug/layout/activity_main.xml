@@ -3,5 +3,6 @@
     android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" tools:ignore="MergeRootFrame" />
-<!-- From: file:/home/natalia/AndroidStudioProjects/Geoconv/app/src/main/res/layout/activity_main.xml -->
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" />
+<!-- From: file:/home/elidioxg/Desenvolvimento/geoconv/app/src/main/res/layout/activity_main.xml -->

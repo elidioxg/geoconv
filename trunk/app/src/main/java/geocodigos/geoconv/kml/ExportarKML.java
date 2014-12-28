@@ -9,12 +9,34 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+
+import geocodigos.geoconv.Database.DatabaseHelper;
+import geocodigos.geoconv.model.PointModel;
 
 public class ExportarKML implements XmlSerializer {
 
     private OutputStream outputStream;
     private String s;
     private Writer writer;
+    DatabaseHelper database;
+    private ArrayList<PointModel> campos;
+
+ //   public ArrayList<PointModel> pontos() {
+ // ArrayList<PointModel> campos = new ArrayList<PointModel>();
+
+//        database = new DatabaseHelper(getContext);
+//        database.getWritableDatabase();
+//        campos.clear();
+//        campos = database.pegarPontos();
+//        return campos;
+//    }
+
+    public void criarCamada() {
+        //XmlSerializer xmlSerializer = Xml.newSerializer();
+        //StringWriter writer = new StringWriter();
+
+    }
 
     public static String CreateXMLString() throws
             IllegalArgumentException, IllegalStateException, IOException {
