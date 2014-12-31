@@ -5,14 +5,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/frag_info"
-        android:tag="Frag Info"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margem"
-        tools:layout="@layout/frag_informacoes"
-        />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvregistro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registro"
+            />
+
+        <TextView
+            android:id="@+id/tvhora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="hora"
+            />
+
+        <TextView
+            android:id="@+id/tvdata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="data"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_descricao"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
 <!-- From: file:/home/elidioxg/Desenvolvimento/geoconv/app/src/main/res/layout/linha_listview.xml -->

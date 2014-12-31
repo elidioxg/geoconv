@@ -16,7 +16,7 @@
         android:id="@+id/lv_registro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/l_buttons" >
+        android:layout_above="@+id/l_buttons">
     </ListView>
 
     <RelativeLayout

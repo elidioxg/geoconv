@@ -4,7 +4,9 @@
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fonteGrande">16dp</dimen>
     <dimen name="margem">5dp</dimen>
+    <dimen name="margem_grande">15dp</dimen>
     <dimen name="texto">16dp</dimen>
     <!-- From: file:/home/elidioxg/Desenvolvimento/geoconv/app/src/main/res/values/strings.xml -->
     <eat-comment/>
@@ -14,11 +16,11 @@
     <string name="conversor_coordenadas">Conversor de Coordenadas</string>
     <string name="converter_coord">Converter Coordenadas</string>
     <string name="coordenadas">Coordenadas Atual:</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="descricao">Descrição</string>
     <string name="latitude">Latitude</string>
     <string name="leste">Leste:</string>
     <string name="longitude">Longitude</string>
-    <string name="longitudeUtm">Latitude/Longitude para UTM</string>
+    <string name="longitudeUtm">Lat/Lon -> UTM</string>
     <string name="marcar_ponto">Marcar Ponto</string>
     <string name="norte">Norte</string>
     <string name="pontos_marcados">Pontos Marcados</string>
@@ -26,9 +28,10 @@
     <string name="quadrante">Quadrante</string>
     <string name="registro">Nome do Registro</string>
     <string name="salvar_ponto">Salvar Ponto</string>
+    <string name="sem_valor">Sem Valor</string>
     <string name="title_activity_kml">kmlActivity</string>
-    <string name="utmLongitude">UTM para Latitude/Longitude</string>
-    <string name="ver_pontos">Ver Pontos</string>
+    <string name="utmLongitude">UTM -> Lat/Lon</string>
+    <string name="ver_pontos">Pontos Marcados</string>
     <!-- From: file:/home/elidioxg/Desenvolvimento/geoconv/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">

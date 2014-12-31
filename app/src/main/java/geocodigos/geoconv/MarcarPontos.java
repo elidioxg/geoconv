@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.model.PointModel;
@@ -31,92 +32,123 @@ public class MarcarPontos extends Fragment implements LocationListener {
     public String strLatitude, strLongitude, strPrecisao, strAltitude;
     ImageButton ibMarcar;
     DatabaseHelper database;
-    public TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude;//private
-    EditText etRegistro;
+    public TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,//private
+        tvData;
+    EditText etRegistro, etDescricao;
     public ArrayList<PointModel> al;
 
-        public View onCreateView(LayoutInflater inflater,
-                                 ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.marcar_pontos,
-                    container, false);
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.marcar_pontos,
+                container, false);
 
-            etRegistro = (EditText) view.findViewById(R.id.et_registro);
-            tvLatitude = (TextView) view.findViewById(R.id.tv_latitude);
-            tvLongitude = (TextView) view.findViewById(R.id.tv_longitude);
+        etRegistro = (EditText) view.findViewById(R.id.et_registro);
+        etDescricao = (EditText) view.findViewById(R.id.et_descricao);
+        tvLatitude = (TextView) view.findViewById(R.id.tv_latitude);
+        tvLongitude = (TextView) view.findViewById(R.id.tv_longitude);
+        tvPrecisao = (TextView) view.findViewById(R.id.in_precisao);
+        tvAltitude = (TextView) view.findViewById(R.id.in_altitude);
+        tvData = (TextView) view.findViewById(R.id.tv_data);
 
-            ImageButton ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
-            ibMarcar.setOnClickListener(new View.OnClickListener() {
-                private boolean aux;
+        Calendar calendar = Calendar.getInstance();
+        int iAno = calendar.get(Calendar.YEAR);
+        int iMes = calendar.get(Calendar.MONTH);
+        int iDia = calendar.get(Calendar.DAY_OF_MONTH);
+        String strData =
+                String.valueOf(iAno)+"-"+String.valueOf(iMes)+
+                        "-"+String.valueOf(iDia);
+        //colocar para atualizar data automaticamente
+        String sData = String.valueOf(strData);
+        tvData.setText(sData);
+
+        ImageButton ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
+        ibMarcar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("onCLick", "Botao Adicionar _____");
+                boolean strId;
+                String strAux;
                 int numId;
-                @Override
-                public void onClick(View v) {
-                    ArrayList<PointModel> al = new ArrayList<PointModel>();
-                    al.clear();
 
-                    if (!etRegistro.getText().toString().isEmpty()) {
+                ArrayList<PointModel> al = new ArrayList<PointModel>();
+                al.clear();
 
-                        if (!tvLatitude.getText().toString().isEmpty()) {
+                if (!tvLatitude.getText().toString().isEmpty()) {
 
-                            if (!tvLongitude.getText().toString().isEmpty()) {
+                    if (!tvLongitude.getText().toString().isEmpty()) {
 
-                                database = new DatabaseHelper(getActivity());
-                                database.getWritableDatabase();
-                                al = database.pegarPontos();
-                                Log.i("al = database.pegarPontos()", al.toString());
-                                //procedimento para ver qual id esta disponivel
-                                //esse procedimento pode ser substituido por uma funcao
-                                //em DatabaseHelper com Select id From table
-                                numId=0;
-                                aux=false;
-                                if(al.size() > 0 ) {
-                                    do {
-                                        for (int i = 0; i < al.size(); i++) {
+                        database = new DatabaseHelper(getActivity());
+                        database.getWritableDatabase();
+                        al = database.pegarPontos();
 
-                                            String strId = Integer.toString(i);
-                                            String strDb = al.get(i).getId();
-                                            Log.i("strDb: ", strDb);
-                                            Log.i("strId: ", strId);
-                                            if (strId != strDb) {
-                                                numId = i;
-                                                Log.i("numId:", Integer.toString(numId));
-                                                aux = true;
-                                            }
-                                        }
-                                    } while (aux == false);
-                                }
-
-                                PointModel pm = new PointModel();
-                                pm.setId(Integer.toString(numId));
-                                pm.setRegistro(etRegistro.getText().toString());
-                                pm.setLatidude(tvLatitude.getText().toString());
-                                pm.setLongitude(tvLongitude.getText().toString());
-
-                                Log.i("MarcarPonto: id:", Integer.toString(al.size()+1));
-                                al.add(pm);
-
-                                database.addPoint(pm);
-
-                                Log.i("id", pm.id);
-                                Log.i("Registro ", pm.registro);
-                                Log.i("Latitude ", pm.latitude);
-                                database.close();
-
-                            } else {
-                                Toast.makeText(getActivity(), "Não foi possível obter a "+
-                                        "localização atual", Toast.LENGTH_SHORT).show();
-                            }
+                        numId= al.size() + 1;
+                        if(database.pegarId(String.valueOf(numId))) {
+                            do {
+                                numId++;
+                                strId = database.pegarId(String.valueOf(numId));
+                            } while (strId == true);
 
                         } else {
-                            Toast.makeText(getActivity(), "Não foi possível obter a "+
-                                    "localização atual", Toast.LENGTH_SHORT).show();
+
                         }
+                        strAux= String.valueOf(numId);
+                        Log.i("Salvando com ID (numId) : ", String.valueOf(numId));
+
+                        PointModel pm = new PointModel();
+                        pm.setId(Integer.toString(numId));
+                        if (etRegistro.getText().toString().isEmpty()) {
+                            etRegistro.setText("Registro "+String.valueOf(numId));
+                        }
+                        pm.setRegistro(etRegistro.getText().toString());
+                        pm.setLatidude(tvLatitude.getText().toString());
+                        pm.setLongitude(tvLongitude.getText().toString());
+                        pm.setDescricao(etDescricao.getText().toString());
+
+                        pm.setAltitude(tvAltitude.getText().toString());
+                        pm.setPrecisao(tvPrecisao.getText().toString());
+                        //pm.setNorte();
+                        //pm.setLeste();
+                        //pm.setSetorN();
+                        //pm.setSetorL();
+
+                        Calendar c = Calendar.getInstance();
+                        int iAno = c.get(Calendar.YEAR);
+                        int iMes = c.get(Calendar.MONTH);
+                        int iDia = c.get(Calendar.DAY_OF_MONTH);
+                        String sqlData =
+                                String.valueOf(iAno)+"-"+String.valueOf(iMes)+
+                                        "-"+String.valueOf(iDia);
+                        int iHora = c.get(Calendar.HOUR_OF_DAY);
+                        int iMin = c.get(Calendar.MINUTE);
+                        int iSeg = c.get(Calendar.SECOND);
+                        String sqlHora = String.valueOf(iHora)+":"+
+                                String.valueOf(iMin)+":"+String.valueOf(iSeg);
+                        pm.setData(sqlData);
+                        pm.setHora(sqlHora);
+                        Log.i("Data" , sqlData);
+                        Log.i("Hora", sqlHora);
+
+                        al.add(pm);
+                        database.addPoint(pm);
+
+                        Log.i("id", pm.id);
+                        Log.i("Registro ", pm.registro);
+                        Log.i("Latitude ", pm.latitude);
+                        Log.i("Descricao ", pm.descricao);
+                        database.close();
 
                     } else {
-                        Toast.makeText(getActivity(), "Adicione o nome do registro",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Não foi possível obter a "+
+                                "localização atual", Toast.LENGTH_SHORT).show();
                     }
 
+                } else {
+                    Toast.makeText(getActivity(), "Não foi possível obter a "+
+                            "localização atual", Toast.LENGTH_SHORT).show();
                 }
+        Log.i("onClick", "Fim do onclickListener_______");
+            }
 
         });
 
@@ -124,7 +156,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
         getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         //provider nao funciona, sempre retorna null
-        provider  = locationManager.getBestProvider(criteria, false);
+        provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);
 
         if (location != null) {

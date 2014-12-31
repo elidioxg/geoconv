@@ -11,6 +11,9 @@
     import android.widget.ImageButton;
     import android.widget.ListView;
     import android.widget.TextView;
+
+    import org.w3c.dom.Text;
+
     import java.io.IOException;
     import java.util.ArrayList;
     import geocodigos.geoconv.Database.DatabaseHelper;
@@ -20,8 +23,7 @@
     public class VerPontos extends Fragment {
         DatabaseHelper database;
         private ImageButton ibExportar;
-        private TextView tvPontos, tvAltitude, tvPrecisao, tvLongitude,
-            in_altitude, in_precisao, in_longitude, in_latitude;
+        private TextView tvRegistro, tvData, tvHora;
         private ListView listView;
         public ArrayList<PointModel> campos = new ArrayList<PointModel>();
 
@@ -56,7 +58,6 @@
             });
 
             TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
-            tvMarcar.setText(R.string.ver_pontos);
             database = new DatabaseHelper(getActivity());
             database.getWritableDatabase();
 
@@ -64,18 +65,22 @@
             campos = database.pegarPontos();
             Log.i("campos.size():", Integer.toString(campos.size()));
             if (!campos.isEmpty()) {
-                for (int i =0; i<campos.size(); i++) {
+                for (int i =0; i>=campos.size(); i++) {
 
                     String id = campos.get(i).getId();
                     String registro = campos.get(i).getRegistro();
                     Log.i("campos(i).getRegistro", "campos("+i+")  Registro="+registro);
                     String latitude = campos.get(i).getlatitude();
                     String longitude = campos.get(i).getLongitude();
-                    String setorl = campos.get(i).getSetorL();
-                    String setorn = campos.get(i).getSetorN();
-                    String norte = campos.get(i).getNorte();
-                    String leste = campos.get(i).getLeste();
+                    //String setorl = campos.get(i).getSetorL();
+                    //String setorn = campos.get(i).getSetorN();
+                    //String norte = campos.get(i).getNorte();
+                    //String leste = campos.get(i).getLeste();
                     String descricao = campos.get(i).getDescricao();
+                    String precisao = campos.get(i).getPrecisao();
+                    String altitude = campos.get(i).getAltitude();
+                    String hora = campos.get(i).getHora();
+                    String data = campos.get(i).getData();
 
                     PointModel pointModel = new PointModel();
 
@@ -83,15 +88,20 @@
                     pointModel.setRegistro(registro);
                     pointModel.setLatidude(latitude);
                     pointModel.setLongitude(longitude);
-                    pointModel.setSetorL(setorl);
-                    pointModel.setSetorN(setorn);
-                    pointModel.setNorte(norte);
-                    pointModel.setLeste(leste);
+                    //pointModel.setSetorL(setorl);
+                    //pointModel.setSetorN(setorn);
+                    //pointModel.setNorte(norte);
+                    //pointModel.setLeste(leste);
                     pointModel.setDescricao(descricao);
-                    //Log.i("id", pointModel.id.toString());
+                    pointModel.setAltitude(altitude);
+                    pointModel.setPrecisao(precisao);
+                    pointModel.setHora(hora);
+                    pointModel.setData(data);
+
+                    //Log.i("id.toString", pointModel.id.toString());
                     Log.i("id:", pointModel.id);
                     Log.i("campos.size()", Integer.toString(campos.size()));
-                    //campos.add(pointModel);
+                    campos.add(pointModel);
                 }
             }
             tvPontos.setText("Número de registros: "+Integer.toString(campos.size()));
@@ -130,41 +140,37 @@
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
-                ViewHolder viewHolder;
+                //ViewHolder viewHolder;
 
                 if (convertView == null ){
 
-                    convertView = View.inflate(getActivity(), R.layout.frag_informacoes, null);
+                    convertView = View.inflate(getActivity(), R.layout.linha_listview, null);
 
                     viewHolder = new ViewHolder();
-                    viewHolder.tvLatitude = (TextView) convertView.findViewById(R.id.in_latitude);
-                    viewHolder.tvPrecisao = (TextView) convertView.findViewById(R.id.in_precisao);
-                    viewHolder.tvLongitude = (TextView) convertView.findViewById(R.id.in_longitude);
-                    viewHolder.tvAltitude  = (TextView) convertView.findViewById(R.id.in_altitude);
+                    viewHolder.tvRegistro = (TextView) convertView.findViewById(R.id.tvregistro);
+                    viewHolder.tvData = (TextView) convertView.findViewById(R.id.tvdata);
+                    viewHolder.tvHora = (TextView) convertView.findViewById(R.id.tvhora);
+                    viewHolder.tvDescricao = (TextView) convertView.findViewById(R.id.tv_descricao);
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
 
-                viewHolder.tvLatitude.setText(campos.get(position).getlatitude().trim());
-                viewHolder.tvLongitude.setText(campos.get(position).getLongitude().trim());
-                viewHolder.tvPrecisao.setText(campos.get(position).getPrecisao().trim());
-                viewHolder.tvAltitude.setText(campos.get(position).getAltitude().trim());
+                viewHolder.tvRegistro.setText(campos.get(0).getRegistro().trim());
+                viewHolder.tvData.setText(campos.get(0).getData().trim());
+                viewHolder.tvHora.setText(campos.get(0).getHora().trim());
+                viewHolder.tvDescricao.setText(campos.get(0).getDescricao().trim());
 
                 final int temp = position;
+
                 return convertView;
             }
 
             private class ViewHolder {
-                TextView tvLatitude;
-                TextView tvLongitude;
-                TextView tvPrecisao;
-                TextView tvAltitude;
-
-                TextView in_latitude;
-                TextView in_longitude;
-                TextView in_precisao;
-                TextView in_altitude;
+                TextView tvRegistro;
+                TextView tvHora;
+                TextView tvData;
+                TextView tvDescricao;
             }
         }
 
