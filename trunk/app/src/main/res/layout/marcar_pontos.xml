@@ -6,187 +6,232 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/layout"
+    <ScrollView
+        android:layout_above="@+id/layout4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="fill_parent"
         android:layout_margin="@dimen/margem">
 
-        <TextClock
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/tv_hora"
-            android:layout_margin="@dimen/margem"
-            />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Data"
-            android:layout_margin="@dimen/margem"
-            />
+            <RelativeLayout
+                android:id="@+id/layout_horadata"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margem">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_marginLeft="@dimen/margem_grande"
+                    />
 
-    <RelativeLayout
-        android:id="@+id/layout1"
-        android:layout_centerVertical="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/layout"
-        android:layout_margin="@dimen/margem">
+                <TextClock
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_data"
+                    android:layout_margin="@dimen/margem"
+                    />
 
-        <TextView
-            android:id="@+id/tv_altitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/altitude"
-            android:textSize="@dimen/texto"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/margem"
-            />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/in_altitude"
-            android:layout_toRightOf="@+id/tv_altitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_margin="@dimen/margem"
-            />
+            <RelativeLayout
+                android:id="@+id/layout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_latlong"
+                android:layout_margin="@dimen/margem">
 
-        <TextView
-            android:id="@+id/tv_precisao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/precisao"
-            android:textSize="@dimen/texto"
-            android:layout_toLeftOf="@+id/in_precisao"
-            android:layout_margin="@dimen/margem"
-            />
+                <TextView
+                    android:id="@+id/tv_altitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/altitude"
+                    android:textSize="@dimen/texto"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="@dimen/margem"
+                    />
 
-        <TextView
-            android:id="@+id/in_precisao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margem"/>
+                <TextView
+                    android:id="@+id/in_altitude"
+                    android:layout_toRightOf="@+id/tv_altitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sem_valor"
+                    android:layout_margin="@dimen/margem"
+                    />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_precisao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/precisao"
+                    android:textSize="@dimen/texto"
+                    android:layout_toLeftOf="@+id/in_precisao"
+                    android:layout_margin="@dimen/margem"
+                    />
 
-    <RelativeLayout
-        android:id="@+id/layout2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/layout1"
-        android:layout_margin="@dimen/margem">
+                <TextView
+                    android:id="@+id/in_precisao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sem_valor"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/margem"/>
 
-        <TextView
-            android:id="@+id/tv_latitude"
-            android:text="@string/latitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/texto"
-            android:layout_margin="@dimen/margem"
-            />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/in_latitude"
-            android:layout_toRightOf="@+id/tv_latitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_margin="@dimen/margem"
-            />
+            <RelativeLayout
+                android:id="@+id/layout_latlong"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margem"
+                android:layout_below="@+id/layout_horadata">
 
-        <TextView
-            android:id="@+id/tv_longitude"
-            android:text="@string/longitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/in_longitude"
-            android:textSize="@dimen/texto"
-            android:layout_margin="@dimen/margem"
-            />
+                <TextView
+                    android:id="@+id/tv_latitude"
+                    android:text="@string/latitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/texto"
+                    android:layout_margin="@dimen/margem"
+                    />
 
-        <TextView
-            android:id="@+id/in_longitude"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_margin="@dimen/margem"
-            />
+                <TextView
+                    android:id="@+id/in_latitude"
+                    android:layout_below="@+id/tv_latitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="@dimen/margem"
+                    />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_longitude"
+                    android:text="@string/longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/texto"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_below="@+id/in_latitude"
+                    android:layout_centerHorizontal="true"
+                    />
 
-    <RelativeLayout
-        android:id="@+id/layout3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout2"
-        android:orientation="horizontal"
-        android:layout_margin="@dimen/margem"
-        android:layout_marginTop="10dp"
-        >
+                <TextView
+                    android:id="@+id/in_longitude"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="@dimen/margem"
+                    android:layout_below="@+id/tv_longitude"
+                    />
 
-        <TextView
-            android:id="@+id/tv_norte"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Norte"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/texto"
-            android:layout_margin="@dimen/margem"
-            />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_leste"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leste"
-            android:layout_toLeftOf="@+id/in_leste"
-            android:textSize="@dimen/texto"
-            android:layout_margin="@dimen/margem"
-            />
+            <RelativeLayout
+                android:id="@+id/layout3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout1"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margem"
+                android:layout_marginTop="10dp"
+                >
 
-        <TextView
-            android:id="@+id/in_leste"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text=""
-            android:layout_margin="@dimen/margem"
-            />
+                <TextView
+                    android:id="@+id/tv_norte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Norte"
+                    android:textSize="@dimen/texto"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    />
 
-        <TextView
-            android:id="@+id/tv_quadrante"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quadrante"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tv_norte"
-            android:textSize="@dimen/texto"
-            android:layout_margin="@dimen/margem"
-            />
+                <TextView
+                    android:id="@+id/in_norte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_norte"/>
 
-        <TextView
-            android:id="@+id/in_quadrante"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_quadrante"
-            android:text=""
-            android:layout_margin="@dimen/margem"
-            />
+                <TextView
+                    android:id="@+id/tv_leste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leste"
+                    android:layout_below="@+id/in_norte"
+                    android:textSize="@dimen/texto"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/in_leste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_below="@+id/tv_leste"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_quadrante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quadrante"
+                    android:layout_below="@+id/in_leste"
+                    android:textSize="@dimen/texto"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/in_quadrante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_quadrante"
+                    android:text=""
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_below="@+id/layout3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/descricao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <EditText
+                    android:id="@+id/et_descricao"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                </RelativeLayout>
+
+           </RelativeLayout>
+
+        </ScrollView>
 
     <RelativeLayout
         android:id="@+id/layout4"
@@ -194,7 +239,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:layout_margin="@dimen/margem">
+        android:layout_margin="@dimen/margem"
+        android:layout_below="@+id/layout3">
+
+        <TextView
+            android:id="@+id/tvadicionar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adicionar Registro"/>
+
 
         <EditText
             android:id="@+id/et_registro"
@@ -202,6 +255,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/registro"
             android:layout_margin="@dimen/margem"
+            android:layout_below="@+id/tvadicionar"
             />
 
         <ImageButton

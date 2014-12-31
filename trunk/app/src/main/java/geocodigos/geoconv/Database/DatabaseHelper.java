@@ -14,7 +14,7 @@
     public class DatabaseHelper extends SQLiteOpenHelper {
         private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
         public static String dbId="id";
-        public static String dbName = "database4";
+        public static String dbName = "database8";
         public static String dbTable = "pontos";
         public static String dbRegister = "registro";
         public static String dbDescription ="descricao";
@@ -26,6 +26,7 @@
         public static String dbSetorL="setorl";
         public static String dbAltitude="altitude";
 
+        public static  String dbPrecisao="precisao";
         public static String dbData="data";
         public static String dbHora="hora";
 
@@ -40,20 +41,23 @@
         @Override
         public void onCreate(SQLiteDatabase db) {
             // TODO Auto-generated method stub
+
             db.execSQL("CREATE TABLE IF NOT EXISTS "+dbTable+
                     " ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                     dbRegister+" TEXT, "+dbDescription+" TEXT, "+
                     dbLatitude+" TEXT, "+dbLongitude+" TEXT, "+
                     dbNorte+ " TEXT, "+dbLeste+" TEXT, "+dbSetorN+
                     " TEXT, "+dbSetorL+" TEXT, "+dbAltitude +
-                    " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT);");
+                    " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT, "+
+                    dbPrecisao+" TEXT);");
             Log.i("SQL: ", "CREATE TABLE IF NOT EXISTS "+dbTable+
                     " ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                     dbRegister+" TEXT, "+dbDescription+" TEXT, "+
                     dbLatitude+" TEXT, "+dbLongitude+" TEXT, "+
                     dbNorte+ " TEXT, "+dbLeste+" TEXT, "+dbSetorN+
                     " TEXT, "+dbSetorL+" TEXT, "+dbAltitude +
-                    " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT);");
+                    " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT, "+
+                    dbPrecisao+" TEXT);");
         }
 
         @Override
@@ -197,6 +201,18 @@
             cursor.close();
             db.close();
             return ponto;
+        }
+
+        public boolean pegarId(String strId) {
+            //verifica se já existe o id, ja que id é unique
+            boolean existe = false;
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.query(true, dbTable, new String[] { dbId },
+                    " id = ? ", new String[] {strId}, null, null, null, null, null);
+            if(cursor.getCount() > 0 ) {
+                existe = true;
+            }
+            return existe;
         }
 
     }

@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="texto">16dp</dimen>
     <dimen name="margem">5dp</dimen>
+    <dimen name="margem_grande">15dp</dimen>
+    <dimen name="fonteGrande">16dp</dimen>
 </resources>

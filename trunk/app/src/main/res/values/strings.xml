@@ -4,7 +4,7 @@
     <string name="app_name">Coordinate Conversor</string>
     <string name="converter_coord">Converter Coordenadas</string>
     <string name="marcar_ponto">Marcar Ponto</string>
-    <string name="ver_pontos">Ver Pontos</string>
+    <string name="ver_pontos">Pontos Marcados</string>
     <string name="pontos_marcados">Pontos Marcados</string>
     <string name="conversor_coordenadas">Conversor de Coordenadas</string>
     <string name="coordenadas">Coordenadas Atual:</string>
@@ -21,5 +21,7 @@
     <string name="precisao">Precisão</string>
     <string name="altitude">Altitude</string>
     <string name="title_activity_kml">kmlActivity</string>
+    <string name="descricao">Descrição</string>
+    <string name="sem_valor">Sem Valor</string>
 
 </resources>

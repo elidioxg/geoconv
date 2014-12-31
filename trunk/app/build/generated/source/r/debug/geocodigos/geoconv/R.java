@@ -13,24 +13,27 @@ public final class R {
     public static final class dimen {
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
-        public static final int margem=0x7f040002;
-        public static final int texto=0x7f040003;
+        public static final int fonteGrande=0x7f040002;
+        public static final int margem=0x7f040003;
+        public static final int margem_grande=0x7f040004;
+        public static final int texto=0x7f040005;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08002f;
-        public static final int btn_latlonutm=0x7f080007;
-        public static final int btnconverter=0x7f08000f;
-        public static final int et_leste=0x7f08000e;
+        public static final int action_settings=0x7f080039;
+        public static final int btn_latlonutm=0x7f080028;
+        public static final int btnconverter=0x7f080029;
+        public static final int et_descricao=0x7f080031;
+        public static final int et_leste=0x7f08000f;
         public static final int et_registro=0x7f080011;
         public static final int etlat=0x7f080005;
-        public static final int etnorte=0x7f08000c;
-        public static final int etquadrante=0x7f08000a;
-        public static final int frag_info=0x7f080028;
+        public static final int etlong=0x7f080007;
+        public static final int etnorte=0x7f08000d;
+        public static final int etquadrante=0x7f08000b;
         public static final int fragment_container=0x7f080001;
-        public static final int ib_exportar=0x7f08002e;
+        public static final int ib_exportar=0x7f080038;
         public static final int ib_marcar=0x7f080012;
         public static final int id_latlongutm=0x7f080014;
         public static final int id_marcar=0x7f080015;
@@ -39,35 +42,44 @@ public final class R {
         public static final int in_latitude=0x7f08001f;
         public static final int in_leste=0x7f080025;
         public static final int in_longitude=0x7f080021;
+        public static final int in_norte=0x7f080030;
         public static final int in_precisao=0x7f08001c;
         public static final int in_quadrante=0x7f080027;
-        public static final int l_buttons=0x7f08002d;
+        public static final int l_buttons=0x7f080037;
         public static final int layout=0x7f080016;
         public static final int layout1=0x7f080002;
         public static final int layout2=0x7f08001d;
         public static final int layout3=0x7f080022;
         public static final int layout4=0x7f080010;
         public static final int layout_buttons=0x7f080000;
-        public static final int layout_principal=0x7f08002a;
-        public static final int lv_registro=0x7f08002c;
-        public static final int tabtextview=0x7f080029;
+        public static final int layout_horadata=0x7f08002e;
+        public static final int layout_latlong=0x7f08002f;
+        public static final int layout_principal=0x7f080034;
+        public static final int layout_utmll=0x7f080008;
+        public static final int lv_registro=0x7f080036;
+        public static final int tabtextview=0x7f080033;
         public static final int tv_altitude=0x7f080019;
-        public static final int tv_converter=0x7f080008;
+        public static final int tv_converter=0x7f080009;
         public static final int tv_data=0x7f080018;
+        public static final int tv_descricao=0x7f08002d;
         public static final int tv_hora=0x7f080017;
         public static final int tv_latitude=0x7f08001e;
         public static final int tv_leste=0x7f080024;
         public static final int tv_longitude=0x7f080020;
         public static final int tv_norte=0x7f080023;
-        public static final int tv_pontos=0x7f08002b;
+        public static final int tv_pontos=0x7f080035;
         public static final int tv_precisao=0x7f08001b;
         public static final int tv_quadrante=0x7f080026;
+        public static final int tvadicionar=0x7f080032;
+        public static final int tvdata=0x7f08002c;
+        public static final int tvhora=0x7f08002b;
         public static final int tvlat=0x7f080004;
-        public static final int tvleste=0x7f08000d;
+        public static final int tvleste=0x7f08000e;
         public static final int tvlong=0x7f080006;
         public static final int tvlongutm=0x7f080003;
-        public static final int tvnorte=0x7f08000b;
-        public static final int tvquadrante=0x7f080009;
+        public static final int tvnorte=0x7f08000c;
+        public static final int tvquadrante=0x7f08000a;
+        public static final int tvregistro=0x7f08002a;
     }
     public static final class layout {
         public static final int activity_kml=0x7f030000;
@@ -79,9 +91,10 @@ public final class R {
         public static final int frag_salvarponto=0x7f030006;
         public static final int frag_utmlong=0x7f030007;
         public static final int linha_listview=0x7f030008;
-        public static final int marcar_pontos=0x7f030009;
-        public static final int tabs=0x7f03000a;
-        public static final int ver_pontos=0x7f03000b;
+        public static final int linha_listview2=0x7f030009;
+        public static final int marcar_pontos=0x7f03000a;
+        public static final int tabs=0x7f03000b;
+        public static final int ver_pontos=0x7f03000c;
     }
     public static final class menu {
         public static final int menu_kml=0x7f070000;
@@ -94,7 +107,7 @@ public final class R {
         public static final int conversor_coordenadas=0x7f050003;
         public static final int converter_coord=0x7f050004;
         public static final int coordenadas=0x7f050005;
-        public static final int hello_world=0x7f050006;
+        public static final int descricao=0x7f050006;
         public static final int latitude=0x7f050007;
         public static final int leste=0x7f050008;
         public static final int longitude=0x7f050009;
@@ -106,9 +119,10 @@ public final class R {
         public static final int quadrante=0x7f05000f;
         public static final int registro=0x7f050010;
         public static final int salvar_ponto=0x7f050011;
-        public static final int title_activity_kml=0x7f050012;
-        public static final int utmLongitude=0x7f050013;
-        public static final int ver_pontos=0x7f050014;
+        public static final int sem_valor=0x7f050012;
+        public static final int title_activity_kml=0x7f050013;
+        public static final int utmLongitude=0x7f050014;
+        public static final int ver_pontos=0x7f050015;
     }
     public static final class style {
         /**  Customize your theme here. 
