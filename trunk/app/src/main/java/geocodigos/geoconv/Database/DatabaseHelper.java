@@ -14,7 +14,7 @@
     public class DatabaseHelper extends SQLiteOpenHelper {
         private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
         public static String dbId="id";
-        public static String dbName = "database8";
+        public static String dbName = "database_pontos";
         public static String dbTable = "pontos";
         public static String dbRegister = "registro";
         public static String dbDescription ="descricao";

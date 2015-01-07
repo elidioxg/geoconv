@@ -1,26 +1,34 @@
     package geocodigos.geoconv;
 
     import android.app.Fragment;
+    import android.app.FragmentManager;
+    import android.app.FragmentTransaction;
     import android.content.Context;
+    import android.content.Intent;
     import android.os.Bundle;
     import android.util.Log;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.AdapterView;
     import android.widget.BaseAdapter;
     import android.widget.ImageButton;
     import android.widget.ListView;
     import android.widget.TextView;
 
-    import org.w3c.dom.Text;
-
     import java.io.IOException;
     import java.util.ArrayList;
     import geocodigos.geoconv.Database.DatabaseHelper;
+    import geocodigos.geoconv.Registro.VerRegistro;
     import geocodigos.geoconv.kml.ExportarKML;
     import geocodigos.geoconv.model.PointModel;
 
     public class VerPontos extends Fragment {
+
+        public void onClick() {
+
+        }
+
         DatabaseHelper database;
         private ImageButton ibExportar;
         private TextView tvRegistro, tvData, tvHora;
@@ -29,35 +37,13 @@
 
         public View onCreateView(LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
-            final View view = inflater.inflate(R.layout.ver_pontos, container, false);
+            View view = inflater.inflate(R.layout.ver_pontos, container, false);
 
+            //TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             ImageButton ibExportar = (ImageButton) view.findViewById(R.id.ib_exportar);
             TextView tvPontos = (TextView) view.findViewById(R.id.tv_pontos);
             listView = (ListView) view.findViewById(R.id.lv_registro);
 
-            ibExportar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    ExportarKML exportar = new ExportarKML();
-                    try {
-                        String string = (String) ExportarKML.CreateXMLString();
-                    } catch (IllegalArgumentException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IllegalStateException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                }
-
-            });
-
-            TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             database = new DatabaseHelper(getActivity());
             database.getWritableDatabase();
 
@@ -65,11 +51,11 @@
             campos = database.pegarPontos();
             Log.i("campos.size():", Integer.toString(campos.size()));
             if (!campos.isEmpty()) {
-                for (int i =0; i>=campos.size(); i++) {
+                for (int i = 0; i > campos.size(); i++) {
 
                     String id = campos.get(i).getId();
                     String registro = campos.get(i).getRegistro();
-                    Log.i("campos(i).getRegistro", "campos("+i+")  Registro="+registro);
+                    //Log.i("campos(i).getRegistro", "campos("+i+")  Registro="+registro);
                     String latitude = campos.get(i).getlatitude();
                     String longitude = campos.get(i).getLongitude();
                     //String setorl = campos.get(i).getSetorL();
@@ -99,14 +85,39 @@
                     pointModel.setData(data);
 
                     //Log.i("id.toString", pointModel.id.toString());
-                    Log.i("id:", pointModel.id);
+                    //Log.i("id:", pointModel.id);
                     Log.i("campos.size()", Integer.toString(campos.size()));
                     campos.add(pointModel);
                 }
             }
-            tvPontos.setText("Número de registros: "+Integer.toString(campos.size()));
-            listView.setAdapter(new ListAdapter(getActivity()));
             database.close();
+            tvPontos.setText("Número de registros: "+Integer.toString(campos.size()));
+
+            ibExportar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    ExportarKML exportar = new ExportarKML();
+                    //passar os pontos em ExportarKML atraves de Bundle e intent
+                    //Bundle bundle = new Bundle();
+                    try {
+                        String string = (String) ExportarKML.CreateXMLString();
+                    } catch (IllegalArgumentException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IllegalStateException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
+
+            });
+            listView.setAdapter(new ListAdapter(getActivity()));
+
             return view;
         }
 
@@ -138,9 +149,8 @@
             }
 
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
-                //ViewHolder viewHolder;
 
                 if (convertView == null ){
 
@@ -151,17 +161,33 @@
                     viewHolder.tvData = (TextView) convertView.findViewById(R.id.tvdata);
                     viewHolder.tvHora = (TextView) convertView.findViewById(R.id.tvhora);
                     viewHolder.tvDescricao = (TextView) convertView.findViewById(R.id.tv_descricao);
+
+                    convertView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.i("onClick - position", String.valueOf(position));
+                            Fragment registro = new VerRegistro();
+
+                            //passar valores ao ser iniciado o view do fragment
+                            //passar arraylist atraves de bundle, junto com o numero position
+                            //bundle.putString("id", String.valueOf(position));
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.replace(R.id.fragment_container, registro);
+                            ft.addToBackStack(null);
+                            ft.commit();
+
+                        }
+                    });
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
+                viewHolder.tvRegistro.setText(campos.get(position).getRegistro().trim());
+                viewHolder.tvData.setText(campos.get(position).getData().trim());
+                viewHolder.tvHora.setText(campos.get(position).getHora().trim());
+                viewHolder.tvDescricao.setText(campos.get(position).getDescricao().trim());
 
-                viewHolder.tvRegistro.setText(campos.get(0).getRegistro().trim());
-                viewHolder.tvData.setText(campos.get(0).getData().trim());
-                viewHolder.tvHora.setText(campos.get(0).getHora().trim());
-                viewHolder.tvDescricao.setText(campos.get(0).getDescricao().trim());
-
-                final int temp = position;
+                //final int temp = position;
 
                 return convertView;
             }
@@ -173,5 +199,4 @@
                 TextView tvDescricao;
             }
         }
-
     }

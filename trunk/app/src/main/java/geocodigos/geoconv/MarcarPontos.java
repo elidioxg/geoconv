@@ -9,6 +9,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -23,17 +24,20 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import geocodigos.geoconv.Conversion.CoordinateConversion;
 import geocodigos.geoconv.Database.DatabaseHelper;
+import geocodigos.geoconv.implementation.getDate;
+import geocodigos.geoconv.implementation.getTime;
 import geocodigos.geoconv.model.PointModel;
 
 public class MarcarPontos extends Fragment implements LocationListener {
     LocationManager locationManager;
     String provider;
     public String strLatitude, strLongitude, strPrecisao, strAltitude;
-    ImageButton ibMarcar;
+    private ImageButton ibMarcar, ibMapa, ibExcluir;
     DatabaseHelper database;
-    public TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,//private
-        tvData;
+    private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
+        tvSetor, tvNorte, tvLeste;
     EditText etRegistro, etDescricao;
     public ArrayList<PointModel> al;
 
@@ -44,24 +48,23 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
         etRegistro = (EditText) view.findViewById(R.id.et_registro);
         etDescricao = (EditText) view.findViewById(R.id.et_descricao);
-        tvLatitude = (TextView) view.findViewById(R.id.tv_latitude);
-        tvLongitude = (TextView) view.findViewById(R.id.tv_longitude);
+        tvLatitude = (TextView) view.findViewById(R.id.in_latitude);
+        tvLongitude = (TextView) view.findViewById(R.id.in_longitude);
         tvPrecisao = (TextView) view.findViewById(R.id.in_precisao);
         tvAltitude = (TextView) view.findViewById(R.id.in_altitude);
-        tvData = (TextView) view.findViewById(R.id.tv_data);
 
-        Calendar calendar = Calendar.getInstance();
-        int iAno = calendar.get(Calendar.YEAR);
-        int iMes = calendar.get(Calendar.MONTH);
-        int iDia = calendar.get(Calendar.DAY_OF_MONTH);
-        String strData =
-                String.valueOf(iAno)+"-"+String.valueOf(iMes)+
-                        "-"+String.valueOf(iDia);
-        //colocar para atualizar data automaticamente
-        String sData = String.valueOf(strData);
-        tvData.setText(sData);
+        tvSetor = (TextView) view.findViewById(R.id.in_quadrante);
+        tvNorte = (TextView) view.findViewById(R.id.in_norte);
+        tvLeste = (TextView) view.findViewById(R.id.in_leste);
 
-        ImageButton ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
+        getDate date = new getDate();
+        String strDate = date.returnDate();
+        //Log.i("MarcarPonto.java", "strDate: "+strDate);
+
+        ibMapa = (ImageButton) view.findViewById(R.id.ib_map);
+        ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
+
+        ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
         ibMarcar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -80,7 +83,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
                         database = new DatabaseHelper(getActivity());
                         database.getWritableDatabase();
-                        al = database.pegarPontos();
+                        //al = database.pegarPontos();
 
                         numId= al.size() + 1;
                         if(database.pegarId(String.valueOf(numId))) {
@@ -93,7 +96,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
                         }
                         strAux= String.valueOf(numId);
-                        Log.i("Salvando com ID (numId) : ", String.valueOf(numId));
+                        Log.i("Salvando com ID (numId) : ", strAux);
 
                         PointModel pm = new PointModel();
                         pm.setId(Integer.toString(numId));
@@ -107,35 +110,29 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
                         pm.setAltitude(tvAltitude.getText().toString());
                         pm.setPrecisao(tvPrecisao.getText().toString());
-                        //pm.setNorte();
-                        //pm.setLeste();
+                        pm.setNorte(tvNorte.getText().toString());
+                        pm.setLeste(tvLeste.getText().toString());
                         //pm.setSetorN();
                         //pm.setSetorL();
-
-                        Calendar c = Calendar.getInstance();
-                        int iAno = c.get(Calendar.YEAR);
-                        int iMes = c.get(Calendar.MONTH);
-                        int iDia = c.get(Calendar.DAY_OF_MONTH);
-                        String sqlData =
-                                String.valueOf(iAno)+"-"+String.valueOf(iMes)+
-                                        "-"+String.valueOf(iDia);
-                        int iHora = c.get(Calendar.HOUR_OF_DAY);
-                        int iMin = c.get(Calendar.MINUTE);
-                        int iSeg = c.get(Calendar.SECOND);
-                        String sqlHora = String.valueOf(iHora)+":"+
-                                String.valueOf(iMin)+":"+String.valueOf(iSeg);
-                        pm.setData(sqlData);
-                        pm.setHora(sqlHora);
-                        Log.i("Data" , sqlData);
-                        Log.i("Hora", sqlHora);
-
-                        al.add(pm);
-                        database.addPoint(pm);
 
                         Log.i("id", pm.id);
                         Log.i("Registro ", pm.registro);
                         Log.i("Latitude ", pm.latitude);
                         Log.i("Descricao ", pm.descricao);
+
+                        getTime time = new getTime();
+                        String strTime = time.returnTime();
+                        Log.i("Time:", strTime);
+
+                        getDate date = new getDate();
+                        String strDate = date.returnDate();
+                        Log.i("Date", strDate);
+
+                        pm.setData(strDate);
+                        pm.setHora(strTime);
+
+                        al.add(pm);
+                        database.addPoint(pm);
                         database.close();
 
                     } else {
@@ -214,6 +211,16 @@ public class MarcarPontos extends Fragment implements LocationListener {
         tvLongitude.setText(strLongitude);
         tvPrecisao.setText(strPrecisao);
         tvAltitude.setText(strAltitude);
+
+        double strLat = Float.valueOf(tvLatitude.getText().toString());
+        double strLon = Float.valueOf(tvLongitude.getText().toString());
+        CoordinateConversion cc = new CoordinateConversion();
+        String latlon = cc.latLon2UTM(strLat, strLon);
+        Log.i("Convertido > utm:" , latlon);
+        String coord[] = latlon.split(" ");
+        tvSetor.setText(coord[0] + " " + coord[1]);
+        tvNorte.setText(coord[2]);
+        tvLeste.setText(coord[3]);
     }
 
     @Override

@@ -3,24 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:onClick="OnItemClick">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margem">
 
-        <TextView
-            android:id="@+id/tvregistro"
+        <CheckBox
+            android:id="@+id/cb_ponto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registro"
+            android:checked="true"
+            android:layout_margin="@dimen/margem"
             />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/cb_ponto"
+            >
+
+            <TextView
+                android:id="@+id/tvregistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registro"
+                android:layout_margin="@dimen/margem"
+                />
+
+            <TextView
+                android:id="@+id/tv_descricao"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/descricao"
+                android:layout_below="@+id/tvregistro"
+                android:layout_margin="@dimen/margem"/>
+
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tvhora"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:text="hora"
             />
 
@@ -32,11 +61,6 @@
             android:text="data"/>
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_descricao"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
 <!-- From: file:/home/elidioxg/Desenvolvimento/geoconv/app/src/main/res/layout/linha_listview.xml -->
