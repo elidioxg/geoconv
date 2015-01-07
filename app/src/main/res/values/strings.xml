@@ -15,13 +15,16 @@
     <string name="utmLongitude">UTM -> Lat/Lon</string>
     <string name="leste">Leste:</string>
     <string name="longitudeUtm">Lat/Lon -> UTM</string>
-    <string name="quadrante">Quadrante</string>
+    <string name="quadrante">Setor</string>
     <string name="salvar_ponto">Salvar Ponto</string>
     <string name="norte">Norte</string>
     <string name="precisao">Precisão</string>
     <string name="altitude">Altitude</string>
     <string name="title_activity_kml">kmlActivity</string>
     <string name="descricao">Descrição</string>
-    <string name="sem_valor">Sem Valor</string>
-
+    <string name="sem_valor"> </string>
+    <string name="hora">Hora:</string>
+    <string name="data">Data:</string>
+    <string name="mapa">Mapa</string>
+    <string name="apagar">Excluir</string>
 </resources>

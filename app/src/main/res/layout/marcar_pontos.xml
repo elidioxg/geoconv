@@ -17,31 +17,6 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/layout_horadata"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/margem">
-
-                <TextView
-                    android:id="@+id/tv_data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Data"
-                    android:layout_margin="@dimen/margem"
-                    android:layout_marginLeft="@dimen/margem_grande"
-                    />
-
-                <TextClock
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_data"
-                    android:layout_margin="@dimen/margem"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/layout1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -272,4 +247,3 @@
     </RelativeLayout>
 
 </RelativeLayout>
-

@@ -34,7 +34,8 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        ActionBar actionbar = getActionBar();actionbar.setNavigationMode(
+        ActionBar actionbar = getActionBar();
+        actionbar.setNavigationMode(
                 ActionBar.NAVIGATION_MODE_TABS);
         tabConverter = actionbar.newTab().setText(R.string.converter_coord);
         tabMarcar = actionbar.newTab().setText(R.string.marcar_ponto);
