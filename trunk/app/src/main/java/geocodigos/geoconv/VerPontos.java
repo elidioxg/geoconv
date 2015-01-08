@@ -26,7 +26,7 @@
     public class VerPontos extends Fragment {
 
         public void onClick() {
-
+            Log.i("VerPontos ","onClick______");
         }
 
         DatabaseHelper database;
@@ -51,7 +51,7 @@
             campos = database.pegarPontos();
             Log.i("campos.size():", Integer.toString(campos.size()));
             if (!campos.isEmpty()) {
-                for (int i = 0; i > campos.size(); i++) {
+                for (int i = campos.size(); i < 0 ; i--) {
 
                     String id = campos.get(i).getId();
                     String registro = campos.get(i).getRegistro();
@@ -60,8 +60,8 @@
                     String longitude = campos.get(i).getLongitude();
                     //String setorl = campos.get(i).getSetorL();
                     //String setorn = campos.get(i).getSetorN();
-                    //String norte = campos.get(i).getNorte();
-                    //String leste = campos.get(i).getLeste();
+                    String norte = campos.get(i).getNorte();
+                    String leste = campos.get(i).getLeste();
                     String descricao = campos.get(i).getDescricao();
                     String precisao = campos.get(i).getPrecisao();
                     String altitude = campos.get(i).getAltitude();
@@ -76,8 +76,8 @@
                     pointModel.setLongitude(longitude);
                     //pointModel.setSetorL(setorl);
                     //pointModel.setSetorN(setorn);
-                    //pointModel.setNorte(norte);
-                    //pointModel.setLeste(leste);
+                    pointModel.setNorte(norte);
+                    pointModel.setLeste(leste);
                     pointModel.setDescricao(descricao);
                     pointModel.setAltitude(altitude);
                     pointModel.setPrecisao(precisao);
@@ -169,8 +169,12 @@
                             Fragment registro = new VerRegistro();
 
                             //passar valores ao ser iniciado o view do fragment
-                            //passar arraylist atraves de bundle, junto com o numero position
-                            //bundle.putString("id", String.valueOf(position));
+
+                            Bundle bundle = new Bundle();
+
+                            bundle.putString("id", String.valueOf(position));
+                            Log.i("Registro:",campos.get(position).getRegistro());
+                            registro.setArguments(bundle);
                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                             ft.replace(R.id.fragment_container, registro);
                             ft.addToBackStack(null);

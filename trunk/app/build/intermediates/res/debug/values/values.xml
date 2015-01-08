@@ -27,12 +27,14 @@
     <string name="mapa">Mapa</string>
     <string name="marcar_ponto">Marcar Ponto</string>
     <string name="norte">Norte</string>
+    <string name="novo_registro">Novo Registro</string>
     <string name="pontos_marcados">Pontos Marcados</string>
     <string name="precisao">Precisão</string>
     <string name="quadrante">Setor</string>
     <string name="registro">Nome do Registro</string>
     <string name="salvar_ponto">Salvar Ponto</string>
     <string name="sem_valor"> </string>
+    <string name="strRegistro">Registro</string>
     <string name="title_activity_kml">kmlActivity</string>
     <string name="utmLongitude">UTM -> Lat/Lon</string>
     <string name="ver_pontos">Pontos Marcados</string>
