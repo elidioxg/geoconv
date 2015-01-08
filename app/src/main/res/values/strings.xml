@@ -27,4 +27,6 @@
     <string name="data">Data:</string>
     <string name="mapa">Mapa</string>
     <string name="apagar">Excluir</string>
+    <string name="strRegistro">Registro</string>
+    <string name="novo_registro">Novo Registro</string>
 </resources>
