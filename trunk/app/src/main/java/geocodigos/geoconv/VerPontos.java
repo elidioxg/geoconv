@@ -30,7 +30,7 @@
         }
 
         DatabaseHelper database;
-        private ImageButton ibExportar;
+        private ImageButton ibExportar, ibMapa, ibExcluir;
         private TextView tvRegistro, tvData, tvHora;
         private ListView listView;
         public ArrayList<PointModel> campos = new ArrayList<PointModel>();
@@ -41,6 +41,8 @@
 
             //TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             ImageButton ibExportar = (ImageButton) view.findViewById(R.id.ib_exportar);
+            ImageButton ibMapa = (ImageButton) view.findViewById(R.id.ib_map);
+            ImageButton ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
             TextView tvPontos = (TextView) view.findViewById(R.id.tv_pontos);
             listView = (ListView) view.findViewById(R.id.lv_registro);
 
@@ -116,6 +118,21 @@
                 }
 
             });
+
+            ibMapa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            ibExcluir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
             listView.setAdapter(new ListAdapter(getActivity()));
 
             return view;
@@ -173,6 +190,7 @@
                             Bundle bundle = new Bundle();
 
                             bundle.putString("id", String.valueOf(position));
+                            bundle.putString("total_registros", String.valueOf(campos.size()));
                             Log.i("Registro:",campos.get(position).getRegistro());
                             registro.setArguments(bundle);
                             FragmentTransaction ft = getFragmentManager().beginTransaction();

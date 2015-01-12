@@ -22,8 +22,6 @@ public class MainActivity extends Activity {
     Fragment fragMarcar = new MarcarPontos();
     Fragment fragPontos = new VerPontos();
 
-    DatabaseHelper database;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
