@@ -1,5 +1,6 @@
 package geocodigos.geoconv.kml;
 
+import android.app.Activity;
 import android.util.Log;
 import android.util.Xml;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.model.PointModel;
 
-public class ExportarKML implements XmlSerializer {
+public class ExportarKML extends Activity implements XmlSerializer {
 
     private OutputStream outputStream;
     private String s;
@@ -22,15 +23,16 @@ public class ExportarKML implements XmlSerializer {
     DatabaseHelper database;
     private ArrayList<PointModel> campos;
 
- //   public ArrayList<PointModel> pontos() {
- // ArrayList<PointModel> campos = new ArrayList<PointModel>();
+    public ArrayList<PointModel> pontos() {
+        ArrayList<PointModel> campos = new ArrayList<PointModel>();
 
-//        database = new DatabaseHelper(getContext);
-//        database.getWritableDatabase();
-//        campos.clear();
-//        campos = database.pegarPontos();
-//        return campos;
-//    }
+        database = new DatabaseHelper(getApplicationContext());
+        database.getWritableDatabase();
+        campos.clear();
+        campos = database.pegarPontos();
+        Log.i("campos:", campos.toString());
+        return campos;
+    }
 
     public void criarCamada() {
         //XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -40,6 +42,9 @@ public class ExportarKML implements XmlSerializer {
 
     public static String CreateXMLString() throws
             IllegalArgumentException, IllegalStateException, IOException {
+
+        //ArrayList<PointModel> teste = new ArrayList<PointModel>();
+        //teste = pontos();
 
         XmlSerializer xmlSerializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();

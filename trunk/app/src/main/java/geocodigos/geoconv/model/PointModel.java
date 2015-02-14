@@ -2,8 +2,8 @@
 
     public class PointModel {
         public String id="",registro="", descricao="", latitude="",
-                longitude="", norte="", leste="", setorN="",
-                setorL="", altitude="", precisao = "",
+                longitude="", norte="", leste="", setor="",
+                altitude="", precisao = "",
                 data="", hora="";
 
         public String getId() {
@@ -62,20 +62,12 @@
             this.leste=leste;
         }
 
-        public String getSetorN() {
-            return setorN;
+        public String getSetor() {
+            return setor;
         }
 
-        public void setSetorN(String setorN) {
-            this.setorN = setorN;
-        }
-
-        public String getSetorL() {
-            return setorN;
-        }
-
-        public void setSetorL(String setorL) {
-            this.setorL = setorL;
+        public void setSetor(String setor) {
+            this.setor = setor;
         }
 
         public String getAltitude() {

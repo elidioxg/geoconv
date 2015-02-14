@@ -65,6 +65,13 @@ public class MarcarPontos extends Fragment implements LocationListener {
         ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
 
         ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
+
+        ibMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         ibMarcar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -112,8 +119,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
                         pm.setPrecisao(tvPrecisao.getText().toString());
                         pm.setNorte(tvNorte.getText().toString());
                         pm.setLeste(tvLeste.getText().toString());
-                        //pm.setSetorN();
-                        //pm.setSetorL();
+                        pm.setSetor(tvSetor.getText().toString());
 
                         Log.i("id", pm.id);
                         Log.i("Registro ", pm.registro);

@@ -134,8 +134,8 @@ public class ConverterCoordenadas extends Fragment {
                 pm.setLatidude(etLat.getText().toString());
                 pm.setLongitude(etLon.getText().toString());
                 pm.setDescricao(etDescricao.getText().toString());
+                pm.setSetor(etSet.getText().toString());
 
-                //pm.setAltitude(tvAltitude.getText().toString());
                 //pm.setPrecisao(tvPrecisao.getText().toString());
                 //pm.setNorte();
                 //pm.setLeste();

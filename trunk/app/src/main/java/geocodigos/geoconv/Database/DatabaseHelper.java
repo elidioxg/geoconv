@@ -14,7 +14,7 @@
     public class DatabaseHelper extends SQLiteOpenHelper {
         private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
         public static String dbId="id";
-        public static String dbName = "database_pontos";
+        public static String dbName = "database_pontos2";
         public static String dbTable = "pontos";
         public static String dbRegister = "registro";
         public static String dbDescription ="descricao";
@@ -22,11 +22,9 @@
         public static String dbLongitude = "longitude";
         public static String dbNorte = "norte";
         public static String dbLeste = "leste";
-        public static String dbSetorN = "setorn";
-        public static String dbSetorL="setorl";
+        public static String dbSetor = "setor";
         public static String dbAltitude="altitude";
-
-        public static  String dbPrecisao="precisao";
+        public static String dbPrecisao="precisao";
         public static String dbData="data";
         public static String dbHora="hora";
 
@@ -46,16 +44,8 @@
                     " ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                     dbRegister+" TEXT, "+dbDescription+" TEXT, "+
                     dbLatitude+" TEXT, "+dbLongitude+" TEXT, "+
-                    dbNorte+ " TEXT, "+dbLeste+" TEXT, "+dbSetorN+
-                    " TEXT, "+dbSetorL+" TEXT, "+dbAltitude +
-                    " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT, "+
-                    dbPrecisao+" TEXT);");
-            Log.i("SQL: ", "CREATE TABLE IF NOT EXISTS "+dbTable+
-                    " ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                    dbRegister+" TEXT, "+dbDescription+" TEXT, "+
-                    dbLatitude+" TEXT, "+dbLongitude+" TEXT, "+
-                    dbNorte+ " TEXT, "+dbLeste+" TEXT, "+dbSetorN+
-                    " TEXT, "+dbSetorL+" TEXT, "+dbAltitude +
+                    dbNorte+ " TEXT, "+dbLeste+" TEXT, "+ dbSetor +
+                    " TEXT, "+dbAltitude +
                     " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT, "+
                     dbPrecisao+" TEXT);");
         }
@@ -71,7 +61,6 @@
 
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            //estou substituindo pelas constantes abaixo dbDescription = "descricao"
             contentValues.put(dbId, pointModel.id);
             contentValues.put(dbRegister, pointModel.registro);
             contentValues.put(dbDescription, pointModel.descricao);
@@ -79,8 +68,7 @@
             contentValues.put(dbLongitude, pointModel.longitude);
             contentValues.put(dbNorte, pointModel.norte);
             contentValues.put(dbLeste, pointModel.leste);
-            contentValues.put(dbSetorN, pointModel.setorN);
-            contentValues.put(dbSetorL, pointModel.setorL);
+            contentValues.put(dbSetor, pointModel.setor);
             contentValues.put(dbAltitude, pointModel.altitude);
 
             contentValues.put(dbData, pointModel.data);
@@ -102,8 +90,7 @@
             contentValues.put(dbLongitude, pointModel.longitude);
             contentValues.put(dbNorte, pointModel.norte);
             contentValues.put(dbLeste, pointModel.leste);
-            contentValues.put(dbSetorN, pointModel.setorN);
-            contentValues.put(dbSetorL, pointModel.setorL);
+            contentValues.put(dbSetor, pointModel.setor);
             contentValues.put(dbAltitude, pointModel.altitude);
 
             contentValues.put(dbData, pointModel.data);
@@ -151,8 +138,7 @@
                         pointModel.longitude = cursor.getString(cursor.getColumnIndex(dbLongitude));
                         pointModel.norte = cursor.getString(cursor.getColumnIndex(dbNorte));
                         pointModel.leste = cursor.getString(cursor.getColumnIndex(dbLeste));
-                        pointModel.setorN = cursor.getString(cursor.getColumnIndex(dbSetorN));
-                        pointModel.setorL = cursor.getString(cursor.getColumnIndex(dbSetorL));
+                        pointModel.setor = cursor.getString(cursor.getColumnIndex(dbSetor));
                         pointModel.altitude  = cursor.getString(cursor.getColumnIndex(dbAltitude));
                         pointModel.hora = cursor.getString(cursor.getColumnIndex(dbHora));
                         pointModel.data = cursor.getString(cursor.getColumnIndex(dbData));
@@ -172,7 +158,7 @@
             ponto.clear();
             SQLiteDatabase db = this.getWritableDatabase();     //substituido pelas constantes
             Cursor cursor = db.query(true, dbTable, new String[] { dbRegister,  dbDescription,
-                            dbLatitude, dbLongitude, dbNorte, dbLeste, dbSetorN, dbSetorL,
+                            dbLatitude, dbLongitude, dbNorte, dbLeste, dbSetor,
                             dbAltitude, dbHora, dbData},
                     "registro = ? ", new String[] {registro}, null, null, null, null, null);
 
@@ -187,8 +173,7 @@
                         pointModel.longitude = cursor.getString(cursor.getColumnIndex(dbLongitude));
                         pointModel.norte = cursor.getString(cursor.getColumnIndex(dbNorte));
                         pointModel.leste = cursor.getString(cursor.getColumnIndex(dbLeste));
-                        pointModel.setorN = cursor.getString(cursor.getColumnIndex(dbSetorN));
-                        pointModel.setorL = cursor.getString(cursor.getColumnIndex(dbSetorL));
+                        pointModel.setor = cursor.getString(cursor.getColumnIndex(dbSetor));
                         pointModel.altitude  = cursor.getString(cursor.getColumnIndex(dbAltitude));
                         pointModel.data = cursor.getString(cursor.getColumnIndex(dbData));
                         pointModel.hora = cursor.getString(cursor.getColumnIndex(dbHora));
