@@ -8,16 +8,22 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="19" />
 
+    <permission
+        android:name="geocodigos.geoconv.map.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="geocodigos.geoconv.map.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <android:uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.access_network_state" />
 
     <application
         android:allowBackup="true"
@@ -33,30 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="geocodigos.geoconv.VerPontos"
-            android:parentActivityName="geocodigos.geoconv.MainActivity" >
-        </activity>
-        <activity
-            android:name="geocodigos.geoconv.MarcarPontos"
-            android:parentActivityName="geocodigos.geoconv.MainActivity" >
-        </activity>
-        <activity
-            android:name="geocodigos.geoconv.ConverterCoordenadas"
-            android:parentActivityName="geocodigos.geoconv.MainActivity" >
-        </activity>
-        <activity
-            android:name="geocodigos.geoconv.kml.kmlActivity"
-            android:label="@string/title_activity_kml"
-            android:parentActivityName="geocodigos.geoconv.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="geocodigos.geoconv.MainActivity" />
-        </activity>
 
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="geocodigos.geoconv.map.v2.API_KEY"
+            android:value="AIzaSyBnus-S8Shl11Ywy4EKMELUmX7hUo4T3bY" />
     </application>
 
 </manifest>

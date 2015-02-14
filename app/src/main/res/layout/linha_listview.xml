@@ -11,19 +11,21 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margem">
 
-        <CheckBox
-            android:id="@+id/cb_ponto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:layout_margin="@dimen/margem"
-            />
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/cb_ponto"
             >
+
+            <CheckBox
+                android:id="@+id/cb_ponto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_margin="@dimen/margem"
+                android:layout_centerVertical="true"
+                />
+
 
             <TextView
                 android:id="@+id/tvregistro"
@@ -31,6 +33,8 @@
                 android:layout_height="wrap_content"
                 android:text="Registro"
                 android:layout_margin="@dimen/margem"
+                android:layout_below="@+id/tvhora"
+                android:layout_toRightOf="@+id/cb_ponto"
                 />
 
             <TextView
@@ -38,27 +42,28 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/descricao"
-                android:layout_below="@+id/tvregistro"
-                android:layout_margin="@dimen/margem"/>
+                android:layout_below="@+id/tvdata"
+                android:layout_margin="@dimen/margem"
+                android:layout_toRightOf="@+id/cb_ponto"
+                />
 
+            <TextView
+                android:id="@+id/tvhora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hora"
+                android:layout_alignParentRight="true"
+                />
+
+            <TextView
+                android:id="@+id/tvdata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvregistro"
+                android:text="data"/>
 
         </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/tvhora"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="hora"
-            />
-
-        <TextView
-            android:id="@+id/tvdata"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="data"/>
 
     </RelativeLayout>
 

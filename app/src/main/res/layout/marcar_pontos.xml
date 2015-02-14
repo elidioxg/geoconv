@@ -253,6 +253,15 @@
             android:layout_margin="@dimen/margem"
             />
 
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/ib_map"
+            android:layout_toLeftOf="@+id/ib_marcar"
+            android:layout_margin="@dimen/margem"
+            android:layout_below="@id/et_descricao"
+            />
+
     </RelativeLayout>
 
 </RelativeLayout>
