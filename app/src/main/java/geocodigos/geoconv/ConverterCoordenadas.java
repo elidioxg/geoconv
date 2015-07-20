@@ -1,6 +1,5 @@
 package geocodigos.geoconv;
 
-import android.app.Fragment;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +19,11 @@ import geocodigos.geoconv.R;
 import geocodigos.geoconv.implementation.getDate;
 import geocodigos.geoconv.implementation.getTime;
 import geocodigos.geoconv.model.PointModel;
-
+import android.support.v4.app.Fragment;
 import static android.widget.Toast.*;
 
 
-public class ConverterCoordenadas extends Fragment {
+public class ConverterCoordenadas extends android.support.v4.app.Fragment {
     DatabaseHelper database;
     private EditText etLat, etLon, etSet, etNor, etLes, etRegistro,
         etDescricao;

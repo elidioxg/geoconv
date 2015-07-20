@@ -1,28 +1,53 @@
 package geocodigos.geoconv.implementation;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import geocodigos.geoconv.R;
+import geocodigos.geoconv.ConverterCoordenadas;
+import geocodigos.geoconv.Map.MapActivity;
+import geocodigos.geoconv.Map.Mapa;
+import geocodigos.geoconv.MarcarPontos;
+import geocodigos.geoconv.VerPontos;
 
-public class tabListener implements ActionBar.TabListener {
+public class tabListener extends FragmentPagerAdapter {
 
-    Fragment fragment;
+    final int PAGE_COUNT=4;
 
-    public tabListener(Fragment fragment) {
-        this.fragment = fragment;
+    private String tabNames[] = new String[] {"Converter","Marcar", "Ver Pontos", "Mapa"};
+    Context context;
+
+    public tabListener(FragmentManager fm) {
+        super(fm);
     }
 
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        ft.replace(R.id.fragment_container, fragment);
+    @Override
+    public int getCount() {
+        return PAGE_COUNT;
     }
 
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-        ft.remove(fragment);
+    @Override
+    public Fragment getItem(int position) {
+        switch(position){
+            case 0:
+                ConverterCoordenadas converter = new ConverterCoordenadas();
+                return converter;
+            case 1:
+                MarcarPontos marcar = new MarcarPontos();
+                return marcar;
+            case 2:
+                VerPontos ver = new VerPontos();
+                return ver;
+            case 3:
+                MapActivity mapa_ = new MapActivity();
+                return mapa_;
+        }
+        return null;
+    }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabNames[position];
     }
 
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
 }

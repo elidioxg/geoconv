@@ -1,7 +1,7 @@
     package geocodigos.geoconv;
 
-    import android.app.Fragment;
-    import android.app.FragmentTransaction;
+    import android.support.v4.app.Fragment;
+    import android.support.v4.app.FragmentTransaction;
     import android.content.Context;
     import android.os.Bundle;
     import android.util.Log;
@@ -117,8 +117,8 @@
                 @Override
                 public void onClick(View v) {
 
-                    //GoogleMap googleMap;
-                    //googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+                    // googleMap;
+                    ///googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
                     Fragment mapa = new Mapa();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -174,9 +174,17 @@
                 return position;
             }
 
+            private class ViewHolder{
+                TextView tvRegistro;
+                TextView tvHora;
+                TextView tvData;
+                TextView tvDescricao;
+            }
+
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
+
 
                 if (convertView == null ){
 
@@ -223,11 +231,5 @@
                 return convertView;
             }
 
-            private class ViewHolder {
-                TextView tvRegistro;
-                TextView tvHora;
-                TextView tvData;
-                TextView tvDescricao;
-            }
         }
     }

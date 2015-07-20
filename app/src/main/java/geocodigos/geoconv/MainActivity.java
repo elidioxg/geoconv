@@ -1,51 +1,28 @@
 package geocodigos.geoconv;
 
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
-import geocodigos.geoconv.Database.DatabaseHelper;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import geocodigos.geoconv.implementation.tabListener;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
-    ActionBar.Tab tabConverter, tabMarcar, tabPontos;
-    Fragment fragConverter = new ConverterCoordenadas();
-    Fragment fragMarcar = new MarcarPontos();
-    Fragment fragPontos = new VerPontos();
-
+    public ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, new PlaceholderFragment())
-                    .commit();
-        }
 
-        ActionBar actionbar = getActionBar();
-        actionbar.setNavigationMode(
-                ActionBar.NAVIGATION_MODE_TABS);
-        tabConverter = actionbar.newTab().setText(R.string.converter_coord);
-        tabMarcar = actionbar.newTab().setText(R.string.marcar_ponto);
-        tabPontos = actionbar.newTab().setText(R.string.pontos_marcados);
-
-        tabConverter.setTabListener(new tabListener(fragConverter));
-        tabMarcar.setTabListener(new tabListener(fragMarcar));
-        tabPontos.setTabListener(new tabListener(fragPontos));
-
-        actionbar.addTab(tabConverter);
-        actionbar.addTab(tabMarcar);
-        actionbar.addTab(tabPontos);
+        viewPager = (ViewPager) findViewById(R.id.fragment_container);
+        viewPager.setAdapter(new tabListener(getSupportFragmentManager()));
+        getFragmentManager();
     }
 
 
@@ -69,21 +46,5 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.activity_main, container, false);
-            return rootView;
-        }
     }
 }
