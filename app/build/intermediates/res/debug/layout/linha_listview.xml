@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:onClick="OnItemClick">
+    android:onClick="OnItemClick"
+    android:background="@color/branco">
 
     <RelativeLayout
         android:layout_width="wrap_content"

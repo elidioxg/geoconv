@@ -34,7 +34,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
     LocationManager locationManager;
     String provider;
     public String strLatitude, strLongitude, strPrecisao, strAltitude;
-    private ImageButton ibMarcar, ibMapa, ibExcluir;
+    private ImageButton ibMarcar, ibExcluir;
     DatabaseHelper database;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
         tvSetor, tvNorte, tvLeste;
@@ -61,17 +61,10 @@ public class MarcarPontos extends Fragment implements LocationListener {
         String strDate = date.returnDate();
         //Log.i("MarcarPonto.java", "strDate: "+strDate);
 
-        ibMapa = (ImageButton) view.findViewById(R.id.ib_map);
         ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
 
         ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
 
-        ibMapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         ibMarcar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -195,6 +188,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+
         locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 

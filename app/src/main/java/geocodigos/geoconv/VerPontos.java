@@ -1,5 +1,6 @@
     package geocodigos.geoconv;
 
+    import android.content.Intent;
     import android.support.v4.app.Fragment;
     import android.support.v4.app.FragmentTransaction;
     import android.content.Context;
@@ -35,7 +36,6 @@
 
             //TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             ImageButton ibExportar = (ImageButton) view.findViewById(R.id.ib_exportar);
-            ImageButton ibMapa = (ImageButton) view.findViewById(R.id.ib_map);
             ImageButton ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
             TextView tvPontos = (TextView) view.findViewById(R.id.tv_pontos);
             listView = (ListView) view.findViewById(R.id.lv_registro);
@@ -50,6 +50,7 @@
                 for (int i = campos.size(); i < 0 ; i--) {
 
                     String id = campos.get(i).getId();
+                    Log.i("id: ", id);
                     String registro = campos.get(i).getRegistro();
                     //Log.i("campos(i).getRegistro", "campos("+i+")  Registro="+registro);
                     String latitude = campos.get(i).getlatitude();
@@ -87,7 +88,7 @@
                 }
             }
             database.close();
-            tvPontos.setText("Número de registros: "+Integer.toString(campos.size()));
+            tvPontos.setText("Número de registros: " + Integer.toString(campos.size()));
 
             ibExportar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,28 +112,6 @@
 
                 }
 
-            });
-
-            ibMapa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    // googleMap;
-                    ///googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-
-                    Fragment mapa = new Mapa();
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.fragment_container, mapa);
-                    ft.addToBackStack(null);
-                    ft.commit();
-
-                    //MapFragment mMapFragment = new Mapa();
-                    //mMapFragment = MapFragment.newInstance();
-                    //FragmentTransaction fragmentTransaction =
-                      //      getFragmentManager().beginTransaction();
-                    //fragmentTransaction.add(R.id.fragment_container, mMapFragment);
-                    //fragmentTransaction.commit();
-                }
             });
 
             ibExcluir.setOnClickListener(new View.OnClickListener() {
@@ -200,20 +179,15 @@
                         @Override
                         public void onClick(View v) {
                             Log.i("onClick - position", String.valueOf(position));
-                            Fragment registro = new VerRegistro();
-
-                            //passar valores ao ser iniciado o view do fragment
 
                             Bundle bundle = new Bundle();
+                            bundle.putInt("id", position);
+                            bundle.putInt("total_registros", campos.size());
+                            VerRegistro verRegistro = new VerRegistro();
+                            Intent intent = new Intent(getActivity(), VerRegistro.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
 
-                            bundle.putString("id", String.valueOf(position));
-                            bundle.putString("total_registros", String.valueOf(campos.size()));
-                            Log.i("Registro:",campos.get(position).getRegistro());
-                            registro.setArguments(bundle);
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.replace(R.id.fragment_container, registro);
-                            ft.addToBackStack(null);
-                            ft.commit();
 
                         }
                     });

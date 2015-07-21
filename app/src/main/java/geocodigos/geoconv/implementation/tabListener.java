@@ -15,7 +15,7 @@ public class tabListener extends FragmentPagerAdapter {
 
     final int PAGE_COUNT=4;
 
-    private String tabNames[] = new String[] {"Converter","Marcar", "Ver Pontos", "Mapa"};
+    private String tabNames[] = new String[] {"Converter","Marcar Ponto", "Pontos Marcados", "Mapa"};
     Context context;
 
     public tabListener(FragmentManager fm) {

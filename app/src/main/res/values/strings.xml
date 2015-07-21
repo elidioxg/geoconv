@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Coordinate Conversor</string>
+    <string name="app_name">Geoconver</string>
     <string name="converter_coord">Converter Coordenadas</string>
     <string name="marcar_ponto">Marcar Ponto</string>
     <string name="ver_pontos">Pontos Marcados</string>

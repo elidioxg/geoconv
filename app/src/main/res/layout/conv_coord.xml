@@ -4,12 +4,14 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:fillViewport="false"
+        android:layout_above="@+id/layout_add">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margem">
+            android:background="@color/branco">
 
             <RelativeLayout
                 android:id="@+id/layout1"
@@ -146,28 +148,27 @@
 
             </RelativeLayout>
 
-            <LinearLayout
+        </RelativeLayout>
+
+    </ScrollView>
+
+            <RelativeLayout
                 android:id="@+id/layout_add"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/margem"
-                android:layout_below="@+id/layout_utmll">
+                android:background="@color/cinza"
+                android:fillViewport="false">
 
                 <TextView
-                    android:id="@+id/textviewAdicionar"
+                    android:id="@+id/tv_adicionar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adicionar Registro"
-                    />
-
-                <EditText
-                    android:id="@+id/edittextDescricao"
-                    android:layout_below="@+id/tvdescricao"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/descricao"
+                    android:layout_margin="@dimen/margem"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/novo_registro"
+                    android:textColor="@color/branco"
                     />
 
                 <EditText
@@ -176,6 +177,20 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/registro"
                     android:layout_margin="@dimen/margem"
+                    android:layout_below="@+id/tv_adicionar"
+                    android:textColor="@color/branco"
+                    android:textColorHint="@color/cinza_claro"
+                    />
+
+                <EditText
+                    android:id="@+id/edittextDescricao"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edittextRegistro"
+                    android:layout_margin="@dimen/margem"
+                    android:hint="@string/descricao"
+                    android:textColor="@color/branco"
+                    android:textColorHint="@color/cinza_claro"
                     />
 
                 <ImageButton
@@ -183,15 +198,12 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:contentDescription="@string/marcar_ponto"
-                    android:src="@drawable/ic_launcher"
+                    android:background="@mipmap/mapmarker"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/edittextDescricao"
                     android:layout_margin="@dimen/margem"
                     />
 
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </ScrollView>
+            </RelativeLayout>
 
 </RelativeLayout>

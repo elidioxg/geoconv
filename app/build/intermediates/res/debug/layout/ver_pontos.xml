@@ -26,31 +26,27 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/preto">
 
         <ImageButton
             android:id="@+id/ib_exportar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:contentDescription="@string/marcar_ponto"
             android:src="@drawable/ic_launcher"
             android:layout_alignParentLeft="true"
-            />
-
-        <ImageButton
-            android:id="@+id/ib_map"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/mapa"
-            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/margem"
             />
 
         <ImageButton
             android:id="@+id/ib_excluir"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:contentDescription="@string/apagar"
             android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margem"
+            android:background="@mipmap/mapmarkeroff"
             />
     </RelativeLayout>
 
