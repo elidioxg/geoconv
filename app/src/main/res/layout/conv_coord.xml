@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="false">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/branco"
+            android:layout_margin="@dimen/margem">
+
+            <RelativeLayout
+                android:id="@+id/layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/margem"
+                >
+
+                <TextView
+                    android:id="@+id/tvlongutm"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/longitudeUtm"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tvlat"
+                    android:layout_below="@+id/tvlongutm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/latitude"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <EditText
+                    android:id="@+id/etlat"
+                    android:layout_below="@+id/tvlat"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    />
+
+                <TextView
+                    android:id="@+id/tvlong"
+                    android:layout_below="@+id/etlat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/longitude"
+                    android:layout_centerHorizontal="true"/>
+
+                <EditText
+                    android:id="@+id/etlong"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvlong"
+                    android:inputType="numberDecimal"
+                    />
+
+                <ImageButton
+                    android:id="@+id/ib_latlonutm"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/etlong"
+                    android:layout_centerHorizontal="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_utmll"
+                android:layout_below="@+id/layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:background="@color/cinza_claro">
+
+                <TextView
+                    android:id="@+id/tv_converter"
+                    android:text="@string/utmLongitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:layout_below="@+id/tv_converter"
+                    android:id="@+id/tvquadrante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quadrante"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <EditText
+                    android:layout_below="@+id/tvquadrante"
+                    android:id="@+id/etquadrante"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:layout_below="@+id/etquadrante"
+                    android:id="@+id/tvnorte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/norte"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <EditText
+                    android:layout_below="@+id/tvnorte"
+                    android:id="@+id/etnorte"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:inputType="number"
+                    />
+
+                <TextView
+                    android:id="@+id/tvleste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etnorte"
+                    android:text="@string/leste"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <EditText
+                    android:layout_below="@+id/tvleste"
+                    android:id="@+id/etleste"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:inputType="number"
+                    />
+
+                <ImageButton
+                    android:id="@+id/ib_utmlatlon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/etleste"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_graus"
+                android:layout_below="@+id/layout_utmll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/layout_latgraus"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem">
+                    <TextView
+                        android:id="@+id/tv_converter2"
+                        android:text="Converter a partir de graus, minutos e segundos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                    <TextView
+                        android:id="@+id/tvlatitude"
+                        android:layout_below="@+id/tv_converter2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/latitude"/>
+
+                    <TextView
+                        android:id="@+id/tvLatgraus"
+                        android:layout_below="@+id/tvlatitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/graus"
+                        android:inputType="number"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLatgraus"
+                        android:layout_below="@+id/tvlatitude"
+                        android:layout_toRightOf="@+id/tvLatgraus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/grau"
+                        android:inputType="number"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvLatminutos"
+                        android:layout_below="@+id/tvlatitude"
+                        android:layout_toRightOf="@+id/etLatgraus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/minutos"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLatminutos"
+                        android:layout_below="@+id/tvlatitude"
+                        android:layout_toRightOf="@+id/tvLatminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/min"
+                        android:inputType="number"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvLatsegundos"
+                        android:layout_below="@+id/tvlatitude"
+                        android:layout_toRightOf="@+id/etLatminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/segundos"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLatsegundos"
+                        android:layout_below="@+id/tvlatitude"
+                        android:layout_toRightOf="@+id/tvLatsegundos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seg"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout_longraus"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_latgraus"
+                    android:layout_margin="@dimen/margem">
+
+                    <TextView
+                        android:id="@+id/tvlongitude"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/longitude"/>
+                    <TextView
+                        android:id="@+id/tvLongraus"
+                        android:layout_below="@+id/tvlongitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/graus"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLongraus"
+                        android:layout_below="@+id/tvLongraus"
+                        android:layout_toRightOf="@+id/tvLongraus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/grau"
+                        android:inputType="number"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvLonminutos"
+                        android:layout_below="@+id/tvLongraus"
+                        android:layout_toRightOf="@+id/etLongraus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/minutos"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLonminutos"
+                        android:layout_below="@+id/tvLongraus"
+                        android:layout_toRightOf="@+id/tvLonminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/min"
+                        android:inputType="number"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvLonsegundos"
+                        android:layout_below="@+id/tvlongitude"
+                        android:layout_toRightOf="@+id/etLonminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/segundos"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLonsegundos"
+                        android:layout_below="@+id/tvlongitude"
+                        android:layout_toRightOf="@+id/tvLonminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seg"
+                        android:inputType="number"
+                        />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@+id/ib_graus"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/layout_longraus"
+                    />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/layout_add"
+                android:layout_below="@+id/layout_graus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:background="@color/cinza"
+                android:fillViewport="false">
+
+                <TextView
+                    android:id="@+id/tv_adicionar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/novo_registro"
+                    android:textColor="@color/branco"
+                    />
+
+                <EditText
+                    android:id="@+id/edittextRegistro"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registro"
+                    android:layout_below="@+id/tv_adicionar"
+                    android:textColor="@color/branco"
+                    android:textColorHint="@color/cinza_claro"
+                    android:textAlignment="center"
+                    />
+
+                <EditText
+                    android:id="@+id/edittextDescricao"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edittextRegistro"
+                    android:hint="@string/descricao"
+                    android:textColor="@color/branco"
+                    android:textColorHint="@color/cinza_claro"
+                    android:textAlignment="center"
+                    />
+
+                <ImageButton
+                    android:id="@+id/ib_marcar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/marcar_ponto"
+                    android:background="@mipmap/mapmarker"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/edittextDescricao"
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
