@@ -14,8 +14,6 @@ import geocodigos.geoconv.VerPontos;
 public class tabListener extends FragmentPagerAdapter {
 
     final int PAGE_COUNT=4;
-
-    //private String tabNames[] = new String[] {"Converter","Marcar Ponto", "Pontos Marcados", "Mapa"};
     public String titulos[];
     public tabListener(FragmentManager fm, Context context) {
         super(fm);
@@ -32,17 +30,17 @@ public class tabListener extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                ConverterCoordenadas converter = new ConverterCoordenadas();
-                return converter;
-            case 1:
                 MarcarPontos marcar = new MarcarPontos();
                 return marcar;
-            case 2:
-                VerPontos ver = new VerPontos();
-                return ver;
-            case 3:
+            case 1:
                 MapActivity mapa_ = new MapActivity();
                 return mapa_;
+            case 2:
+                ConverterCoordenadas converter = new ConverterCoordenadas();
+                return converter;
+            case 3:
+                VerPontos ver = new VerPontos();
+                return ver;
         }
         return null;
     }

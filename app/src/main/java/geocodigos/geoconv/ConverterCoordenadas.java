@@ -1,11 +1,16 @@
 package geocodigos.geoconv;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -26,9 +31,8 @@ import static android.widget.Toast.*;
 
 public class ConverterCoordenadas extends android.support.v4.app.Fragment {
     DatabaseHelper database;
-    private EditText etLat, etLon, etSet, etNor, etLes, etRegistro,
-        etDescricao, etLatGrau, etLatMin, etLatSeg, etLonGrau, etLonMin,
-        etLonSeg;
+    private EditText etLat, etLon, etSet, etNor, etLes, etLatGrau,
+            etLatMin, etLatSeg, etLonGrau, etLonMin, etLonSeg;
     private ImageButton ibUtmLatLon, ibLatLonUtm, ibGraus,ibAddPoint;
 
     public View onCreateView(LayoutInflater inflater,
@@ -36,13 +40,41 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.conv_coord,
                 container, false);
 
+        final View view_marcar = View.inflate(getActivity(), R.layout.adicionar_registro,
+                null);
+        final EditText etDescricao  = (EditText) view_marcar.findViewById(R.id.add_descricao);
+        final EditText etRegistro = (EditText) view_marcar.findViewById(R.id.add_registro);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        etRegistro.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+        etDescricao.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+
         etLat = (EditText) view.findViewById(R.id.etlat);
         etLon = (EditText) view.findViewById(R.id.etlong);
         etSet = (EditText) view.findViewById(R.id.etquadrante);
         etNor = (EditText) view.findViewById(R.id.etnorte);
         etLes = (EditText) view.findViewById(R.id.etleste);
-        etDescricao  = (EditText) view.findViewById(R.id.edittextDescricao);
-        etRegistro = (EditText) view.findViewById(R.id.edittextRegistro);
         etLatGrau = (EditText) view.findViewById(R.id.etLatgraus);
         etLatMin = (EditText) view.findViewById(R.id.etLatminutos);
         etLatSeg = (EditText) view.findViewById(R.id.etLatsegundos);
@@ -55,17 +87,45 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         ibGraus = (ImageButton) view.findViewById(R.id.ib_graus);
         ibAddPoint = (ImageButton) view.findViewById(R.id.ib_marcar);
 
+        etLon.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER){
+                    imm = (InputMethodManager)getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    ibLatLonUtm.callOnClick();
+                }
+                return false;
+            }
+        });
+        etLes.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER){
+                    imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    ibUtmLatLon.callOnClick();
+                }
+                return false;
+            }
+        });
+
         ibUtmLatLon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(etSet.getText().toString().trim().isEmpty()){
+                if (etSet.getText().toString().trim().isEmpty()) {
 
                 } else {
-                    if(etNor.getText().toString().trim().isEmpty()) {
+                    if (etNor.getText().toString().trim().isEmpty()) {
 
                     } else {
-                        if(etLes.getText().toString().trim().isEmpty()) {
+                        if (etLes.getText().toString().trim().isEmpty()) {
 
                         } else {
                             if (validacao(etSet.getText().toString(),
@@ -77,10 +137,10 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                                 CoordinateConversion cc = new CoordinateConversion();
 //mostrar apenas 5 casas decimais
                                 double[] latlon = cc.utm2LatLon(strUtm);
-                                Log.i("Convertido > lat", String.valueOf(latlon[0]));
-                                Log.i("Convertido > lon", String.valueOf(latlon[1]));
-                                etLat.setText(String.valueOf(latlon[0]));
-                                etLon.setText(String.valueOf(latlon[1]));
+                                Log.i("Convertido > lat", String.format("%.5f", latlon[0]));
+                                Log.i("Convertido > lon", String.format("%.5f", latlon[1]));
+                                etLat.setText(String.format("%.5f", latlon[0]));
+                                etLon.setText(String.format("%.5f", latlon[1]));
 
                                 conversaoGraus(latlon[0], latlon[1]);
 
@@ -152,63 +212,109 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         ibAddPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int numId;
-                boolean strId;
-                String strAux;
-                ArrayList<PointModel> al = new ArrayList<PointModel>();
-                al.clear();
-                database = new DatabaseHelper(getActivity());
-                database.getWritableDatabase();
-                al = database.pegarPontos();
 
-                numId= al.size() + 1;
-                if(database.pegarId(String.valueOf(numId))) {
-                    do {
-                        numId++;
-                        strId = database.pegarId(String.valueOf(numId));
-                    } while (strId == true);
+                if (!etLat.getText().toString().isEmpty()) {
+                    if(!etLon.getText().toString().isEmpty()){
+                        alertDialog.setTitle(R.string.marcar_ponto);
+                        alertDialog.setView(view_marcar);
+                        //alertDialog.setCancelable(true);//ver pra que serve isso
 
+                        alertDialog.setNegativeButton(R.string.cancelar,
+                                new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewGroup parent = (ViewGroup) view_marcar.getParent();
+                                parent.removeView(view_marcar);
+                            }
+                        });
+
+                        alertDialog.setPositiveButton(R.string.strMarcar,
+                                new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                final InputMethodManager imm;
+                                int numId;
+                                boolean strId;
+                                String strAux;
+                                ArrayList<PointModel> al = new ArrayList<PointModel>();
+                                al.clear();
+                                database = new DatabaseHelper(getActivity());
+                                database.getWritableDatabase();
+                                al = database.pegarPontos();
+
+                                numId = al.size() + 1;
+                                if (database.pegarId(String.valueOf(numId))) {
+                                    do {
+                                        numId++;
+                                        strId = database.pegarId(String.valueOf(numId));
+                                    } while (strId == true);
+
+                                } else {
+
+                                }
+
+                                strAux = String.valueOf(numId);
+                                Log.i("Salvando com ID : ", strAux);
+
+                                PointModel pm = new PointModel();
+                                pm.setId(Integer.toString(numId));
+                                if (etRegistro.getText().toString().isEmpty()) {
+                                    etRegistro.setText(R.string.strRegistro + String.valueOf(numId));
+                                }
+                                pm.setRegistro(etRegistro.getText().toString());
+                                pm.setLatidude(etLat.getText().toString());
+                                pm.setLongitude(etLon.getText().toString());
+                                pm.setDescricao(etDescricao.getText().toString());
+                                pm.setSetor(etSet.getText().toString());
+
+                                pm.setNorte(etNor.getText().toString());
+                                pm.setLeste(etLes.getText().toString());
+                                pm.setSelecao("1");
+
+                                Log.i("id", pm.id);
+                                Log.i("Registro ", pm.registro);
+                                Log.i("Latitude ", pm.latitude);
+                                Log.i("Descricao ", pm.descricao);
+
+                                getTime time = new getTime();
+                                String strTime = time.returnTime();
+                                Log.i("Time:", strTime);
+
+                                getDate date = new getDate();
+                                String strDate = date.returnDate();
+                                Log.i("Date", strDate);
+
+                                pm.setData(strDate);
+                                pm.setHora(strTime);
+
+                                al.add(pm);
+                                database.addPoint(pm);
+                                database.close();
+                                imm = (InputMethodManager) getActivity().getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                                //substituir por frame layout mostrando hora data coords
+                                etRegistro.setText("");
+                                etDescricao.setText("");
+                                ViewGroup parent = (ViewGroup) view_marcar.getParent();
+                                parent.removeView(view_marcar);
+                                Toast.makeText(getActivity(), R.string.ponto_marcado,
+                                        Toast.LENGTH_SHORT);
+                            }
+                        });
+                    } else {
+                    Toast.makeText(getActivity(),
+                            R.string.valor_longitude,
+                            Toast.LENGTH_SHORT).show();
+                    }
+                    alertDialog.show();
                 } else {
-
+                    Toast.makeText(getActivity(),
+                            R.string.valor_latitude,
+                            Toast.LENGTH_SHORT).show();
                 }
-
-                strAux= String.valueOf(numId);
-                Log.i("Salvando com ID : ", strAux);
-
-                PointModel pm = new PointModel();
-                pm.setId(Integer.toString(numId));
-                if (etRegistro.getText().toString().isEmpty()) {
-                    etRegistro.setText("Registro "+String.valueOf(numId));
-                }
-                pm.setRegistro(etRegistro.getText().toString());
-                pm.setLatidude(etLat.getText().toString());
-                pm.setLongitude(etLon.getText().toString());
-                pm.setDescricao(etDescricao.getText().toString());
-                pm.setSetor(etSet.getText().toString());
-
-                pm.setNorte(etNor.getText().toString());
-                pm.setLeste(etLes.getText().toString());
-                pm.setSelecao("1");
-
-                Log.i("id", pm.id);
-                Log.i("Registro ", pm.registro);
-                Log.i("Latitude ", pm.latitude);
-                Log.i("Descricao ", pm.descricao);
-
-                getTime time = new getTime();
-                String strTime = time.returnTime();
-                Log.i("Time:", strTime);
-
-                getDate date = new getDate();
-                String strDate = date.returnDate();
-                Log.i("Date", strDate);
-
-                pm.setData(strDate);
-                pm.setHora(strTime);
-
-                al.add(pm);
-                database.addPoint(pm);
-                database.close();
             }
         });
 
@@ -230,39 +336,39 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
     private boolean validacao(double latitude, double longitude){
         boolean arg = true;
         if (latitude < -90.0 || latitude > 90.0) {
-            Toast.makeText(getActivity(), "Latitude deve ter os valores entre -90 e 90",
+            Toast.makeText(getActivity(), R.string.latminmax,
                     Toast.LENGTH_LONG).show();
             arg = false;
         }
         if(longitude < -180.0 || longitude >= 180.0)
         {
-            Toast.makeText(getActivity(), "Longitude deve ser entre -180 e 179.9",
+            Toast.makeText(getActivity(), R.string.lonminmax,
                     Toast.LENGTH_LONG).show();
             arg = false;
         }
         return arg;
     }
     private boolean validacao (String setor, String norte, String leste){
+
         boolean arg=true;
         Log.i("setor.length",String.valueOf(setor.length()));
-        if (setor.length() ==3){
 
-        }
         if(setor.length()==4){
 
         }
-        if (setor.length() <3 || setor.length()>4) {
-            Toast.makeText(getActivity(), "Quadrante tem que ser forma 'Numero Letra'. Exemplo: 24 L",
+        if (setor.length() <4 || setor.length()>4) {
+            Toast.makeText(getActivity(), R.string.quadrante_formato,
                     Toast.LENGTH_LONG).show();
             arg=false;
         }
-        if(Double.parseDouble(norte) <0 || Double.parseDouble(norte) >10000){
-            Toast.makeText(getActivity(), "Valor da coordenada Norte deve ser entre 0 e 10000",
+        if(Double.parseDouble(norte) <0 || Double.parseDouble(norte) >10000000){
+            Toast.makeText(getActivity(), R.string.norte_formato,
                     Toast.LENGTH_LONG).show();
             arg=false;
         }
-        if(Double.parseDouble(leste) <160000 || Double.parseDouble(leste) >834000){
-            Toast.makeText(getActivity(), "Valores das Coordenadas Leste devem ser entre 160000 e 834000",
+        if(Double.parseDouble(leste) <160000 || Double.parseDouble(leste) >10000000){//834000
+            Toast.makeText(getActivity(),
+                    R.string.leste_formato,
                     Toast.LENGTH_LONG).show();
             arg=false;
         }
@@ -271,7 +377,42 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
 
     private boolean validacao(String latgrau, String latmin, String latseg,
                       String longrau, String lonmin, String lonseg ){
-        return true;
+        boolean arg=true;
+        if(Double.parseDouble(latgrau) >90 || Double.parseDouble(latgrau) <-90){
+            arg=false;
+            Toast.makeText(getActivity(),R.string.latminmax,Toast.LENGTH_SHORT).show();
+        }
+        if(arg==true) {
+            if (Double.parseDouble(longrau) > 180 || Double.parseDouble(longrau) < -180) {
+                arg = false;
+                Toast.makeText(getActivity(), R.string.lonminmax, Toast.LENGTH_SHORT).show();
+            }
+        }
+        if(arg==true) {
+            if (Double.parseDouble(latmin) >= 60 || Double.parseDouble(latmin) < 0) {
+                arg = false;
+                Toast.makeText(getActivity(), R.string.minminmax, Toast.LENGTH_SHORT).show();
+            }
+        }
+        if(arg==true) {
+            if (Double.parseDouble(lonmin) >= 60 || Double.parseDouble(lonmin) < 0) {
+                arg = false;
+                Toast.makeText(getActivity(), R.string.minminmax, Toast.LENGTH_SHORT).show();
+            }
+        }
+        if(arg==true) {
+            if (Double.parseDouble(latseg) >= 60 || Double.parseDouble(latseg) < 0) {
+                arg = false;
+                Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
+            }
+        }
+        if(arg==true) {
+            if (Double.parseDouble(lonseg) >= 60 || Double.parseDouble(lonseg) < 0) {
+                arg = false;
+                Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
+            }
+        }
+        return arg;
     }
 
 }

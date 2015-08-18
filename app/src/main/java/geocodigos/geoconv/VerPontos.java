@@ -5,29 +5,32 @@
     import android.content.Intent;
     import android.support.v4.app.Fragment;
     import android.support.v4.app.FragmentManager;
-    import android.support.v4.app.FragmentTransaction;
     import android.content.Context;
     import android.os.Bundle;
     import android.util.Log;
+    import android.view.KeyEvent;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.view.inputmethod.InputMethodManager;
     import android.widget.BaseAdapter;
     import android.widget.CheckBox;
     import android.widget.CompoundButton;
+    import android.widget.EditText;
     import android.widget.ImageButton;
     import android.widget.ListView;
     import android.widget.RadioButton;
     import android.widget.TextView;
+    import android.widget.Toast;
 
+    import java.io.FileOutputStream;
     import java.io.IOException;
-    import java.io.OutputStreamWriter;
     import java.util.ArrayList;
     import geocodigos.geoconv.Database.DatabaseHelper;
-    import geocodigos.geoconv.Map.Mapa;
     import geocodigos.geoconv.Registro.VerRegistro;
     import geocodigos.geoconv.kml.ExportarKML;
     import geocodigos.geoconv.model.PointModel;
+    import geocodigos.geoconv.net.bgreco.DirectoryPicker;
 
     public class VerPontos extends Fragment implements FragmentManager.OnBackStackChangedListener {
 
@@ -40,13 +43,13 @@
 
         public View onCreateView(LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.ver_pontos, container, false);
+            final View view = inflater.inflate(R.layout.ver_pontos, container, false);
 
             final View Kml = View.inflate(getActivity(), R.layout.kml_export, null);
-
-            final RadioButton rbPontos = (RadioButton) view.findViewById(R.id.rbponto);
-            final RadioButton rbLinha = (RadioButton) view.findViewById(R.id.rblinha);
-            final RadioButton rbPoligono = (RadioButton) view.findViewById(R.id.rbpoligono);
+            final EditText etCamada = (EditText) Kml.findViewById(R.id.etCamada);
+            final RadioButton rbPontos = (RadioButton) Kml.findViewById(R.id.rbponto);
+            final RadioButton rbLinha = (RadioButton) Kml.findViewById(R.id.rblinha);
+            final RadioButton rbPoligono = (RadioButton) Kml.findViewById(R.id.rbpoligono);
 
             //TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             ImageButton ibExportar = (ImageButton) view.findViewById(R.id.ib_exportar);
@@ -59,6 +62,7 @@
             ibExportar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final FileOutputStream out;
                     AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
                     alerta.setTitle(R.string.exportar_kml);
                     //alerta.setMessage("teste");
@@ -67,77 +71,111 @@
                     alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            ViewGroup parent = (ViewGroup) Kml.getParent();
+                            parent.removeView(Kml);
+                        }
+                    });
+                    alerta.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                        @Override
+                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                            final InputMethodManager imm;
+                            if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    keyCode == KeyEvent.KEYCODE_ENTER) {
+                                imm = (InputMethodManager) getActivity().getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                            }
+                            return false;
                         }
                     });
                     alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener(
-
                     ) {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            int opcao=-1;
-                            ExportarKML exportar = new ExportarKML();
-                            if(rbPontos.isChecked()){
-                                opcao=0;
-                            }
-                            if(rbLinha.isChecked()){
-                                opcao=1;
-                            }
-                            if(rbPoligono.isChecked()){
-                                opcao=2;
-                            }
-                            try {
-                                String string = (String) exportar.criarCamada(opcao);
-                            } catch (IllegalArgumentException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (IllegalStateException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
+                            if(!etCamada.getText().toString().isEmpty()) {
+                                int opcao = -1;
+                                String nome_camada="";
+                                nome_camada = etCamada.getText().toString().trim();
+                                ExportarKML exportar = new ExportarKML(getActivity());
+                                if (rbPontos.isChecked()) {
+                                    opcao = 0;
+                                }
+                                if (rbLinha.isChecked()) {
+                                    opcao = 1;
+                                }
+                                if (rbPoligono.isChecked()) {
+                                    opcao = 2;
+                                }
 
+                                try {
+                                    String param_camada = (String) exportar.criarCamada(nome_camada, opcao);
+                                    Intent intent = new Intent(getActivity(), DirectoryPicker.class);
+                                    intent.putExtra("nome_camada", nome_camada);
+                                    intent.putExtra("param", param_camada);
+                                    startActivityForResult(intent, DirectoryPicker.PICK_DIRECTORY);
+                                    } catch (IllegalArgumentException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                } catch (IllegalStateException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                                Toast.makeText(getActivity(),R.string.arquivo_salvo,
+                                        Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(getActivity(),R.string.no_camada,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            ViewGroup parent = (ViewGroup) Kml.getParent();
+                            parent.removeView(Kml);
                         }
                     }).show();
                 }
-
             });
 
             ibExcluir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
-                    alerta.setTitle(R.string.apagar_registros);
-                    //alerta.setMessage("teste");
-                    alerta.setCancelable(false);
-                    //alerta.setView();
-                    alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    if(campos.size()>0) {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
+                        alerta.setTitle(R.string.apagar_registros);
+                        //alerta.setMessage("teste");
+                        alerta.setCancelable(false);
+                        //alerta.setView();
+                        alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    });
-                    alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener(
-                    ) {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            database = new DatabaseHelper(getActivity());
-                            database.getWritableDatabase();
-                            campos.clear();
-                            campos = database.pegarPontos();
-                            for(int i=1; i<campos.size();i++){
-                                if(Integer.parseInt(campos.get(i).getSelecao())==1){
-                                    database.removePonto(campos.get(i).getId());
+                            }
+                        });
+                        alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener(
+                        ) {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                database = new DatabaseHelper(getActivity());
+                                database.getWritableDatabase();
+                                campos.clear();
+                                campos = database.pegarPontos();
+                                for (int i = 0; i < campos.size(); i++) {
+                                    if (Integer.parseInt(campos.get(i).getSelecao()) == 1) {
+                                        database.removePonto(campos.get(i).getId());
+                                    }
                                 }
-                            }
-                            database.close();
-                            listView.getAdapter().notify();
+                                database.close();
+                                listView.setAdapter(new ListAdapter(getActivity()));
+                                listView.refreshDrawableState();
+                                //listView.notify();
 
                             }
-                    }).show();
-
+                        }).show();
+                    } else {
+                        Toast.makeText(getActivity(),R.string.sem_pontos,
+                                Toast.LENGTH_SHORT);
+                    }
                 }
             });
 
@@ -223,7 +261,6 @@
                         @Override
                         public void onClick(View v) {
                             Log.i("onClick - position", String.valueOf(position));
-
                             Bundle bundle = new Bundle();
                             bundle.putInt("id", position);
                             bundle.putInt("total_registros", campos.size());
@@ -252,7 +289,6 @@
                 //final int temp = position;
                 return convertView;
             }
-
         }
 
         private void refreshPoints(){
@@ -271,7 +307,6 @@
                     //Log.i("campos(i).getRegistro", "campos("+i+")  Registro="+registro);
                     String latitude = campos.get(i).getlatitude();
                     String longitude = campos.get(i).getLongitude();
-                    //String setorl = campos.get(i).getSetorL();
                     String setor = campos.get(i).getSetor();
                     String norte = campos.get(i).getNorte();
                     String leste = campos.get(i).getLeste();

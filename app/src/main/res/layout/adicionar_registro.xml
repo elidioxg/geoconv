@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvadicionar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margem"
+        android:layout_centerHorizontal="true"
+        android:text="@string/novo_registro"
+        android:textColor="@color/branco"
+        />
+
+    <EditText
+        android:id="@+id/add_registro"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/registro"
+        android:layout_margin="@dimen/margem"
+        android:layout_below="@+id/tvadicionar"
+        android:textColor="@color/branco"
+        android:textColorHint="@color/cinza_claro"
+        android:maxLines="1"
+        />
+
+    <EditText
+        android:id="@+id/add_descricao"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_registro"
+        android:layout_margin="@dimen/margem"
+        android:hint="@string/descricao"
+        android:textColor="@color/branco"
+        android:textColorHint="@color/cinza_claro"
+        />
+
+</LinearLayout>

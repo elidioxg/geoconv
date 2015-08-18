@@ -23,13 +23,18 @@ public class ExportarKML extends Activity implements XmlSerializer {
     private OutputStream outputStream;
     private String s;
     private Writer writer;
-    DatabaseHelper database;
+    private DatabaseHelper database;
     private ArrayList<PointModel> campos;
 
-    public ArrayList<PointModel> pontos() {
+    Context context;
+    public ExportarKML(Context context){
+        this.context=context;
+    }
+
+    private ArrayList<PointModel> pontos() {
         ArrayList<PointModel> campos = new ArrayList<PointModel>();
 
-        database = new DatabaseHelper(getApplicationContext());
+        database = new DatabaseHelper(context);
         database.getWritableDatabase();
         campos.clear();
         campos = database.pegarPontos();
@@ -38,9 +43,10 @@ public class ExportarKML extends Activity implements XmlSerializer {
         return campos;
     }
 
-    public String criarCamada(int tipo) throws
+    public String criarCamada(String nome_camada, int tipo) throws
             IllegalArgumentException, IllegalStateException, IOException {
         campos = pontos();
+        String altitude;
         XmlSerializer xmlSerializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
         xmlSerializer.setOutput(writer);
@@ -50,7 +56,11 @@ public class ExportarKML extends Activity implements XmlSerializer {
         xmlSerializer.startTag("", "kml").attribute("", "xmlns",
                 "http://www.opengis.net/kml/2.2");
         xmlSerializer.startTag("", "Document");
-            switch (tipo) {
+        xmlSerializer.startTag("", "name");
+        xmlSerializer.text("geoconver");
+        xmlSerializer.endTag("", "name");
+
+        switch (tipo) {
                 case 0:
                     for(int i=0; i<campos.size(); i++) {
                         if(Integer.parseInt(campos.get(i).getSelecao().trim())==1) {
@@ -63,8 +73,12 @@ public class ExportarKML extends Activity implements XmlSerializer {
                             xmlSerializer.endTag("", "description");
                             xmlSerializer.startTag("", "Point");
                             xmlSerializer.startTag("", "coordinates");
+                            altitude = campos.get(i).getAltitude();
+                            if(altitude.toString().isEmpty()){
+                                altitude = "0";
+                            }
                             xmlSerializer.text(campos.get(i).getlatitude() + " , " +
-                                    campos.get(i).getLongitude() + ", " + campos.get(i).getAltitude());
+                                    campos.get(i).getLongitude() + ", " + altitude);
                             xmlSerializer.endTag("", "coordinates");
                             xmlSerializer.endTag("", "Point");
                             xmlSerializer.endTag("", "Placemark");
@@ -76,9 +90,14 @@ public class ExportarKML extends Activity implements XmlSerializer {
                     xmlSerializer.startTag("","LineString");
                     xmlSerializer.startTag("","Coordinates");
                     for(int i=0; i<campos.size();i++){
+                        altitude = campos.get(i).getAltitude();
+                        if(altitude.toString().isEmpty()){
+                            altitude = "0";
+                        }
                         if(Integer.parseInt(campos.get(i).getSelecao().trim())==1) {
                             xmlSerializer.text(campos.get(i).getlatitude() + "," +
-                                    campos.get(i).getLongitude() + "," + campos.get(i).getAltitude());
+                                    campos.get(i).getLongitude() + "," + altitude+
+                                    System.getProperty("line.separator"));
                         }
                     }
                     xmlSerializer.endTag("","Coordinates");
@@ -96,14 +115,18 @@ public class ExportarKML extends Activity implements XmlSerializer {
                     xmlSerializer.startTag("", "LinearRing");
                     xmlSerializer.startTag("", "coordinates");
                     for(int i=0; i<campos.size(); i++){
+                        altitude = campos.get(i).getAltitude();
+                        if(altitude.toString().isEmpty()){
+                            altitude = "0";
+                        }
                         if(Integer.parseInt(campos.get(i).getSelecao().trim())==1) {
                             xmlSerializer.text(campos.get(i).getlatitude() + "," +
-                                    campos.get(i).getLongitude() + "," + campos.get(i).getAltitude());
+                                    campos.get(i).getLongitude() + "," + altitude+
+                                    System.getProperty("line.separator"));
                         }
                     }
                     xmlSerializer.endTag("","coordinates");
                     xmlSerializer.endTag("", "LinearRing");
-
                     xmlSerializer.endTag("", "Polygon");
                     break;
                 default:
@@ -117,68 +140,6 @@ public class ExportarKML extends Activity implements XmlSerializer {
         return writer.toString();
     }
 
-    private void escreverArquivo(String arqKml){
-        try {
-            OutputStreamWriter osw = new OutputStreamWriter(openFileOutput("nome.kml",
-                    Context.MODE_PRIVATE));
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-/*
-    public static String CreateXMLString() throws
-            IllegalArgumentException, IllegalStateException, IOException {
-
-        //ArrayList<PointModel> teste = new ArrayList<PointModel>();
-        //teste = pontos();
-
-        XmlSerializer xmlSerializer = Xml.newSerializer();
-        StringWriter writer = new StringWriter();
-
-        xmlSerializer.setOutput(writer);
-
-        xmlSerializer.startDocument("UTF-8", true);
-        //xmlSerializer.setFeature("http://www.opengis.net/kml/2.2", true);
-        xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-
-        xmlSerializer.startTag("", "kml").attribute("", "xmlns",
-                "http://www.opengis.net/kml/2.2");
-        //xmlSerializer.sesetFeature("xmlns= http://www.opengis.net/kml/2.2", false);
-
-        xmlSerializer.startTag("", "Placemark");
-
-        //xmlSerializer tempXml = Xml.newSerializer();
-        //StringWriter tempWriter = new StringWriter();
-
-        xmlSerializer.startTag("", "name");
-        xmlSerializer.text("Ponto 1");
-        xmlSerializer.endTag("", "name");
-        //xmlSerializer.attribute("","ID", "01");
-        //xmlSerializer.attribute(namespace, name, value)
-
-        xmlSerializer.startTag("", "description");
-        xmlSerializer.text("descrição");
-        xmlSerializer.endTag("", "description");
-
-        xmlSerializer.startTag("", "Point");
-
-        xmlSerializer.startTag("", "coordinates");
-        xmlSerializer.text("122.08 , 37.42222, 0");
-        xmlSerializer.endTag("", "coordinates");
-
-        xmlSerializer.endTag("","Point");
-
-        xmlSerializer.endTag("", "Placemark");
-
-        xmlSerializer.endTag("", "kml");
-
-        xmlSerializer.endDocument();
-
-        Log.i("arquivo KML", writer.toString());
-        return writer.toString();
-
-    }
-*/
     @Override
     public void setFeature(String name, boolean state)
             throws IllegalArgumentException, IllegalStateException {

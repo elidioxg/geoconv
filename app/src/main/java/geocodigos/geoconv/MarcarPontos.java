@@ -13,9 +13,11 @@ import android.media.Image;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import geocodigos.geoconv.Conversion.ConversaoGMS;
 import geocodigos.geoconv.Conversion.CoordinateConversion;
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.implementation.getDate;
@@ -34,24 +37,28 @@ public class MarcarPontos extends Fragment implements LocationListener {
     LocationManager locationManager;
     String provider;
     public String strLatitude, strLongitude, strPrecisao, strAltitude;
-    private ImageButton ibMarcar, ibExcluir;
+    private ImageButton ibMarcar;
     DatabaseHelper database;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
-        tvSetor, tvNorte, tvLeste;
-    EditText etRegistro, etDescricao;
-    public ArrayList<PointModel> al;
+        tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.marcar_pontos,
                 container, false);
 
-        etRegistro = (EditText) view.findViewById(R.id.et_registro);
-        etDescricao = (EditText) view.findViewById(R.id.et_descricao);
+        final View view_marcar = View.inflate(getActivity(),R.layout.adicionar_registro, null);
+        final EditText etRegistro = (EditText) view_marcar.findViewById(R.id.add_registro);
+        final EditText etDescricao = (EditText) view_marcar.findViewById(R.id.add_descricao);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
         tvLatitude = (TextView) view.findViewById(R.id.in_latitude);
         tvLongitude = (TextView) view.findViewById(R.id.in_longitude);
+        tvLatgms = (TextView) view.findViewById(R.id.in_lat_gms);
+        tvLongms = (TextView) view.findViewById(R.id.in_lon_gms);
         tvPrecisao = (TextView) view.findViewById(R.id.in_precisao);
         tvAltitude = (TextView) view.findViewById(R.id.in_altitude);
+        tvData = (TextView) view.findViewById(R.id.tv_data);
 
         tvSetor = (TextView) view.findViewById(R.id.in_quadrante);
         tvNorte = (TextView) view.findViewById(R.id.in_norte);
@@ -60,94 +67,127 @@ public class MarcarPontos extends Fragment implements LocationListener {
         getDate date = new getDate();
         String strDate = date.returnDate();
         //Log.i("MarcarPonto.java", "strDate: "+strDate);
+        etRegistro.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+        etDescricao.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
 
-        ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
-
-        ibMarcar = (ImageButton) view.findViewById(R.id.ib_marcar);
+        ibMarcar = (ImageButton) view.findViewById(R.id.ibmarcar);
 
         ibMarcar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.i("onCLick", "Botao Adicionar _____");
-                boolean strId;
-                String strAux;
-                int numId;
-
-                ArrayList<PointModel> al = new ArrayList<PointModel>();
-                al.clear();
 
                 if (!tvLatitude.getText().toString().isEmpty()) {
 
                     if (!tvLongitude.getText().toString().isEmpty()) {
+                        alert.setTitle(R.string.marcar_ponto);
+                        alert.setView(view_marcar);
+                        alert.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
 
-                        database = new DatabaseHelper(getActivity());
-                        database.getWritableDatabase();
-                        //al = database.pegarPontos();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewGroup parent = (ViewGroup) view_marcar.getParent();
+                                parent.removeView(view_marcar);
+                            }
+                        });
+                        alert.setPositiveButton(R.string.strMarcar, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ArrayList<PointModel> al = new ArrayList<PointModel>();
+                                int numId;
+                                boolean strId;
+                                String strAux;
+                                database = new DatabaseHelper(getActivity());
+                                database.getWritableDatabase();
+                                //al = database.pegarPontos();
+                                numId= al.size() + 1;
+                                if(database.pegarId(String.valueOf(numId))) {
+                                    do {
+                                        numId++;
+                                        strId = database.pegarId(String.valueOf(numId));
+                                    } while (strId == true);
 
-                        numId= al.size() + 1;
-                        if(database.pegarId(String.valueOf(numId))) {
-                            do {
-                                numId++;
-                                strId = database.pegarId(String.valueOf(numId));
-                            } while (strId == true);
+                                } else {
 
-                        } else {
+                                }
+                                strAux= String.valueOf(numId);
+                                Log.i("Salvando ID : ", strAux);
 
-                        }
-                        strAux= String.valueOf(numId);
-                        Log.i("Salvando com ID : ", strAux);
+                                PointModel pm = new PointModel();
+                                pm.setId(Integer.toString(numId));
+                                if (etRegistro.getText().toString().isEmpty()) {
+                                    etRegistro.setText(R.string.strRegistro+String.valueOf(numId));
+                                }
+                                pm.setRegistro(etRegistro.getText().toString());
+                                pm.setLatidude(tvLatitude.getText().toString());
+                                pm.setLongitude(tvLongitude.getText().toString());
+                                pm.setDescricao(etDescricao.getText().toString());
 
-                        PointModel pm = new PointModel();
-                        pm.setId(Integer.toString(numId));
-                        if (etRegistro.getText().toString().isEmpty()) {
-                            etRegistro.setText("Registro "+String.valueOf(numId));
-                        }
-                        pm.setRegistro(etRegistro.getText().toString());
-                        pm.setLatidude(tvLatitude.getText().toString());
-                        pm.setLongitude(tvLongitude.getText().toString());
-                        pm.setDescricao(etDescricao.getText().toString());
+                                pm.setAltitude(tvAltitude.getText().toString());
+                                pm.setPrecisao(tvPrecisao.getText().toString());
+                                pm.setNorte(tvNorte.getText().toString());
+                                pm.setLeste(tvLeste.getText().toString());
+                                pm.setSetor(tvSetor.getText().toString());
+                                pm.setSelecao("1");
 
-                        pm.setAltitude(tvAltitude.getText().toString());
-                        pm.setPrecisao(tvPrecisao.getText().toString());
-                        pm.setNorte(tvNorte.getText().toString());
-                        pm.setLeste(tvLeste.getText().toString());
-                        pm.setSetor(tvSetor.getText().toString());
-                        pm.setSelecao("1");
+                                Log.i("id", pm.id);
+                                Log.i("Registro ", pm.registro);
+                                Log.i("Latitude ", pm.latitude);
+                                Log.i("Descricao ", pm.descricao);
 
-                        Log.i("id", pm.id);
-                        Log.i("Registro ", pm.registro);
-                        Log.i("Latitude ", pm.latitude);
-                        Log.i("Descricao ", pm.descricao);
+                                getTime time = new getTime();
+                                String strTime = time.returnTime();
+                                Log.i("Time:", strTime);
 
-                        getTime time = new getTime();
-                        String strTime = time.returnTime();
-                        Log.i("Time:", strTime);
+                                getDate date = new getDate();
+                                String strDate = date.returnDate();
+                                Log.i("Date", strDate);
 
-                        getDate date = new getDate();
-                        String strDate = date.returnDate();
-                        Log.i("Date", strDate);
+                                pm.setData(strDate);
+                                pm.setHora(strTime);
 
-                        pm.setData(strDate);
-                        pm.setHora(strTime);
+                                al.add(pm);
+                                database.addPoint(pm);
+                                database.close();
+                                etRegistro.setText("");
+                                etDescricao.setText("");
+                                ViewGroup parent = (ViewGroup) view_marcar.getParent();
+                                parent.removeView(view_marcar);
+                                Toast.makeText(getActivity(), R.string.ponto_marcado,
+                                        Toast.LENGTH_SHORT).show();
 
-                        al.add(pm);
-                        database.addPoint(pm);
-                        database.close();
-                        Toast.makeText(getActivity(), "Ponto Marcado", Toast.LENGTH_SHORT).show();
-                        etRegistro.setText("");
-                        etDescricao.setText("");
+                            }
+                        }).show();
 
                     } else {
-                        Toast.makeText(getActivity(), "Não foi possível obter a "+
-                                "localização atual", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.nao_loc, Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(getActivity(), "Não foi possível obter a "+
-                            "localização atual", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.nao_loc, Toast.LENGTH_SHORT).show();
                 }
-        Log.i("onClick", "Fim do onclickListener_______");
             }
 
         });
@@ -155,44 +195,28 @@ public class MarcarPontos extends Fragment implements LocationListener {
         locationManager = (LocationManager) getActivity().
         getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
-        //provider nao funciona, sempre retorna null
+
         provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);
 
         if (location != null) {
-            System.out.println("Provider: "+provider+ " foi selecionado.");
             onLocationChanged(location);
             Log.i("provider:", provider);
         } else {
-            AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("GPS desativado");
-            builder.setMessage("Deseja ativar?");
-            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int i) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
-                }
-            });
-            builder.setNegativeButton("Não", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int i) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            //AlertDialog.Builder builder;
+            Toast.makeText(getActivity(),
+                    R.string.nao_gps_loc,
+                    Toast.LENGTH_SHORT).show();
             Log.i("provider:", provider);
-
         }
 
         return view;
-}
+    }
 
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-
         locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 
@@ -205,21 +229,42 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
         Log.i("Localização: ", latitude+" "+longitude+" "+altitude+" "+precisao);
 
-        //colocar procedimentos para converter coordenadas aqui
-
-        strLatitude = String.valueOf(latitude);
-        strLongitude = String.valueOf(longitude);
+        ConversaoGMS cg = new ConversaoGMS();
+        String sLat = cg.converteGraus(latitude);
+        String sLon = cg.converteGraus(longitude);
+        String coordLat[] = sLat.split(" ");
+        String coordLon[] = sLon.split(" ");
+        String norte ="N";
+        String leste="E";
+        if(latitude<0){
+            norte="S";
+        }
+        if(longitude<0){
+            leste="W";
+        }
+        strLatitude = coordLat[0]+"\u00B0 "+coordLat[1]+"' "+coordLat[2]+"'' "+norte;
+        strLongitude = coordLon[0]+"\u00B0 "+coordLon[1]+"' "+coordLon[2]+"'' "+leste;
         strPrecisao = String.valueOf(precisao);
         strAltitude = String.valueOf(altitude);
-        tvLatitude.setText(strLatitude);
-        tvLongitude.setText(strLongitude);
+        tvLatitude.setText(String.format("%.5f", latitude));
+        tvLongitude.setText(String.format("%.5f", longitude));
+        tvLatgms.setText(strLatitude);
+        tvLongms.setText(strLongitude);
         tvPrecisao.setText(strPrecisao);
         tvAltitude.setText(strAltitude);
 
-        double strLat = Float.valueOf(tvLatitude.getText().toString());
-        double strLon = Float.valueOf(tvLongitude.getText().toString());
+        getTime time = new getTime();
+        String strTime = time.returnTime();
+        Log.i("Time:", strTime);
+
+        getDate date = new getDate();
+        String strDate = date.returnDate();
+        Log.i("Date", strDate);
+
+        tvData.setText(strTime+"   -   "+strDate);
+
         CoordinateConversion cc = new CoordinateConversion();
-        String latlon = cc.latLon2UTM(strLat, strLon);
+        String latlon = cc.latLon2UTM(latitude, longitude);
         Log.i("Convertido > utm:" , latlon);
         String coord[] = latlon.split(" ");
         tvSetor.setText(coord[0] + " " + coord[1]);

@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <ScrollView
-        android:layout_above="@+id/layout4"
+        android:layout_above="@+id/lay_marcar1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_margin="@dimen/margem"
@@ -35,6 +35,7 @@
                     android:textSize="@dimen/texto"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -44,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/sem_valor"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -54,6 +56,7 @@
                     android:textSize="@dimen/texto"
                     android:layout_toLeftOf="@+id/in_precisao"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -62,7 +65,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/sem_valor"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/margem_grande"/>
+                    android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
+                    />
 
             </RelativeLayout>
 
@@ -84,16 +89,28 @@
                     android:layout_alignParentLeft="true"
                     android:textSize="@dimen/texto"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
                     />
 
                 <TextView
                     android:id="@+id/in_latitude"
-                    android:layout_toRightOf="@+id/tv_latitude"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
+                    android:gravity="center"
                     />
+
+                <TextView
+                    android:id="@+id/in_lat_gms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_alignParentRight="true"
+                    android:text=""
+                    android:gravity="right" />
 
                 <TextView
                     android:id="@+id/tv_longitude"
@@ -104,6 +121,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_below="@+id/in_latitude"
                     android:layout_alignParentLeft="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -112,9 +130,21 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:layout_margin="@dimen/margem_grande"
-                    android:layout_toRightOf="@+id/tv_longitude"
+                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/in_latitude"
+                    android:textStyle="bold"
+                    android:gravity="center"
                     />
+
+                <TextView
+                    android:id="@+id/in_lon_gms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/in_latitude"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:text=""/>
 
             </RelativeLayout>
 
@@ -136,6 +166,7 @@
                     android:textSize="@dimen/texto"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentLeft="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -144,8 +175,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tv_quadrante"
                     android:text=""
-                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_marginTop="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -156,15 +188,18 @@
                     android:textSize="@dimen/texto"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
                     android:id="@+id/in_norte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margem"
-                    android:layout_centerHorizontal="true"
-                    android:layout_toRightOf="@+id/tv_norte"/>
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_norte"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/tv_leste"
@@ -175,6 +210,7 @@
                     android:textSize="@dimen/texto"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -182,10 +218,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:layout_below="@+id/tv_norte"
                     android:layout_toRightOf="@+id/tv_leste"
                     android:layout_margin="@dimen/margem_grande"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/in_norte"
+                    android:layout_alignParentRight="true"
+                    android:textStyle="bold"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout4"
+                android:layout_below="@+id/layout3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem_grande"
+                >
+
+                <TextView
+                    android:id="@+id/tv_ultima"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ultima_localizacao"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_data"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_ultima"
+                    android:text=""
+                    android:textStyle="bold"
                     />
 
             </RelativeLayout>
@@ -195,55 +258,20 @@
         </ScrollView>
 
     <RelativeLayout
-        android:id="@+id/layout4"
+        android:id="@+id/lay_marcar1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:background="@color/cinza"
-        >
-
-        <TextView
-            android:id="@+id/tvadicionar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margem"
-            android:layout_centerHorizontal="true"
-            android:text="@string/novo_registro"
-            android:textColor="@color/branco"
-            />
-
-        <EditText
-            android:id="@+id/et_registro"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/registro"
-            android:layout_margin="@dimen/margem"
-            android:layout_below="@+id/tvadicionar"
-            android:textColor="@color/branco"
-            android:textColorHint="@color/cinza_claro"
-            />
-
-            <EditText
-                android:id="@+id/et_descricao"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/et_registro"
-                android:layout_margin="@dimen/margem"
-                android:hint="@string/descricao"
-                android:textColor="@color/branco"
-                android:textColorHint="@color/cinza_claro"
-                />
+        android:background="@color/preto">
 
         <ImageButton
-            android:id="@+id/ib_marcar"
+            android:id="@+id/ibmarcar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/marcar_ponto"
             android:background="@mipmap/mapmarker"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/et_descricao"
-            android:layout_margin="@dimen/margem"
+            android:layout_margin="@dimen/margem_grande"
             />
 
     </RelativeLayout>

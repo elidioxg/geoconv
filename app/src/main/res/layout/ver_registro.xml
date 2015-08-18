@@ -65,7 +65,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tvRegistro"
                     android:hint="@string/registro"
+                    android:maxLines="1"
                     />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -88,6 +90,7 @@
                     android:hint="@string/descricao"/>
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -106,6 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/hora"
+                    android:maxLength="10"
+                    android:maxLines="1"
                     />
 
                 <TextView
@@ -122,6 +127,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/data"
+                    android:maxLength="10"
+                    android:maxLines="1"
                     />
 
             </RelativeLayout>
@@ -144,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tvLatitude"
                     android:hint="@string/latitude"
+                    android:inputType="numberDecimal|numberSigned"
                     />
 
             </RelativeLayout>
@@ -166,7 +174,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tvLongitude"
                     android:hint="@string/longitude"
+                    android:inputType="numberDecimal|numberSigned"
                     />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -185,47 +195,61 @@
                 <EditText
                     android:id="@+id/etSetor"
                     android:layout_toRightOf="@+id/tvSetor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/quadrante"
                     />
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem_grande">
 
                 <TextView
                     android:id="@+id/tvNorte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/norte"
-                    android:layout_toRightOf="@id/etSetor"/>
+                    />
 
                 <EditText
                     android:id="@+id/etNorte"
                     android:layout_toRightOf="@+id/tvNorte"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/norte"
+                    android:inputType="number"
                     />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem_grande">
 
                 <TextView
                     android:id="@+id/tvLeste"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/leste"
-                    android:layout_toRightOf="@id/etNorte"/>
+                    />
 
                 <EditText
                     android:id="@+id/etLeste"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/leste"
-                    android:layout_toRightOf="@+id/tvLeste"/>
+                    android:layout_toRightOf="@+id/tvLeste"
+                    android:inputType="number"
+                    />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margem_grande"
-                >
+                android:layout_margin="@dimen/margem_grande">
 
                 <TextView
                     android:id="@+id/tvAltitude"
@@ -240,6 +264,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tvAltitude"
                     android:hint="@string/altitude"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:maxLines="1"
                     />
 
                 <TextView
@@ -256,10 +283,15 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/precisao"
                     android:layout_alignParentRight="true"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:maxLines="1"
                     />
 
             </RelativeLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
