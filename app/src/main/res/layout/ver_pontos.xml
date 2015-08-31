@@ -5,21 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tv_pontos"
-        android:layout_above="@+id/lv_registro"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pontos_marcados"
-        android:layout_margin="@dimen/margem"/>
-
     <ListView
         android:id="@+id/lv_registro"
-        android:layout_above="@+id/l_buttons"
+        android:layout_above="@+id/tv_pontos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/tv_pontos"
+        android:layout_above="@+id/l_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pontos_marcados"
+        android:layout_margin="@dimen/margem"
+        android:gravity="bottom"/>
+
 
     <RelativeLayout
         android:id="@+id/l_buttons"

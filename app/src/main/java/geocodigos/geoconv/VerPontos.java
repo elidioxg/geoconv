@@ -68,7 +68,7 @@
                     //alerta.setMessage("teste");
                     alerta.setCancelable(false);
                     alerta.setView(Kml);
-                    alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    alerta.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ViewGroup parent = (ViewGroup) Kml.getParent();
@@ -88,7 +88,7 @@
                             return false;
                         }
                     });
-                    alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener(
+                    alerta.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener(
                     ) {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -107,6 +107,8 @@
                                     opcao = 2;
                                 }
 
+                                //ViewGroup parent = (ViewGroup) Kml.getParent();
+                                //parent.removeView(Kml);
                                 try {
                                     String param_camada = (String) exportar.criarCamada(nome_camada, opcao);
                                     Intent intent = new Intent(getActivity(), DirectoryPicker.class);
@@ -146,13 +148,13 @@
                         //alerta.setMessage("teste");
                         alerta.setCancelable(false);
                         //alerta.setView();
-                        alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        alerta.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         });
-                        alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener(
+                        alerta.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener(
                         ) {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -160,15 +162,19 @@
                                 database.getWritableDatabase();
                                 campos.clear();
                                 campos = database.pegarPontos();
-                                for (int i = 0; i < campos.size(); i++) {
+                                int campos_size = campos.size();
+                                for (int i = 0; i < campos_size; i++) {
                                     if (Integer.parseInt(campos.get(i).getSelecao()) == 1) {
                                         database.removePonto(campos.get(i).getId());
+                                        //listView.removeViewsInLayout(i, 1);
                                     }
                                 }
                                 database.close();
+                                refreshPoints();
                                 listView.setAdapter(new ListAdapter(getActivity()));
-                                listView.refreshDrawableState();
-                                //listView.notify();
+                                synchronized(listView) {
+                                    listView.notifyAll();
+                                }
 
                             }
                         }).show();
@@ -339,8 +345,30 @@
                 }
             }
             database.close();
-            //tvpontos nao aparece
             tvPontos.setText("Número de registros: " + Integer.toString(campos.size()));
+        }
 
+        @Override
+        public void onDestroyView(){
+            super.onDestroyView();
+            Log.i("VerPontos", "onDestroy");
+        }
+
+        @Override
+        public void onDetach(){
+            super.onDetach();
+            Log.i("VerPontos", "onDetach");
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser){
+            super.setUserVisibleHint(isVisibleToUser);
+            if(isVisibleToUser){
+                refreshPoints();
+                listView.setAdapter(new ListAdapter(getActivity()));
+                synchronized(listView) {
+                    listView.notifyAll();
+                }
+            }
         }
     }

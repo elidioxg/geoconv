@@ -13,8 +13,8 @@
 
     public class DatabaseHelper extends SQLiteOpenHelper {
         private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
-        public static String dbId="id";
-        public static String dbName = "database5";
+        public static String dbId="id_";
+        public static String dbName = "database53";
         public static String dbTable = "pontos";
         public static String dbRegister = "registro";
         public static String dbDescription ="descricao";
@@ -32,7 +32,7 @@
         Context c;
 
         public DatabaseHelper(Context context) {
-            super(context, dbName, null, 33); //33?
+            super(context, dbName, null, 33);
             // TODO Auto-generated constructor stub
             c = context;
         }
@@ -42,7 +42,8 @@
             // TODO Auto-generated method stub
 
             db.execSQL("CREATE TABLE IF NOT EXISTS "+dbTable+
-                    " ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                    //" ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                    " ("+dbId+" INTEGER PRIMARY KEY , "+
                     dbRegister+" TEXT, "+dbDescription+" TEXT, "+
                     dbLatitude+" TEXT, "+dbLongitude+" TEXT, "+
                     dbNorte+ " TEXT, "+dbLeste+" TEXT, "+ dbSetor +
@@ -89,7 +90,7 @@
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(dbSel, pointModel.selecionado);
-            db.update(dbTable, contentValues, "id="+pointModel.id, null);
+            db.update(dbTable, contentValues, dbId+"="+pointModel.id, null);
             db.close();
         }
 
@@ -114,9 +115,8 @@
             contentValues.put(dbSel, pointModel.selecionado);
             Log.i("Registro Atualizado:", pointModel.registro);
             //obs: pode ter mais um ponto com o mesmo nome de registro
-            db.update(dbTable, contentValues, "registro="+pointModel.registro, null);
+            db.update(dbTable, contentValues, dbId+" = "+pointModel.id, null);
             db.close();
-
         }
 
         public void deleteAllFields() {
@@ -133,7 +133,9 @@
 
             try {
                 String[] args = {id};
-                getWritableDatabase().delete(dbTable, dbId=" ? ", args);
+                SQLiteDatabase db = this.getWritableDatabase();
+                db.delete(dbTable, dbId +" = ? ", args);
+                db.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -179,7 +181,7 @@
             Cursor cursor = db.query(true, dbTable, new String[] { dbRegister,  dbDescription,
                             dbLatitude, dbLongitude, dbNorte, dbLeste, dbSetor,
                             dbAltitude, dbHora, dbData, dbSel},
-                    "registro = ? ", new String[] {registro}, null, null, null, null, null);
+                    dbRegister+" = ? ", new String[] {registro}, null, null, null, null, null);
 
             if (cursor.getCount() != 0) {
                 if (cursor.moveToFirst()) {
@@ -213,11 +215,12 @@
             boolean existe = false;
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.query(true, dbTable, new String[] { dbId },
-                    " id = ? ", new String[] {strId}, null, null, null, null, null);
+                    dbId+" = ? ", new String[] {strId}, null, null, null, null, null);
             if(cursor.getCount() > 0 ) {
                 existe = true;
             }
+            cursor.close();
+            db.close();
             return existe;
         }
-
     }

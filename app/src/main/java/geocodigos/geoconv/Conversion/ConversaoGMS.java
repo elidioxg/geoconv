@@ -18,6 +18,14 @@ public class ConversaoGMS {
         Log.i("aux ", String.format("%.0f",min));
         seg = (min - aux)*60;
         Log.i("seg ", String.format("%.0f",seg));
+        if(seg>=Double.valueOf(60)){
+            min=min+1;
+            seg=seg-60.;
+        }
+        if(min>=Double.valueOf(60)){
+            grau=grau+1;
+            min=min-60.;
+        }
         return doubleToStr(grau, min, seg);
     }
 
@@ -30,7 +38,7 @@ public class ConversaoGMS {
     }
 
     public String doubleToStr(double graus) {
-        return String.format("%.0f",graus);
+        return String.format("%.5f",graus);
     }
     public String doubleToStr(double grau, double min, double seg){
         //aprimorar procedimento, formatar no padrao que vai receber no edittext

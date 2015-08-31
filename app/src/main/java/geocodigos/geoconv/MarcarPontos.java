@@ -4,14 +4,11 @@ import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import geocodigos.geoconv.Conversion.ConversaoGMS;
 import geocodigos.geoconv.Conversion.CoordinateConversion;
@@ -36,15 +32,19 @@ import geocodigos.geoconv.model.PointModel;
 public class MarcarPontos extends Fragment implements LocationListener {
     LocationManager locationManager;
     String provider;
-    public String strLatitude, strLongitude, strPrecisao, strAltitude;
+    public String strLatitude, strLongitude, strPrecisao, strAltitude, strDate, strTime;
     private ImageButton ibMarcar;
     DatabaseHelper database;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
         tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms;
 
+    private View view;
+    private static boolean fragmentVisivel;
+    private double latitude, longitude, altitude, precisao;
+
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.marcar_pontos,
+        view = inflater.inflate(R.layout.marcar_pontos,
                 container, false);
 
         final View view_marcar = View.inflate(getActivity(),R.layout.adicionar_registro, null);
@@ -64,8 +64,8 @@ public class MarcarPontos extends Fragment implements LocationListener {
         tvNorte = (TextView) view.findViewById(R.id.in_norte);
         tvLeste = (TextView) view.findViewById(R.id.in_leste);
 
-        getDate date = new getDate();
-        String strDate = date.returnDate();
+        //getDate date = new getDate();
+        //String strDate = date.returnDate();
         //Log.i("MarcarPonto.java", "strDate: "+strDate);
         etRegistro.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -115,6 +115,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
                         alert.setPositiveButton(R.string.strMarcar, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                InputMethodManager imm;
                                 ArrayList<PointModel> al = new ArrayList<PointModel>();
                                 int numId;
                                 boolean strId;
@@ -136,9 +137,9 @@ public class MarcarPontos extends Fragment implements LocationListener {
                                 Log.i("Salvando ID : ", strAux);
 
                                 PointModel pm = new PointModel();
-                                pm.setId(Integer.toString(numId));
+                                pm.setId(strAux);
                                 if (etRegistro.getText().toString().isEmpty()) {
-                                    etRegistro.setText(R.string.strRegistro+String.valueOf(numId));
+                                    etRegistro.setText("Point "+strAux);
                                 }
                                 pm.setRegistro(etRegistro.getText().toString());
                                 pm.setLatidude(tvLatitude.getText().toString());
@@ -173,6 +174,9 @@ public class MarcarPontos extends Fragment implements LocationListener {
                                 database.close();
                                 etRegistro.setText("");
                                 etDescricao.setText("");
+                                imm = (InputMethodManager) getActivity().getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                                 ViewGroup parent = (ViewGroup) view_marcar.getParent();
                                 parent.removeView(view_marcar);
                                 Toast.makeText(getActivity(), R.string.ponto_marcado,
@@ -209,41 +213,28 @@ public class MarcarPontos extends Fragment implements LocationListener {
                     Toast.LENGTH_SHORT).show();
             Log.i("provider:", provider);
         }
-
+        //precisa dessa linha abaixo?
+        locationManager.requestLocationUpdates(provider, 1000, 1, this);
         return view;
     }
 
-    @Override
-    public void onResume() {
-        // TODO Auto-generated method stub
-        super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        double latitude = (double) (location.getLatitude());
-        double longitude = (double) (location.getLongitude());
-        double altitude = (double) (location.getAltitude());
-        double precisao = (double) (location.getAccuracy());
-
-        Log.i("Localização: ", latitude+" "+longitude+" "+altitude+" "+precisao);
+    public void preencheCampos(){
 
         ConversaoGMS cg = new ConversaoGMS();
         String sLat = cg.converteGraus(latitude);
         String sLon = cg.converteGraus(longitude);
         String coordLat[] = sLat.split(" ");
         String coordLon[] = sLon.split(" ");
-        String norte ="N";
-        String leste="E";
-        if(latitude<0){
-            norte="S";
+        String norte = "N";
+        String leste = "E";
+        if (latitude < 0) {
+            norte = "S";
         }
-        if(longitude<0){
-            leste="W";
+        if (longitude < 0) {
+            leste = "W";
         }
-        strLatitude = coordLat[0]+"\u00B0 "+coordLat[1]+"' "+coordLat[2]+"'' "+norte;
-        strLongitude = coordLon[0]+"\u00B0 "+coordLon[1]+"' "+coordLon[2]+"'' "+leste;
+        strLatitude = coordLat[0] + "\u00B0 " + coordLat[1] + "' " + coordLat[2] + "'' " + norte;
+        strLongitude = coordLon[0] + "\u00B0 " + coordLon[1] + "' " + coordLon[2] + "'' " + leste;
         strPrecisao = String.valueOf(precisao);
         strAltitude = String.valueOf(altitude);
         tvLatitude.setText(String.format("%.5f", latitude));
@@ -254,23 +245,49 @@ public class MarcarPontos extends Fragment implements LocationListener {
         tvAltitude.setText(strAltitude);
 
         getTime time = new getTime();
-        String strTime = time.returnTime();
+        strTime = time.returnTime();
         Log.i("Time:", strTime);
 
         getDate date = new getDate();
-        String strDate = date.returnDate();
+        strDate = date.returnDate();
         Log.i("Date", strDate);
 
-        tvData.setText(strTime+"   -   "+strDate);
+        tvData.setText(strTime + "   -   " + strDate);
 
         CoordinateConversion cc = new CoordinateConversion();
         String latlon = cc.latLon2UTM(latitude, longitude);
-        Log.i("Convertido > utm:" , latlon);
+        Log.i("Convertido > utm:", latlon);
         String coord[] = latlon.split(" ");
         tvSetor.setText(coord[0] + " " + coord[1]);
         tvNorte.setText(coord[2]);
         tvLeste.setText(coord[3]);
+    }
 
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 1000, 1, this);
+        preencheCampos();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //if (fragmentVisivel) {
+            latitude = (double) (location.getLatitude());
+            longitude = (double) (location.getLongitude());
+            altitude = (double) (location.getAltitude());
+            precisao = (double) (location.getAccuracy());
+            Log.i("Localização: ", latitude + " " + longitude + " " + altitude + " " + precisao);
+            //preencheCampos();
+        //}
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser){
+        super.setUserVisibleHint(isVisibleToUser);
+        fragmentVisivel = isVisibleToUser;
+        //if(isVisibleToUser){preencheCampos();}
     }
 
     @Override

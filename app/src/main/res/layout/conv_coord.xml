@@ -177,6 +177,14 @@
                 android:layout_margin="@dimen/margem_grande"
                 >
 
+                <TextView
+                    android:id="@+id/tv_gms"
+                    android:text="@string/conv_gms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    />
+
                 <RelativeLayout
                     android:id="@+id/layout_latgraus"
                     android:layout_width="fill_parent"
@@ -184,21 +192,35 @@
                     android:layout_margin="@dimen/margem_grande">
 
                     <TextView
-                        android:id="@+id/tv_converter2"
-                        android:text="@string/latlon_gms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margem"
-                        />
-
-                    <TextView
                         android:id="@+id/tvlatitude"
-                        android:layout_below="@+id/tv_converter2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/latitude"
                         android:layout_margin="@dimen/margem"
                         />
+
+                    <RadioGroup
+                        android:id="@+id/rg_latitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvlatitude"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_N"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/N"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rb_S"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/S"
+                            />
+
+                    </RadioGroup>
 
                     <EditText
                         android:id="@+id/etLatgraus"
@@ -249,9 +271,33 @@
                         android:layout_margin="@dimen/margem"
                         />
 
+                    <RadioGroup
+                        android:id="@+id/rg_longitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvlongitude"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_E"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/E"
+                            android:checked="true"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rb_W"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/W"
+                            />
+
+                    </RadioGroup>
+
                     <EditText
                         android:id="@+id/etLongraus"
-                        android:layout_below="@+id/tvlongitude"
+                        android:layout_below="@+id/rg_longitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/grau"
@@ -261,7 +307,7 @@
 
                     <EditText
                         android:id="@+id/etLonminutos"
-                        android:layout_below="@+id/tvlongitude"
+                        android:layout_below="@+id/rg_longitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/min"
@@ -272,7 +318,7 @@
 
                     <EditText
                         android:id="@+id/etLonsegundos"
-                        android:layout_below="@+id/tvlongitude"
+                        android:layout_below="@+id/rg_longitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/seg"

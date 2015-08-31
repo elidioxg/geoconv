@@ -64,6 +64,12 @@
     <string name="no_camada">O nome da camada não pode ficar em branco</string>
     <string name="arquivo_salvo">Arquivo salvo com sucesso</string>
     <string name="ultima_localizacao">Ultima localizalçao recebida em: </string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="N">N</string>
+    <string name="S">S</string>
+    <string name="W">W</string>
+    <string name="E">E</string>
 
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>

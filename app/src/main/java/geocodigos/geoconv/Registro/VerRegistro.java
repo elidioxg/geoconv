@@ -81,7 +81,6 @@ public class VerRegistro extends Activity implements View.OnTouchListener{
                     Id--;
                     preencheCampos(Id);
                 }
-
             }
         });
 
@@ -162,4 +161,10 @@ public class VerRegistro extends Activity implements View.OnTouchListener{
         }
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
 }
+

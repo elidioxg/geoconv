@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
     private EditText etLat, etLon, etSet, etNor, etLes, etLatGrau,
             etLatMin, etLatSeg, etLonGrau, etLonMin, etLonSeg;
     private ImageButton ibUtmLatLon, ibLatLonUtm, ibGraus,ibAddPoint;
+    private RadioButton rbN, rbS, rbW, rbE;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState){
@@ -87,6 +90,20 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         ibGraus = (ImageButton) view.findViewById(R.id.ib_graus);
         ibAddPoint = (ImageButton) view.findViewById(R.id.ib_marcar);
 
+        rbN = (RadioButton) view.findViewById(R.id.rb_N);
+        rbS = (RadioButton) view.findViewById(R.id.rb_S);
+        rbE = (RadioButton) view.findViewById(R.id.rb_E);
+        rbW = (RadioButton) view.findViewById(R.id.rb_W);
+
+        rbN.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                }
+            }
+        });
+
         etLon.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -96,6 +113,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                     imm = (InputMethodManager)getActivity().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etLat.requestFocus();
                     ibLatLonUtm.callOnClick();
                 }
                 return false;
@@ -107,9 +125,38 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                 final InputMethodManager imm;
                 if(event.getAction()==KeyEvent.ACTION_DOWN &&
                         keyCode==KeyEvent.KEYCODE_ENTER){
-                    imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm = (InputMethodManager)getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etNor.requestFocus();
                     ibUtmLatLon.callOnClick();
+                }
+                return false;
+            }
+        });
+        /*etLatGrau.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER) {
+                    //imm = (InputMethodManager) getActivity().getSystemService(
+                      //      Context.INPUT_METHOD_SERVICE);
+                    etLatMin.requestFocus();
+                }
+                return false;
+            }
+        });*/
+        etLonSeg.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN&&
+                        keyCode==KeyEvent.KEYCODE_ENTER){
+                    imm = (InputMethodManager)getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    ibGraus.callOnClick();
                 }
                 return false;
             }
@@ -120,13 +167,16 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
             public void onClick(View v) {
 
                 if (etSet.getText().toString().trim().isEmpty()) {
-
+                    Toast.makeText(getActivity(), R.string.quadrante_formato,
+                            Toast.LENGTH_LONG).show();
                 } else {
                     if (etNor.getText().toString().trim().isEmpty()) {
-
+                        Toast.makeText(getActivity(), R.string.norte_formato,
+                                Toast.LENGTH_LONG).show();
                     } else {
                         if (etLes.getText().toString().trim().isEmpty()) {
-
+                            Toast.makeText(getActivity(), R.string.leste_formato,
+                                    Toast.LENGTH_LONG).show();
                         } else {
                             if (validacao(etSet.getText().toString(),
                                     etNor.getText().toString(),
@@ -135,7 +185,6 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                                         etNor.getText().toString() + " " +
                                         etLes.getText().toString();
                                 CoordinateConversion cc = new CoordinateConversion();
-//mostrar apenas 5 casas decimais
                                 double[] latlon = cc.utm2LatLon(strUtm);
                                 Log.i("Convertido > lat", String.format("%.5f", latlon[0]));
                                 Log.i("Convertido > lon", String.format("%.5f", latlon[1]));
@@ -143,7 +192,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                                 etLon.setText(String.format("%.5f", latlon[1]));
 
                                 conversaoGraus(latlon[0], latlon[1]);
-
+                                etNor.requestFocus();
                                 Toast.makeText(getActivity(), R.string.coordenadas_convertidas,
                                         Toast.LENGTH_LONG).show();
                             }
@@ -157,10 +206,12 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 if(etLat.getText().toString().isEmpty()) {
-
+                    Toast.makeText(getActivity(), R.string.latminmax,
+                            Toast.LENGTH_LONG).show();
                 } else {
                     if(etLon.getText().toString().isEmpty()) {
-
+                        Toast.makeText(getActivity(), R.string.lonminmax,
+                                Toast.LENGTH_LONG).show();
                     } else {
                         //substituir por Double.parseDouble()
                         double strLat = Float.valueOf(etLat.getText().toString());
@@ -174,7 +225,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         etNor.setText(coord[2]);
                         etLes.setText(coord[3]);
                         conversaoGraus(strLat, strLon);
-
+                        etLat.requestFocus();
                         Toast.makeText(getActivity(), R.string.coordenadas_convertidas,
                                 Toast.LENGTH_LONG).show();}
                     }
@@ -184,17 +235,42 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         ibGraus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validacao(etLatGrau.getText().toString(), etLatMin.getText().toString(),
-                        etLatSeg.getText().toString(), etLonGrau.getText().toString(),
-                        etLonMin.getText().toString(), etLonSeg.getText().toString())){
-                double grau = Double.parseDouble(etLatGrau.getText().toString());
-                double min = Double.parseDouble(etLatMin.getText().toString());
-                double seg = Double.parseDouble(etLatSeg.getText().toString());
+                String strLatGrau = etLatGrau.getText().toString();
+                String strLatMin = etLatMin.getText().toString();
+                String strLatSeg = etLatSeg.getText().toString();
+                String strLonGrau = etLonGrau.getText().toString();
+                String strLonMin = etLonMin.getText().toString();
+                String strLonSeg = etLonSeg.getText().toString();
+                //colocar procedimentos abaixo na função validação
+                if(strLatGrau.trim().isEmpty()){
+                    strLatGrau="0";
+                }
+                Log.i("strLatGrau = ", strLatGrau);
+                if(strLatMin.trim().isEmpty()){
+                    strLatMin="0";
+                }
+                if(strLatSeg.trim().isEmpty()){
+                    strLatSeg="0";
+                }
+                if(strLonGrau.trim().isEmpty()){
+                    strLonGrau="0";
+                }
+                if(strLonMin.trim().isEmpty()){
+                    strLonMin="0";
+                }
+                if(strLonSeg.trim().isEmpty()){
+                    strLonSeg="0";
+                }
+                if (validacao(strLatGrau, strLatMin, strLatSeg, strLonGrau,
+                        strLatMin, strLonSeg)){
+                double grau = Double.parseDouble(strLatGrau);
+                double min = Double.parseDouble(strLatMin);
+                double seg = Double.parseDouble(strLatSeg);
                 ConversaoGMS cg = new ConversaoGMS();
                 String latitude = cg.grausConverte(grau, min, seg);
-                grau = Double.parseDouble(etLonGrau.getText().toString());
-                min = Double.parseDouble(etLonMin.getText().toString());
-                seg = Double.parseDouble(etLonSeg.getText().toString());
+                grau = Double.parseDouble(strLonGrau);
+                min = Double.parseDouble(strLonMin);
+                seg = Double.parseDouble(strLonSeg);
                 String longitude = cg.grausConverte(grau, min, seg);
                 etLat.setText(latitude);
                 etLon.setText(longitude);
@@ -206,6 +282,9 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                 etNor.setText(utms[2]);
                 etLes.setText(utms[3]);
                 }
+                etLatGrau.requestFocus();
+                Toast.makeText(getActivity(), R.string.coordenadas_convertidas,
+                        Toast.LENGTH_LONG).show();
             }
         });
 
@@ -257,11 +336,11 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
 
                                 strAux = String.valueOf(numId);
                                 Log.i("Salvando com ID : ", strAux);
-
                                 PointModel pm = new PointModel();
-                                pm.setId(Integer.toString(numId));
-                                if (etRegistro.getText().toString().isEmpty()) {
-                                    etRegistro.setText(R.string.strRegistro + String.valueOf(numId));
+                                pm.setId(strAux);
+
+                                if (etRegistro.getText().toString().trim().isEmpty()) {
+                                    etRegistro.setText("Point " + strAux);
                                 }
                                 pm.setRegistro(etRegistro.getText().toString());
                                 pm.setLatidude(etLat.getText().toString());
@@ -321,6 +400,12 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         return view;
     }
     private void conversaoGraus(double lat, double lon) {
+        if(lat<0){
+            rbS.setChecked(true);
+        }
+        if(lon<0){
+            rbW.setChecked(true);
+        }
         ConversaoGMS cg = new ConversaoGMS();
         String strLat = cg.converteGraus(lat);
         String strLon = cg.converteGraus(lon);
@@ -334,20 +419,20 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         etLonSeg.setText(coordLon[2]);
     }
     private boolean validacao(double latitude, double longitude){
-        boolean arg = true;
-        if (latitude < -90.0 || latitude > 90.0) {
-            Toast.makeText(getActivity(), R.string.latminmax,
+        if (latitude <= -90.0 || latitude >= 90.0) {
+            Toast.makeText(getActivity(),R.string.latminmax,
                     Toast.LENGTH_LONG).show();
-            arg = false;
+            return false;
         }
-        if(longitude < -180.0 || longitude >= 180.0)
+        if(longitude <= -180.0 || longitude >= 180.0)
         {
             Toast.makeText(getActivity(), R.string.lonminmax,
                     Toast.LENGTH_LONG).show();
-            arg = false;
+            return false;
         }
-        return arg;
+        return true;
     }
+    //Colocar procedimentso validacao em ConversaoGMS
     private boolean validacao (String setor, String norte, String leste){
 
         boolean arg=true;

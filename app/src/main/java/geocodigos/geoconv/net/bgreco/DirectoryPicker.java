@@ -52,7 +52,7 @@ public class DirectoryPicker extends ListActivity {
     public static final String ONLY_DIRS = "onlyDirs";
     public static final String SHOW_HIDDEN = "showHidden";
     public static final String CHOSEN_DIRECTORY = "chosenDir";
-    public static final int PICK_DIRECTORY = 43522432;
+    public static final int PICK_DIRECTORY = 10;
     private File dir;
     private boolean showHidden = false;
     private boolean onlyDirs = true ;
@@ -119,6 +119,7 @@ public class DirectoryPicker extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICK_DIRECTORY && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             String nome = data.getStringExtra("nome_camada");
@@ -135,6 +136,7 @@ public class DirectoryPicker extends ListActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Log.i("OnActivityResult", path);
             returnDir(path);
         }
     }

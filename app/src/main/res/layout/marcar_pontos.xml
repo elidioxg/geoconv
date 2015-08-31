@@ -100,6 +100,7 @@
                     android:text=""
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
+                    android:textSize="@dimen/texto"
                     android:gravity="center"
                     />
 
@@ -133,6 +134,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/in_latitude"
                     android:textStyle="bold"
+                    android:textSize="@dimen/texto"
                     android:gravity="center"
                     />
 
