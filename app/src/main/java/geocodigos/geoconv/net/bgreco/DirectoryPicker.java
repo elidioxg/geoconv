@@ -56,11 +56,16 @@ public class DirectoryPicker extends ListActivity {
     private File dir;
     private boolean showHidden = false;
     private boolean onlyDirs = true ;
+    public String param_camada, nome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
+        nome = extras.getString("nome_camada");
+        Log.i("nome_camada: ", nome);
+        param_camada = extras.getString("param");
+
         dir = Environment.getExternalStorageDirectory();
         if (extras != null) {
             String preferredStartDir = extras.getString(START_DIR);
@@ -80,7 +85,8 @@ public class DirectoryPicker extends ListActivity {
         String name = dir.getName();
         if(name.length() == 0)
             name = "/";
-        btnChoose.setText("Choose " + "'" + name + "'");
+
+        btnChoose.setText(R.string.escolher + "'" + name + "'?");
         btnChoose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 returnDir(dir.getAbsolutePath());
@@ -120,25 +126,27 @@ public class DirectoryPicker extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_DIRECTORY && resultCode == RESULT_OK) {
+        String path=null;
+        File file;
+        /*if(requestCode == PICK_DIRECTORY && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            String nome = data.getStringExtra("nome_camada");
-            Log.i("nome_camada: ", nome);
-            String param_camada = data.getStringExtra("param");
-            String path = (String) extras.get(DirectoryPicker.CHOSEN_DIRECTORY);
-            File file = new File(getApplicationContext().getFilesDir(), nome);
+            path = (String) extras.get(DirectoryPicker.CHOSEN_DIRECTORY);
+            file = new File(getApplicationContext().getFilesDir(), nome);
             FileOutputStream outputStream;
 
             try {
                 outputStream = openFileOutput(nome, Context.MODE_PRIVATE);
                 outputStream.write(param_camada.getBytes());
                 outputStream.close();
+                Toast.makeText(getApplicationContext(), R.string.arquivo_salvo,
+                        Toast.LENGTH_SHORT).show();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.i("OnActivityResult", path);
-            returnDir(path);
-        }
+        }*/
+        Log.i("OnActivityResult", path);
+        returnDir(path);
     }
 
     private void returnDir(String path) {

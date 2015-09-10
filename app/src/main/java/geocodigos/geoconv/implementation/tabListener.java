@@ -13,7 +13,7 @@ import geocodigos.geoconv.VerPontos;
 
 public class tabListener extends FragmentPagerAdapter {
 
-    final int PAGE_COUNT=4;
+    final int PAGE_COUNT=3;
     public String titulos[];
     public tabListener(FragmentManager fm, Context context) {
         super(fm);

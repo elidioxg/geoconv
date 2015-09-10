@@ -1,16 +1,24 @@
 package geocodigos.geoconv.Map;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -19,11 +27,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
+
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.R;
+import geocodigos.geoconv.VerPontos;
 import geocodigos.geoconv.model.PointModel;
 
 public class MapActivity extends Fragment implements LocationListener {
@@ -35,10 +49,16 @@ public class MapActivity extends Fragment implements LocationListener {
     double lat_atual=0, lon_atual=0;
     final double dif = 0.2;
     public Marker marcador;
+    public Polygon poligono;//private
+    public Polyline line;
     public View view;
     private boolean fragmentVisivel;
+    private Location location;
     LocationManager locationManager;
     String provider;
+    private RadioGroup rgGeometria;
+    private RadioButton rbPontos, rbLinhas, rbPoligono;
+    private ImageButton ibPontos;
     public SupportMapFragment supportFragment;
 
     public View onCreateView(LayoutInflater inflater,
@@ -46,13 +66,76 @@ public class MapActivity extends Fragment implements LocationListener {
         if(container==null){
             return null;
         }
-        locationManager = (LocationManager) getActivity().
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
 
         view = inflater.inflate(R.layout.map_layout, container, false);
+        locationManager = (LocationManager) getActivity().
+                getSystemService(Context.LOCATION_SERVICE);
+        //Criteria criteria = new Criteria();
+        provider = locationManager.GPS_PROVIDER;
+        //provider = locationManager.getBestProvider(criteria, false);
+        location = locationManager.getLastKnownLocation(provider);
+        if (location != null) {
+            onLocationChanged(location);
+        }
+        rgGeometria = (RadioGroup) view.findViewById(R.id.rg_geometria);
+        rgGeometria.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_pontos:
+                        Log.i("rb_pontos","Marcado");
+                        break;
+                    case R.id.rb_linha:
+                        Log.i("rb_linha","Marcado");
+                        break;
+                    case R.id.rb_poligono:
+                        Log.i("rb_poligono","Marcado");
+                        break;
+                    default:
+                        break;
+                }
+                Log.i("checkedId ", String.valueOf(checkedId));
+            }
+        });
+        rbPontos = (RadioButton) view.findViewById(R.id.rb_pontos);
+        rbLinhas = (RadioButton) view.findViewById(R.id.rb_linha);
+        rbPoligono  = (RadioButton) view.findViewById(R.id.rb_poligono);
+        rbPontos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.i("rbPontos","onCheckedChanged");
+                if(isChecked){addMarkers(false);}
+            }
+        });
+        rbLinhas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.i("rbLinhas", "onCheckedChanged");
+                if (isChecked) {
+                    addMarkers(false);
+                }
+            }
+        });
+        rbPoligono.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.i("rbPoligono", "onCheckedChanged");
+                if (isChecked) {
+                    addMarkers(false);
+                }
+            }
+        });
+        ibPontos = (ImageButton) view.findViewById(R.id.ib_pontos);
+        ibPontos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VerPontos ver_pontos = new VerPontos();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.layout_map, ver_pontos);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         supportFragment = ((SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map));
@@ -61,110 +144,31 @@ public class MapActivity extends Fragment implements LocationListener {
         mapa.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                LatLngBounds visao;
-                if (num_pontos > 0) {
-                    visao = new LatLngBounds(
-                            new LatLng(lat_atual - dif, lon_atual - dif),
-                            new LatLng(lat_atual + dif, lon_atual + dif));
-
-                } else {
-                    visao = new LatLngBounds(
-                            new LatLng(lat_atual - dif, lon_atual - dif),
-                            new LatLng(lat_atual + dif, lon_atual + dif));
-                    Log.i("lat_atual-dif: ", String.valueOf(lat_atual - dif));
-                    Log.i("lat_atual+dif: ", String.valueOf(lat_atual + dif));
-                }
-                if (mapa != null) {
-                    mapa.moveCamera(CameraUpdateFactory.newLatLngBounds(visao, 80));
-                    addMarkers();
-                }
+                addMarkers(true);
             }
         });
-
-        if (location != null) {
-            onLocationChanged(location);
-            Log.i("provider:", provider);
-        }
-        setRetainInstance(false);
+        //setRetainInstance(false);
+        locationManager.requestLocationUpdates(provider, 1000, 1, this);
         return view;
     }
 
-    private void addMarkers() {
-        //if(fragmentVisivel){
-        if(mapa!=null){
-            double lat, lon;
-            database = new DatabaseHelper(getActivity());
-            database.getWritableDatabase();
-            pontos.clear();
-            pontos = database.pegarPontos();
-            Log.i("pontos.size():", Integer.toString(pontos.size()));
-            num_pontos=pontos.size();
-            mapa.clear();
-            marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.loc_mapmarker))
-                    .title("Localização Atual"));
-            minLat=lat_atual;
-            maxLat=lat_atual;
-            minLon=lon_atual;
-            maxLon=lon_atual;
-            if(!pontos.isEmpty()){
-                for (int i = 0; i < pontos.size() ; i++) {
-                    String selecionado = pontos.get(i).getSelecao();
-                    Log.i("selecionado = ", selecionado);
-                    if(Integer.parseInt(selecionado.trim())==1) {
-                        String latitude = pontos.get(i).getlatitude();
-                        String longitude = pontos.get(i).getLongitude();
-                        String nome = pontos.get(i).getRegistro();
-                        lat = Double.parseDouble(latitude);
-                        lon = Double.parseDouble(longitude);
-                        if (minLat > lat) {
-                            minLat = lat;
-                        }
-                        if (maxLat < lat) {
-                            maxLat = lat;
-                        }
-                        if (minLon > lon) {
-                            minLon = lon;
-                        }
-                        if (maxLon < lon) {
-                            maxLon = lon;
-                        }
-                        Log.i("Latitude", latitude);
-                        Log.i("Longitude", String.valueOf(lon));
-                        mapa.addMarker(new MarkerOptions()
-                                .position(new LatLng(lat, lon))
-                                .title(nome));
-                    }
-                }
-            }
-            database.close();
-            LatLngBounds visao;
-            visao = new LatLngBounds(
-                    new LatLng(minLat-dif, minLon-dif),
-                    new LatLng(maxLat+dif, maxLon+dif));
-            //if( mapa!= null) {
-                mapa.moveCamera(CameraUpdateFactory.newLatLngBounds(visao, 80));
-            //}
-        }
-    }
 
     @Override
     public void onLocationChanged(Location location) {
         //if(fragmentVisivel) {
-            String strLoc = getResources().getString(R.string.localizacao_atual);
-            lat_atual = location.getLatitude();
-            lon_atual = location.getLongitude();
-            Log.i("lon_atual: ", String.valueOf(lon_atual));
-            if (marcador != null) {
-                marcador.remove();
-            }
-            if(mapa!=null){
+        String strLoc = getResources().getString(R.string.localizacao_atual);
+        lat_atual = location.getLatitude();
+        lon_atual = location.getLongitude();
+        if (marcador != null) {
+            marcador.remove();
+        }
+        if(lat_atual!=0  && lon_atual!=0) {
+            if (mapa != null) {
                 marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.loc_mapmarker))
                         .title(strLoc));
             }
-        //}
-        //marcador.setPosition(new LatLng(lat_atual, lon_atual));
+        }
     }
 
     @Override
@@ -181,67 +185,147 @@ public class MapActivity extends Fragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
-
+/*
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+*/
+    @Override
+    public void onPause(){
         if(marcador!=null){
             marcador.remove();
         }
         if(mapa!=null) {
-            getFragmentManager().beginTransaction().remove(getChildFragmentManager()
-                    .findFragmentById(R.id.map)).commit();
+            //getFragmentManager().beginTransaction().remove(getChildFragmentManager()
+              //      .findFragmentById(R.id.map)).commitAllowingStateLoss();
             mapa=null;
-            //mapa.clear();
         }
-  //      supportFragment.onDetach();
-        //supportFragment.onDestroy();
-    }
+        if(poligono!=null){
+            poligono.remove();
+        }
+        if(line!=null){line.remove();}
+        locationManager.removeUpdates(this);
+        /*if(supportFragment.isResumed()){
+            getFragmentManager().beginTransaction().remove(supportFragment).
+                    commitAllowingStateLoss();
 
+        }*/
+        super.onPause();
+    }
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
         //if fragmentVisivel?
+        //locationManager.removeUpdates(this);
         locationManager.requestLocationUpdates(provider, 1000, 1, this);
-        //addMarkers();
+        addMarkers(false);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser){
         super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            addMarkers(false);
+        }
         fragmentVisivel = isVisibleToUser;
     }
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        //setTargetFragment(supportFragment, 0);
-        setTargetFragment(null, -1);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-            /*if (marcador != null) {
-                marcador.remove();
+    private void addMarkers(boolean updateVision) {
+        int numLinhas=0, numPoligono=0;
+        //if(fragmentVisivel){
+        if(mapa!=null){
+            double lat, lon;
+            PolygonOptions poly = new PolygonOptions();
+            PolylineOptions linha = new PolylineOptions();
+            database = new DatabaseHelper(getActivity());
+            database.getWritableDatabase();
+            pontos.clear();
+            pontos = database.pegarPontos();
+            num_pontos=pontos.size();
+            if(marcador!=null){marcador.remove();}
+            if(line!=null){line.remove();}
+            if(poligono!=null){poligono.remove();}
+            mapa.clear();
+            if(lat_atual!=0 && lon_atual!=0) {
+                marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.loc_mapmarker))
+                        .title("Localização Atual"));
             }
-            if (mapa != null) {
-                getFragmentManager().beginTransaction().remove(getChildFragmentManager()
-                        .findFragmentById(R.id.map)).commit();
-                //mapa=null;
-                mapa.clear();
+            if(pontos.size()>0){
+                    for (int i = 0; i < pontos.size() ; i++) {
+                        String selecionado = pontos.get(i).getSelecao();
+                        if (Integer.parseInt(selecionado.trim()) == 1) {
+                            String latitude = pontos.get(i).getlatitude();
+                            String longitude = pontos.get(i).getLongitude();
+                            String nome = pontos.get(i).getRegistro();
+                            lat = Double.parseDouble(latitude);
+                            lon = Double.parseDouble(longitude);
+                            if (i == 0) {
+                                minLat = lat;
+                                maxLat = lat;
+                                minLon = lon;
+                                maxLon = lon;
+                            }
+                            if (minLat > lat) {
+                                minLat = lat;
+                            }
+                            if (maxLat < lat) {
+                                maxLat = lat;
+                            }
+                            if (minLon > lon) {
+                                minLon = lon;
+                            }
+                            if (maxLon < lon) {
+                                maxLon = lon;
+                            }
+                            if (rbPontos.isChecked()) {
+                                Log.i("rbPontos", "isChecked()");
+                                mapa.addMarker(new MarkerOptions()
+                                        .position(new LatLng(lat, lon))
+                                        .title(nome));
+                            }
+                            if (rbLinhas.isChecked()) {
+                                Log.i("rbLinhas", "isChecked()");
+                                linha.add(new LatLng(lat, lon));
+                                numLinhas++;
+                            }
+                            if (rbPoligono.isChecked()) {
+                                Log.i("rbPoligono", "isChecked()");
+                                poly.add(new LatLng(lat, lon));
+                                numPoligono++;
+                            }
+                        }
+                }
+                if(rbLinhas.isChecked() && numLinhas>1){
+                    List<LatLng> lista = linha.getPoints();
+                    //linha.addAll(lista);
+                    line = mapa.addPolyline(linha);
+                    line.setWidth(3);
+                    line.setColor(Color.BLUE);
+                    line.setPoints(lista);
+                }
+                if(rbPoligono.isChecked() && numPoligono>2){
+                    poly.fillColor(Color.GREEN);
+                    poly.strokeColor(Color.green(50));
+                    poligono = mapa.addPolygon(poly);
+                }
             }
-            //supportFragment.onDestroy();
-*/
-        /*try {
-            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }*/
+            database.close();
+            if(updateVision) {
+                LatLngBounds visao;
+                visao = new LatLngBounds(
+                        new LatLng(minLat - dif, minLon - dif),
+                        new LatLng(maxLat + dif, maxLon + dif));
+                mapa.moveCamera(CameraUpdateFactory.newLatLngBounds(visao, 80));
+            }
+        }
     }
+
 }

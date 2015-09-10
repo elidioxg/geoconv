@@ -1,44 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:id="@+id/layout_registro"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/cinza"
-        >
-
-        <ImageButton
-            android:id="@+id/ib_anterior"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/margem_grande"
-            />
-
-        <TextView
-            android:id="@+id/tv_registros"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/margem_grande"
-            />
-
-        <ImageButton
-            android:id="@+id/ib_proximo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margem_grande"
-            />
-
-    </RelativeLayout>
+    android:layout_height="match_parent">
 
     <ScrollView
+        android:layout_above="@+id/layout_buttons"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
@@ -57,16 +25,8 @@
                     android:id="@+id/tvRegistro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/registro"/>
-
-                <EditText
-                    android:id="@+id/etregistro"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tvRegistro"
-                    android:hint="@string/registro"
-                    android:maxLines="1"
-                    />
 
             </RelativeLayout>
 
@@ -87,7 +47,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tvDescricao"
-                    android:hint="@string/descricao"/>
+                    android:hint="@string/descricao"
+                    android:layout_margin="@dimen/margem"
+                    />
 
             </RelativeLayout>
 
@@ -111,6 +73,7 @@
                     android:hint="@string/hora"
                     android:maxLength="10"
                     android:maxLines="1"
+                    android:layout_margin="@dimen/margem"
                     />
 
                 <TextView
@@ -129,6 +92,7 @@
                     android:hint="@string/data"
                     android:maxLength="10"
                     android:maxLines="1"
+                    android:layout_margin="@dimen/margem"
                     />
 
             </RelativeLayout>
@@ -152,6 +116,7 @@
                     android:layout_toRightOf="@+id/tvLatitude"
                     android:hint="@string/latitude"
                     android:inputType="numberDecimal|numberSigned"
+                    android:layout_margin="@dimen/margem"
                     />
 
             </RelativeLayout>
@@ -175,6 +140,7 @@
                     android:layout_toRightOf="@+id/tvLongitude"
                     android:hint="@string/longitude"
                     android:inputType="numberDecimal|numberSigned"
+                    android:layout_margin="@dimen/margem"
                     />
 
             </RelativeLayout>
@@ -198,7 +164,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/quadrante"
+                    android:layout_margin="@dimen/margem"
                     />
+
                 </RelativeLayout>
 
             <RelativeLayout
@@ -220,7 +188,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/norte"
                     android:inputType="number"
+                    android:layout_margin="@dimen/margem"
                     />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -242,6 +212,7 @@
                     android:hint="@string/leste"
                     android:layout_toRightOf="@+id/tvLeste"
                     android:inputType="number"
+                    android:layout_margin="@dimen/margem"
                     />
 
             </RelativeLayout>
@@ -267,6 +238,7 @@
                     android:inputType="numberDecimal"
                     android:maxLength="6"
                     android:maxLines="1"
+                    android:layout_margin="@dimen/margem"
                     />
 
                 <TextView
@@ -286,6 +258,7 @@
                     android:inputType="numberDecimal"
                     android:maxLength="6"
                     android:maxLines="1"
+                    android:layout_margin="@dimen/margem"
                     />
 
             </RelativeLayout>
@@ -294,5 +267,36 @@
 
     </ScrollView>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layout_buttons"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cinza"
+        >
+
+        <ImageButton
+            android:id="@+id/ib_anterior"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            />
+
+        <ImageButton
+            android:id="@+id/ib_salvar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <ImageButton
+            android:id="@+id/ib_proximo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geoconver</string>
+    <string name="converter">Converter</string>
     <string name="converter_coord">Converter Coordenadas</string>
     <string name="marcar_ponto">Marcar Ponto</string>
     <string name="ver_pontos">Pontos Marcados</string>
@@ -26,7 +27,7 @@
     <string name="data">Data:</string>
     <string name="mapa">Mapa</string>
     <string name="apagar">Excluir</string>
-    <string name="strRegistro">Registro</string>
+    <string name="strRegistro">Registro </string>
     <string name="novo_registro">Novo Registro</string>
     <string name="coordenadas_convertidas">Coordenadas convertidas com sucesso.</string>
     <string name="graus">Graus</string>
@@ -39,4 +40,47 @@
     <string name="pontos">Pontos</string>
     <string name="linha">Linha</string>
     <string name="poligono">Polígono</string>
+    <string name="idioma">Language</string>
+    <string name="exportar_kml">Exportar os Pontos selecionados para KML?</string>
+    <string name="apagar_registros">Apagar registros selecionados?</string>
+    <string name="sem_pontos">Não há pontos selecionados</string>
+    <string name="latlon_gms">Latitude/Longitude (graus, min , seg)</string>
+    <string name="localizacao_atual">Localizaçao Atual</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="ponto_marcado">Ponto Marcado</string>
+    <string name="valor_longitude">O valor da longitude não está preenchido</string>
+    <string name="valor_latitude">O valor da latitude não está preenchido</string>
+    <string name="latminmax">Latitude deve ter os valores entre -90 e 90</string>
+    <string name="lonminmax">Longitude deve ser entre -180 e 180</string>
+    <string name="quadrante_formato">Quadrante tem que ser forma: Numero Letra. Exemplo: 24 L</string>
+    <string name="norte_formato">Valor da coordenada Norte deve ser entre 0 e 10000000</string>
+    <string name="leste_formato">Valores das Coordenadas Leste devem ser entre 160000 e 10000000</string>
+    <string name="minminmax">Valores de minutos devem ser maior ou igual a 0 e menor que 60</string>
+    <string name="segminmax">Valores de segundos devem ser maior ou igual a 0 e menor que 60</string>
+    <string name="strMarcar">Marcar</string>
+    <string name="nao_loc">Não foi possível obter a localização atual</string>
+    <string name="nao_gps_loc">GPS desativado ou ainda não foi possível obter a localização atual</string>
+    <string name="no_camada">O nome da camada não pode ficar em branco</string>
+    <string name="arquivo_salvo">Arquivo salvo com sucesso</string>
+    <string name="ultima_localizacao">Ultima localizalçao recebida em: </string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="N">N</string>
+    <string name="S">S</string>
+    <string name="W">W</string>
+    <string name="E">E</string>
+    <string name="documentacao">Documentação</string>
+    <string name="por">Português</string>
+    <string name="esp">Español</string>
+    <string name="eng">English</string>
+    <string name="num_satelites">Número de Satelites: </string>
+    <string name="escolher">Escolher </string>
+    <string name="limpar">Limpar</string>
+    <string name="fechar">Fechar</string>
+
+    <string-array name="androidstrings">
+        <item>@string/marcar_ponto</item>
+        <item>@string/ver_pontos</item>
+        <item>@string/converter</item>
+    </string-array>
 </resources>

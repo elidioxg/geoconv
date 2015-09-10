@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande"
                 >
 
                 <TextView
@@ -87,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande"
                 android:background="@color/cinza_claro">
 
                 <TextView
@@ -175,6 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande"
                 >
 
                 <TextView
@@ -210,7 +213,9 @@
                             android:id="@+id/rb_N"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margem_grande"
                             android:text="@string/N"
+                            android:checked="true"
                             />
 
                         <RadioButton
@@ -224,7 +229,7 @@
 
                     <EditText
                         android:id="@+id/etLatgraus"
-                        android:layout_below="@+id/tvlatitude"
+                        android:layout_below="@+id/rg_latitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/grau"
@@ -234,7 +239,7 @@
 
                     <EditText
                         android:id="@+id/etLatminutos"
-                        android:layout_below="@+id/tvlatitude"
+                        android:layout_below="@+id/rg_latitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/min"
@@ -245,7 +250,7 @@
 
                     <EditText
                         android:id="@+id/etLatsegundos"
-                        android:layout_below="@+id/tvlatitude"
+                        android:layout_below="@+id/rg_latitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/seg"
@@ -261,7 +266,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_latgraus"
-                    android:layout_margin="@dimen/margem_grande">
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_marginBottom="@dimen/margem_grande">
 
                     <TextView
                         android:id="@+id/tvlongitude"
@@ -282,6 +288,7 @@
                             android:id="@+id/rb_E"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margem_grande"
                             android:text="@string/E"
                             android:checked="true"
                             />
@@ -352,13 +359,20 @@
         android:background="@color/preto">
 
         <ImageButton
+            android:id="@+id/ib_limpar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/limpar"
+            android:layout_alignParentLeft="true"
+            />
+
+        <ImageButton
             android:id="@+id/ib_marcar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/marcar_ponto"
             android:background="@mipmap/mapmarker"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margem_grande"
             />
 
     </RelativeLayout>

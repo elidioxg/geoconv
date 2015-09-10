@@ -1,7 +1,5 @@
 package geocodigos.geoconv.Conversion;
 
-import android.util.Log;
-
 public class ConversaoGMS {
 
     public void ConversaoGMS(){
@@ -9,31 +7,29 @@ public class ConversaoGMS {
     }
 
     public String converteGraus(double graus) {
-        double aux, grau, min, seg;
+        double aux, aux2, grau, min, seg;
         grau = (long) graus;
-        Log.i("grau ", String.valueOf(grau));
-        min =  ((graus - grau)*60);
-        Log.i("min ", String.valueOf(min));
-        aux = (long) min;
-        Log.i("aux ", String.format("%.0f",min));
-        seg = (min - aux)*60;
-        Log.i("seg ", String.format("%.0f",seg));
-        if(seg>=Double.valueOf(60)){
+        aux =  ((graus - grau)*60);
+        min = (long) aux;
+        aux2 =  (aux - min)*60;
+        seg = (long) aux2;
+        if(seg>=60){
             min=min+1;
             seg=seg-60.;
         }
-        if(min>=Double.valueOf(60)){
+        if(min>=60){
             grau=grau+1;
             min=min-60.;
         }
         return doubleToStr(grau, min, seg);
     }
 
-    public String grausConverte(double grau, double min, double seg) {
+    public String grausConverte(boolean positivo, double grau, double min, double seg) {
         min = min + (seg/60);
-        Log.i("min ", String.valueOf(min));
         grau = grau + (min/60);
-        Log.i("grau ", String.valueOf(grau));
+        if(!positivo) {
+            grau = grau*-1;
+        }
         return doubleToStr(grau);
     }
 

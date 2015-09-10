@@ -10,7 +10,7 @@
     <string name="coordenadas">Coordenadas Atual:</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
     <string name="registro">Nome do Registro</string>
     <string name="utmLongitude">Universal Tranverse Mercator</string>
     <string name="leste">Leste:</string>
@@ -50,8 +50,8 @@
     <string name="ponto_marcado">Ponto Marcado</string>
     <string name="valor_longitude">O valor da longitude não está preenchido</string>
     <string name="valor_latitude">O valor da latitude não está preenchido</string>
-    <string name="latminmax">Latitude deve ter os valores entre -90 e 90</string>
-    <string name="lonminmax">Longitude deve ser entre -180 e 180</string>
+    <string name="latminmax">Latitude deve ter os valores entre 0 e 90</string>
+    <string name="lonminmax">Longitude deve ser entre 0 e 180</string>
     <string name="quadrante_formato">Quadrante tem que ser forma: Numero Letra. Exemplo: 24 L</string>
     <string name="norte_formato">Valor da coordenada Norte deve ser entre 0 e 10000000</string>
     <string name="leste_formato">Valores das Coordenadas Leste devem ser entre 160000 e 10000000</string>

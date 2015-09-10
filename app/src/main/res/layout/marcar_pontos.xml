@@ -24,6 +24,7 @@
                 android:orientation="horizontal"
                 android:layout_below="@+id/layout_latlong"
                 android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande"
                 android:background="@color/branco"
                 >
 
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande"
                 android:layout_alignParentTop="true"
                 android:background="@color/cinza_claro"
                 >
@@ -157,6 +159,7 @@
                 android:layout_below="@+id/layout1"
                 android:orientation="horizontal"
                 android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande"
                 android:background="@color/cinza_claro"
                 >
 
@@ -255,6 +258,31 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout4"
+                android:layout_margin="@dimen/margem_grande"
+                android:layout_marginBottom="@dimen/margem_grande">
+
+                <TextView
+                    android:id="@+id/num_satelites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margem"
+                    android:text="@string/num_satelites"/>
+
+                <TextView
+                    android:id="@+id/in_satelites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/num_satelites"
+                    android:text=""
+                    android:textStyle="bold"
+                    />
+
+            </RelativeLayout>
+
            </RelativeLayout>
 
         </ScrollView>
@@ -273,7 +301,6 @@
             android:contentDescription="@string/marcar_ponto"
             android:background="@mipmap/mapmarker"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margem_grande"
             />
 
     </RelativeLayout>
