@@ -5,6 +5,8 @@
     <item name="branco" type="color">#FFFFFF</item>
     <item name="cinza_claro" type="color">#DDDDDD</item>
     <item name="preto" type="color">#000000</item>
+    <item name="vermelho" type="color">#FFAAAA</item>
+    <item name="verde" type="color">#AAFFAA</item>
 
     <integer-array name="androidcolors">
         <item>@color/azul</item>

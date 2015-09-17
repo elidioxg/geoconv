@@ -63,7 +63,7 @@ public class DirectoryPicker extends ListActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         nome = extras.getString("nome_camada");
-        Log.i("nome_camada: ", nome);
+        //Log.i("nome_camada: ", nome);
         param_camada = extras.getString("param");
 
         dir = Environment.getExternalStorageDirectory();
@@ -86,7 +86,7 @@ public class DirectoryPicker extends ListActivity {
         if(name.length() == 0)
             name = "/";
 
-        btnChoose.setText(R.string.escolher + "'" + name + "'?");
+        btnChoose.setText(getResources().getString(R.string.escolher) + "'" + name + "'?");
         btnChoose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 returnDir(dir.getAbsolutePath());
@@ -128,7 +128,7 @@ public class DirectoryPicker extends ListActivity {
         super.onActivityResult(requestCode, resultCode, data);
         String path=null;
         File file;
-        /*if(requestCode == PICK_DIRECTORY && resultCode == RESULT_OK) {
+        if(requestCode == PICK_DIRECTORY && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             path = (String) extras.get(DirectoryPicker.CHOSEN_DIRECTORY);
             file = new File(getApplicationContext().getFilesDir(), nome);
@@ -144,8 +144,8 @@ public class DirectoryPicker extends ListActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }*/
-        Log.i("OnActivityResult", path);
+        }
+        //Log.i("OnActivityResult", path);
         returnDir(path);
     }
 

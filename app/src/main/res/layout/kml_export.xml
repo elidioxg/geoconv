@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="Nome da camada"
         android:textColor="@color/cinza"
+        android:textColorHint="@color/cinza_claro"
         android:maxLines="1"
         />
     <RadioGroup

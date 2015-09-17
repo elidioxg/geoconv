@@ -6,4 +6,6 @@
     <dimen name="margem">4dp</dimen>
     <dimen name="margem_grande">15dp</dimen>
     <dimen name="fonteGrande">16dp</dimen>
+    <dimen name="fontePequena">12dp</dimen>
+    <dimen name="margem_mgrande">25dp</dimen>
 </resources>

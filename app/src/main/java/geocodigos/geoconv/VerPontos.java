@@ -44,7 +44,7 @@
         public View onCreateView(LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
 
-            View view = inflater.inflate(R.layout.ver_pontos, container, false);
+            final View view = inflater.inflate(R.layout.ver_pontos, container, false);
 
             final View Kml = View.inflate(getActivity(), R.layout.kml_export, null);
             final EditText etCamada = (EditText) Kml.findViewById(R.id.etCamada);
@@ -64,77 +64,79 @@
             ibExportar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //final FileOutputStream out;
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
-                    alerta.setTitle(R.string.exportar_kml);
-                    //alerta.setMessage("teste");
-                    alerta.setCancelable(false);
-                    alerta.setView(Kml);
-                    alerta.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ViewGroup parent = (ViewGroup) Kml.getParent();
-                            parent.removeView(Kml);
-                        }
-                    });
-                    alerta.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                        @Override
-                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                            final InputMethodManager imm;
-                            if (event.getAction() == KeyEvent.ACTION_DOWN &&
-                                    keyCode == KeyEvent.KEYCODE_ENTER) {
-                                imm = (InputMethodManager) getActivity().getSystemService(
-                                        Context.INPUT_METHOD_SERVICE);
-                                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    if(campos.size()>0) {
+                        //final FileOutputStream out;
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
+                        alerta.setTitle(R.string.exportar_kml);
+                        //alerta.setMessage("teste");
+                        alerta.setCancelable(false);
+                        alerta.setView(Kml);
+                        alerta.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewGroup parent = (ViewGroup) Kml.getParent();
+                                parent.removeView(Kml);
                             }
-                            return false;
-                        }
-                    });
-                    alerta.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener(
-                    ) {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (!etCamada.getText().toString().isEmpty()) {
-                                int opcao = -1;
-                                String nome_camada = "";
-                                nome_camada = etCamada.getText().toString().trim();
-                                ExportarKML exportar = new ExportarKML(getActivity());
-                                if (rbPontos.isChecked()) {
-                                    opcao = 0;
+                        });
+                        alerta.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                final InputMethodManager imm;
+                                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                                        keyCode == KeyEvent.KEYCODE_ENTER) {
+                                    imm = (InputMethodManager) getActivity().getSystemService(
+                                            Context.INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                                 }
-                                if (rbLinha.isChecked()) {
-                                    opcao = 1;
-                                }
-                                if (rbPoligono.isChecked()) {
-                                    opcao = 2;
-                                }
-                                try {
-                                    String param_camada = (String) exportar.criarCamada(nome_camada, opcao);
-                                    Intent intent = new Intent(getActivity(), DirectoryPicker.class);
-                                    intent.putExtra("nome_camada", nome_camada);
-                                    intent.putExtra("param", param_camada);
-                                    startActivity(intent);
-                                    //startActivityForResult(intent, DirectoryPicker.PICK_DIRECTORY);
-                                } catch (IllegalArgumentException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                } catch (IllegalStateException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-
-                            } else {
-                                Toast.makeText(getActivity(), R.string.no_camada,
-                                        Toast.LENGTH_SHORT).show();
+                                return false;
                             }
-                            ViewGroup parent = (ViewGroup) Kml.getParent();
-                            parent.removeView(Kml);
+                        });
+                        alerta.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener(
+                        ) {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (!etCamada.getText().toString().isEmpty()) {
+                                    int opcao = -1;
+                                    String nome_camada = "";
+                                    nome_camada = etCamada.getText().toString().trim();
+                                    ExportarKML exportar = new ExportarKML(getActivity());
+                                    if (rbPontos.isChecked()) {
+                                        opcao = 0;
+                                    }
+                                    if (rbLinha.isChecked()) {
+                                        opcao = 1;
+                                    }
+                                    if (rbPoligono.isChecked()) {
+                                        opcao = 2;
+                                    }
+                                    try {
+                                        String param_camada = (String) exportar.criarCamada(nome_camada, opcao);
+                                        Intent intent = new Intent(getActivity(), DirectoryPicker.class);
+                                        intent.putExtra("nome_camada", nome_camada);
+                                        intent.putExtra("param", param_camada);
+                                        startActivity(intent);
+                                        //startActivityForResult(intent, DirectoryPicker.PICK_DIRECTORY);
+                                    } catch (IllegalArgumentException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    } catch (IllegalStateException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
 
-                        }
-                    }).show();
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.no_camada,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                ViewGroup parent = (ViewGroup) Kml.getParent();
+                                parent.removeView(Kml);
+
+                            }
+                        }).show();
+                    }
                 }
             });
 
@@ -142,6 +144,9 @@
                 @Override
                 public void onClick(View v) {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    //MapActivity mapa = new MapActivity();
+                    //transaction.replace(R.id.layout_principal, mapa);
+                    transaction.addToBackStack(null);
                     transaction.remove(VerPontos.this);
                     transaction.commit();
                 }
@@ -182,7 +187,6 @@
                                 synchronized(listView) {
                                     listView.notifyAll();
                                 }
-
                             }
                         }).show();
                     } else {
@@ -267,7 +271,6 @@
                     convertView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.i("onClick - position", String.valueOf(position));
                             Bundle bundle = new Bundle();
                             bundle.putInt("posicao", position);
                             bundle.putInt("total_registros", campos.size());
@@ -291,7 +294,6 @@
                 } else {
                     viewHolder.cbSelecionado.setChecked(false);
                 }
-                //final int temp = position;
                 return convertView;
             }
         }
@@ -302,7 +304,6 @@
 
             campos.clear();
             campos = database.pegarPontos();
-            Log.i("campos.size():", Integer.toString(campos.size()));
             if (!campos.isEmpty()) {
                 for (int i = campos.size(); i < 0 ; i--) {
 
@@ -334,12 +335,12 @@
                     pointModel.setHora(hora);
                     pointModel.setData(data);
 
-                    Log.i("campos.size()", Integer.toString(campos.size()));
                     campos.add(pointModel);
                 }
             }
             database.close();
-            tvPontos.setText("Número de registros: " + Integer.toString(campos.size()));
+            tvPontos.setText(getResources().getString(R.string.num_registros)
+                    + Integer.toString(campos.size()));
         }
 
         @Override

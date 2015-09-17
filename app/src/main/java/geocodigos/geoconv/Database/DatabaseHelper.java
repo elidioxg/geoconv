@@ -14,7 +14,7 @@
     public class DatabaseHelper extends SQLiteOpenHelper {
         private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
         public static String dbId="id_";
-        public static String dbName = "database53";
+        public static String dbName = "database98";
         public static String dbTable = "pontos";
         public static String dbRegister = "registro";
         public static String dbDescription ="descricao";
@@ -78,15 +78,12 @@
 
             contentValues.put(dbPrecisao, pointModel.precisao);
             contentValues.put(dbSel, pointModel.selecionado);
-            Log.i("dbSel: ", pointModel.selecionado);
 
             db.insert(dbTable, null, contentValues);
             db.close();
         }
 
         public void updateSelecao(PointModel pointModel){
-            Log.i("id: ", pointModel.id);
-            Log.i("Selecionado: ", pointModel.selecionado);
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(dbSel, pointModel.selecionado);
@@ -113,8 +110,7 @@
             contentValues.put(dbHora, pointModel.hora);
 
             contentValues.put(dbSel, pointModel.selecionado);
-            Log.i("Registro Atualizado:", pointModel.registro);
-            //obs: pode ter mais um ponto com o mesmo nome de registro
+
             db.update(dbTable, contentValues, dbId+" = "+pointModel.id, null);
             db.close();
         }

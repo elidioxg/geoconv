@@ -47,7 +47,7 @@
         android:layout_margin="@dimen/margem"
         android:layout_below="@+id/tvadicionar"
         android:textColor="@color/cinza"
-        android:textColorHint="@color/branco"
+        android:textColorHint="@color/cinza_claro"
         android:maxLines="1"
         />
 
@@ -59,7 +59,7 @@
         android:layout_margin="@dimen/margem"
         android:hint="@string/descricao"
         android:textColor="@color/cinza"
-        android:textColorHint="@color/branco"
+        android:textColorHint="@color/cinza_claro"
         />
 
 </LinearLayout>

@@ -280,6 +280,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
+            android:background="@mipmap/ic_left"
             />
 
         <ImageButton
@@ -287,6 +288,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
+            android:background="@mipmap/ic_save"
             />
 
         <ImageButton
@@ -294,6 +296,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
+            android:background="@mipmap/ic_right"
             />
 
     </RelativeLayout>

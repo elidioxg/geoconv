@@ -4,14 +4,15 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
 import geocodigos.geoconv.ConverterCoordenadas;
 import geocodigos.geoconv.Map.MapActivity;
 import geocodigos.geoconv.MarcarPontos;
 import geocodigos.geoconv.R;
 import geocodigos.geoconv.VerPontos;
 
-public class tabListener extends FragmentPagerAdapter {
+public class tabListener extends FragmentStatePagerAdapter {
 
     final int PAGE_COUNT=3;
     public String titulos[];
@@ -31,16 +32,13 @@ public class tabListener extends FragmentPagerAdapter {
         switch(position){
             case 0:
                 MarcarPontos marcar = new MarcarPontos();
-                return marcar;
+                return (Fragment) marcar;
             case 1:
                 MapActivity mapa_ = new MapActivity();
-                return mapa_;
+                return (Fragment) mapa_;
             case 2:
                 ConverterCoordenadas converter = new ConverterCoordenadas();
-                return converter;
-            case 3:
-                VerPontos ver = new VerPontos();
-                return ver;
+                return (Fragment) converter;
         }
         return null;
     }

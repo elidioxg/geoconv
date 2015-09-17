@@ -5,21 +5,21 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/lay_marcar"
         android:fillViewport="false">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/branco">
+            android:background="@color/cinza">
 
             <RelativeLayout
                 android:id="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/margem_grande"
-                android:layout_marginBottom="@dimen/margem_grande"
+                android:layout_margin="@dimen/margem"
+                android:layout_marginBottom="@dimen/margem"
+                android:background="@color/branco"
                 >
 
                 <TextView
@@ -47,8 +47,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal|numberSigned"
-                    android:layout_margin="@dimen/margem"
+                    android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:hint="@string/latitude"
                     />
 
                 <TextView
@@ -67,8 +68,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvlong"
                     android:inputType="numberDecimal|numberSigned"
-                    android:layout_margin="@dimen/margem"
+                    android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:hint="@string/longitude"
                     />
 
                 <ImageButton
@@ -78,6 +80,7 @@
                     android:layout_below="@id/etlong"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/margem"
+                    android:background="@mipmap/ic_convert"
                     />
 
             </RelativeLayout>
@@ -87,9 +90,9 @@
                 android:layout_below="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margem_grande"
-                android:layout_marginBottom="@dimen/margem_grande"
-                android:background="@color/cinza_claro">
+                android:layout_margin="@dimen/margem"
+                android:layout_marginBottom="@dimen/margem"
+                android:background="@color/branco">
 
                 <TextView
                     android:id="@+id/tv_converter"
@@ -115,8 +118,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:layout_margin="@dimen/margem"
+                    android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:hint="@string/quadrante"
                     />
 
                 <TextView
@@ -137,7 +141,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:inputType="number"
-                    android:layout_margin="@dimen/margem"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:hint="@string/norte"
                     />
 
                 <TextView
@@ -157,7 +162,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:inputType="number"
-                    android:layout_margin="@dimen/margem"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:hint="@string/leste"
                     />
 
                 <ImageButton
@@ -167,6 +173,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/etleste"
                     android:layout_margin="@dimen/margem"
+                    android:background="@mipmap/ic_convert"
                     />
 
             </RelativeLayout>
@@ -176,8 +183,9 @@
                 android:layout_below="@+id/layout_utmll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margem_grande"
-                android:layout_marginBottom="@dimen/margem_grande"
+                android:layout_margin="@dimen/margem"
+                android:layout_marginBottom="@dimen/margem"
+                android:background="@color/branco"
                 >
 
                 <TextView
@@ -186,6 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margem"
+                    android:layout_marginBottom="@dimen/margem"
                     />
 
                 <RelativeLayout
@@ -237,6 +246,16 @@
                         android:layout_margin="@dimen/margem"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/etLatgraus"
+                        android:layout_below="@+id/rg_latitude"
+                        android:layout_margin="@dimen/margem"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_grau"
+                        android:textSize="@dimen/fonteGrande"/>
+
                     <EditText
                         android:id="@+id/etLatminutos"
                         android:layout_below="@+id/rg_latitude"
@@ -248,15 +267,37 @@
                         android:layout_centerHorizontal="true"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/etLatminutos"
+                        android:layout_below="@+id/rg_latitude"
+                        android:layout_margin="@dimen/margem"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_min"
+                        android:textSize="@dimen/fonteGrande"/>
+
                     <EditText
                         android:id="@+id/etLatsegundos"
                         android:layout_below="@+id/rg_latitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/tvsimlatseg"
                         android:hint="@string/seg"
                         android:layout_margin="@dimen/margem"
                         android:inputType="numberDecimal|numberSigned"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvsimlatseg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rg_latitude"
+                        android:layout_margin="@dimen/margem"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_seg"
                         android:layout_alignParentRight="true"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                 </RelativeLayout>
@@ -267,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_latgraus"
                     android:layout_margin="@dimen/margem_grande"
-                    android:layout_marginBottom="@dimen/margem_grande">
+                    android:layout_marginBottom="@dimen/margem">
 
                     <TextView
                         android:id="@+id/tvlongitude"
@@ -312,6 +353,16 @@
                         android:layout_margin="@dimen/margem"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/etLongraus"
+                        android:layout_below="@+id/rg_longitude"
+                        android:layout_margin="@dimen/margem"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_grau"
+                        android:textSize="@dimen/fonteGrande"/>
+
                     <EditText
                         android:id="@+id/etLonminutos"
                         android:layout_below="@+id/rg_longitude"
@@ -323,6 +374,16 @@
                         android:layout_centerHorizontal="true"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/etLonminutos"
+                        android:layout_below="@+id/rg_longitude"
+                        android:layout_margin="@dimen/margem"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_min"
+                        android:textSize="@dimen/fonteGrande"/>
+
                     <EditText
                         android:id="@+id/etLonsegundos"
                         android:layout_below="@+id/rg_longitude"
@@ -331,6 +392,18 @@
                         android:hint="@string/seg"
                         android:inputType="numberDecimal|numberSigned"
                         android:layout_margin="@dimen/margem"
+                        android:layout_toLeftOf="@+id/tvsimlonseg"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvsimlonseg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rg_longitude"
+                        android:layout_margin="@dimen/margem"
+                        android:text="@string/simbolo_seg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteGrande"
                         android:layout_alignParentRight="true"
                         />
 
@@ -343,6 +416,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/layout_longraus"
                     android:layout_margin="@dimen/margem"
+                    android:background="@mipmap/ic_convert"
                     />
 
             </RelativeLayout>
@@ -350,31 +424,5 @@
         </RelativeLayout>
 
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/lay_marcar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/preto">
-
-        <ImageButton
-            android:id="@+id/ib_limpar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="@string/limpar"
-            android:layout_alignParentLeft="true"
-            />
-
-        <ImageButton
-            android:id="@+id/ib_marcar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="@string/marcar_ponto"
-            android:background="@mipmap/mapmarker"
-            android:layout_alignParentRight="true"
-            />
-
-    </RelativeLayout>
 
 </RelativeLayout>

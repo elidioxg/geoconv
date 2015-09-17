@@ -1,12 +1,10 @@
 package geocodigos.geoconv;
 
 import android.app.AlertDialog;
-import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -21,13 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.location.LocationRequest;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import geocodigos.geoconv.Conversion.ConversaoGMS;
 import geocodigos.geoconv.Conversion.CoordinateConversion;
@@ -44,13 +36,11 @@ public class MarcarPontos extends Fragment implements LocationListener {
     private ImageButton ibMarcar;
     DatabaseHelper database;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
-        tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms, tvSatelites;
+        tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms, tvGpsStatus;
 
     private View view;
     private static boolean fragmentVisivel;
     private double latitude, longitude, altitude, precisao;
-    final int GPS_EVENT_SATELLITE_STATUS =1;
-    private String num_satelites = "0";
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +65,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
         tvSetor = (TextView) view.findViewById(R.id.in_quadrante);
         tvNorte = (TextView) view.findViewById(R.id.in_norte);
         tvLeste = (TextView) view.findViewById(R.id.in_leste);
-        tvSatelites = (TextView) view.findViewById(R.id.in_satelites);
+        tvGpsStatus = (TextView) view.findViewById(R.id.in_status);
 
         etRegistro.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -165,7 +155,6 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
                                 getTime time = new getTime();
                                 String strTime = time.returnTime();
-
                                 getDate date = new getDate();
                                 String strDate = date.returnDate();
 
@@ -203,41 +192,25 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
         locationManager = (LocationManager) getActivity().
         getSystemService(Context.LOCATION_SERVICE);
-        //Criteria criteria = new Criteria();
 
         provider = locationManager.GPS_PROVIDER;
         locationManager.removeUpdates(this);//ver se remove os valores falsos quando a atividade é iniciada
         //provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);
-
         if (location != null) {
             onLocationChanged(location);
-        } else {
-            //implementar depois
-            //if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            //    Toast.makeText(getActivity(), R.string.gps_desativado).show();
-            //}
-            Toast.makeText(getActivity(),
-                    R.string.nao_gps_loc,
-                    Toast.LENGTH_SHORT).show();
         }
-        status = new GpsStatus.Listener(){
-            @Override
-            public void onGpsStatusChanged(int event) {
-                if(event == GPS_EVENT_SATELLITE_STATUS){
-                    GpsStatus gps = locationManager.getGpsStatus(null);
-                    Iterable<GpsSatellite> satelites = gps.getSatellites();
-                    Iterator<GpsSatellite> sat = satelites.iterator();
-                    num_satelites= String.valueOf(0);
-                    int i=0;
-                    while(sat.hasNext()){
-                        i++;
-                        num_satelites = String.valueOf(i);
-                    }
-                }
-            }
-        };
-        locationManager.requestLocationUpdates(provider, 1000, 1, this);
+        final LocationManager manager = (LocationManager)
+                getActivity().getSystemService( Context.LOCATION_SERVICE );
+
+        if(manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            tvGpsStatus.setText(R.string.req_loc);
+            tvGpsStatus.setTextColor(getResources().getColor(R.color.verde));
+        } else {
+            tvGpsStatus.setText(R.string.gps_desativado);
+            tvGpsStatus.setTextColor(getResources().getColor(R.color.vermelho));
+        }
+        locationManager.requestLocationUpdates(provider, 5000, 1, this);
         locationManager.addGpsStatusListener(status);
         return view;
     }
@@ -259,15 +232,14 @@ public class MarcarPontos extends Fragment implements LocationListener {
             }
             strLatitude = coordLat[0] + "\u00B0 " + coordLat[1] + "' " + coordLat[2] + "'' " + norte;
             strLongitude = coordLon[0] + "\u00B0 " + coordLon[1] + "' " + coordLon[2] + "'' " + leste;
-            strPrecisao = String.valueOf(precisao);
-            strAltitude = String.valueOf(altitude);
+            strPrecisao = String.format("%.1f", precisao);
+            strAltitude = String.format("%.1f", altitude);
             tvLatitude.setText(String.format("%.5f", latitude));
             tvLongitude.setText(String.format("%.5f", longitude));
             tvLatgms.setText(strLatitude);
             tvLongms.setText(strLongitude);
             tvPrecisao.setText(strPrecisao);
             tvAltitude.setText(strAltitude);
-            tvSatelites.setText(num_satelites);
 
             getTime time = new getTime();
             strTime = time.returnTime();
@@ -294,7 +266,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        locationManager.requestLocationUpdates(provider, 1000, 1, this);
+        locationManager.requestLocationUpdates(provider, 5000, 1, this);
         preencheCampos();
     }
 
@@ -323,11 +295,14 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
     @Override
     public void onProviderEnabled(String s) {
-
+        tvGpsStatus.setText(R.string.gps_desativado);
+        tvGpsStatus.setTextColor(getResources().getColor(R.color.vermelho));
     }
 
     @Override
     public void onProviderDisabled(String s) {
-
+        tvGpsStatus.setText(R.string.req_loc);
+        tvGpsStatus.setTextColor(getResources().getColor(R.color.verde));
     }
+
 }

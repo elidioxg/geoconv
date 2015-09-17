@@ -84,47 +84,25 @@ public class MapActivity extends Fragment implements LocationListener {
                 switch (checkedId){
                     case R.id.rb_pontos:
                         Log.i("rb_pontos","Marcado");
+                        addMarkers(true, "pontos");
                         break;
                     case R.id.rb_linha:
                         Log.i("rb_linha","Marcado");
+                        addMarkers(true, "linha");
                         break;
                     case R.id.rb_poligono:
                         Log.i("rb_poligono","Marcado");
+                        addMarkers(true, "poligono");
                         break;
                     default:
+                        addMarkers(false, "pontos");
                         break;
                 }
-                Log.i("checkedId ", String.valueOf(checkedId));
             }
         });
         rbPontos = (RadioButton) view.findViewById(R.id.rb_pontos);
         rbLinhas = (RadioButton) view.findViewById(R.id.rb_linha);
         rbPoligono  = (RadioButton) view.findViewById(R.id.rb_poligono);
-        rbPontos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.i("rbPontos","onCheckedChanged");
-                if(isChecked){addMarkers(false);}
-            }
-        });
-        rbLinhas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.i("rbLinhas", "onCheckedChanged");
-                if (isChecked) {
-                    addMarkers(false);
-                }
-            }
-        });
-        rbPoligono.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.i("rbPoligono", "onCheckedChanged");
-                if (isChecked) {
-                    addMarkers(false);
-                }
-            }
-        });
         ibPontos = (ImageButton) view.findViewById(R.id.ib_pontos);
         ibPontos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +111,7 @@ public class MapActivity extends Fragment implements LocationListener {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_map, ver_pontos);
                 transaction.addToBackStack(null);
+                //transaction.remove(MapActivity.this);
                 transaction.commit();
             }
         });
@@ -144,11 +123,24 @@ public class MapActivity extends Fragment implements LocationListener {
         mapa.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                addMarkers(true);
+                switch(rgGeometria.getCheckedRadioButtonId()){
+                    case R.id.rb_pontos:
+                        addMarkers(true, "pontos");
+                        break;
+                    case R.id.rb_linha:
+                        addMarkers(true, "linha");
+                        break;
+                    case R.id.rb_poligono:
+                        addMarkers(true, "poligono");
+                        break;
+                    default:
+                        addMarkers(true, "pontos");
+                        break;
+                }
             }
         });
         //setRetainInstance(false);
-        locationManager.requestLocationUpdates(provider, 1000, 1, this);
+        locationManager.requestLocationUpdates(provider, 5000, 1, this);
         return view;
     }
 
@@ -165,7 +157,7 @@ public class MapActivity extends Fragment implements LocationListener {
         if(lat_atual!=0  && lon_atual!=0) {
             if (mapa != null) {
                 marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.loc_mapmarker))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_loc))
                         .title(strLoc));
             }
         }
@@ -219,15 +211,28 @@ public class MapActivity extends Fragment implements LocationListener {
         super.onResume();
         //if fragmentVisivel?
         //locationManager.removeUpdates(this);
-        locationManager.requestLocationUpdates(provider, 1000, 1, this);
-        addMarkers(false);
+        locationManager.requestLocationUpdates(provider, 5000, 1, this);
+        /*switch(rgGeometria.getCheckedRadioButtonId()){
+            case R.id.rb_pontos:
+                addMarkers(true, "pontos");
+                break;
+            case R.id.rb_linha:
+                addMarkers(true, "linha");
+                break;
+            case R.id.rb_poligono:
+                addMarkers(true, "poligono");
+                break;
+            default:
+                addMarkers(true, "pontos");
+                break;
+        }*/
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser){
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            addMarkers(false);
+            addMarkers(false, "pontos");
         }
         fragmentVisivel = isVisibleToUser;
     }
@@ -237,7 +242,7 @@ public class MapActivity extends Fragment implements LocationListener {
         super.onSaveInstanceState(outState);
     }
 
-    private void addMarkers(boolean updateVision) {
+    public void addMarkers(boolean updateVision, String tipo) {
         int numLinhas=0, numPoligono=0;
         //if(fragmentVisivel){
         if(mapa!=null){
@@ -255,8 +260,8 @@ public class MapActivity extends Fragment implements LocationListener {
             mapa.clear();
             if(lat_atual!=0 && lon_atual!=0) {
                 marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.loc_mapmarker))
-                        .title("Localização Atual"));
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_loc))
+                        .title(getResources().getString(R.string.localizacao_atual)));
             }
             if(pontos.size()>0){
                     for (int i = 0; i < pontos.size() ; i++) {
@@ -285,25 +290,25 @@ public class MapActivity extends Fragment implements LocationListener {
                             if (maxLon < lon) {
                                 maxLon = lon;
                             }
-                            if (rbPontos.isChecked()) {
+                            if (tipo=="pontos") {
                                 Log.i("rbPontos", "isChecked()");
                                 mapa.addMarker(new MarkerOptions()
                                         .position(new LatLng(lat, lon))
                                         .title(nome));
                             }
-                            if (rbLinhas.isChecked()) {
+                            if (tipo=="linha") {
                                 Log.i("rbLinhas", "isChecked()");
                                 linha.add(new LatLng(lat, lon));
                                 numLinhas++;
                             }
-                            if (rbPoligono.isChecked()) {
+                            if (tipo=="poligono") {
                                 Log.i("rbPoligono", "isChecked()");
                                 poly.add(new LatLng(lat, lon));
                                 numPoligono++;
                             }
                         }
                 }
-                if(rbLinhas.isChecked() && numLinhas>1){
+                if(tipo=="linha" && numLinhas>1){
                     List<LatLng> lista = linha.getPoints();
                     //linha.addAll(lista);
                     line = mapa.addPolyline(linha);
@@ -311,7 +316,7 @@ public class MapActivity extends Fragment implements LocationListener {
                     line.setColor(Color.BLUE);
                     line.setPoints(lista);
                 }
-                if(rbPoligono.isChecked() && numPoligono>2){
+                if(tipo=="poligono" && numPoligono>2){
                     poly.fillColor(Color.GREEN);
                     poly.strokeColor(Color.green(50));
                     poligono = mapa.addPolygon(poly);
@@ -320,10 +325,19 @@ public class MapActivity extends Fragment implements LocationListener {
             database.close();
             if(updateVision) {
                 LatLngBounds visao;
-                visao = new LatLngBounds(
-                        new LatLng(minLat - dif, minLon - dif),
-                        new LatLng(maxLat + dif, maxLon + dif));
-                mapa.moveCamera(CameraUpdateFactory.newLatLngBounds(visao, 80));
+                if(pontos.size()>0) {
+                    visao = new LatLngBounds(
+                            new LatLng(minLat - dif, minLon - dif),
+                            new LatLng(maxLat + dif, maxLon + dif));
+                    mapa.moveCamera(CameraUpdateFactory.newLatLngBounds(visao, 80));
+                } else {
+                    if(lat_atual!=0 && lon_atual!=0) {
+                        visao = new LatLngBounds(
+                                new LatLng(lat_atual - dif, lon_atual - dif),
+                                new LatLng(lat_atual + dif, lon_atual + dif));
+                        mapa.moveCamera(CameraUpdateFactory.newLatLngBounds(visao, 80));
+                    }
+                }
             }
         }
     }

@@ -77,6 +77,13 @@
     <string name="escolher">Escolher </string>
     <string name="limpar">Clear</string>
     <string name="fechar">Fechar</string>
+    <string name="simbolo_grau">\u00B0</string>
+    <string name="simbolo_min">\'</string>
+    <string name="simbolo_seg">\'\'</string>
+    <string name="num_registros">Número de Registros: </string>
+    <string name="gps_status">GPS status:</string>
+    <string name="req_loc">Requisitando localização...</string>
+    <string name="gps_desativado">GPS desativado</string>
 
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>

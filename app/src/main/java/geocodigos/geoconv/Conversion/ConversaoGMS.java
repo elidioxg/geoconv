@@ -1,7 +1,7 @@
 package geocodigos.geoconv.Conversion;
 
 public class ConversaoGMS {
-
+//to do: colocar os procedimentos de validação aqui
     public void ConversaoGMS(){
 
     }
