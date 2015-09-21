@@ -4,23 +4,21 @@
     <string name="converter">Converter</string>
     <string name="converter_coord">Converter Coordenadas</string>
     <string name="marcar_ponto">Marcar Ponto</string>
-    <string name="ver_pontos">Pontos Marcados</string>
     <string name="pontos_marcados">Pontos Marcados</string>
     <string name="conversor_coordenadas">Conversor de Coordenadas</string>
-    <string name="coordenadas">Coordenadas Atual:</string>
+    <string name="coordenadas">Coordenadas Atuais:</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="action_settings">Configurações</string>
     <string name="registro">Nome do Registro</string>
     <string name="utmLongitude">Universal Tranverse Mercator</string>
-    <string name="leste">Leste:</string>
-    <string name="longitudeUtm">Latitude/Longitude</string>
+    <string name="leste">Leste</string>
+    <string name="longitudeUtm">Latitude/Longitude (graus decimais)</string>
     <string name="quadrante">Setor</string>
     <string name="salvar_ponto">Salvar Ponto</string>
     <string name="norte">Norte</string>
     <string name="precisao">Precisão</string>
     <string name="altitude">Altitude</string>
-    <string name="title_activity_kml">kmlActivity</string>
     <string name="descricao">Descrição</string>
     <string name="sem_valor"> </string>
     <string name="hora">Hora:</string>
@@ -29,14 +27,14 @@
     <string name="apagar">Excluir</string>
     <string name="strRegistro">Registro </string>
     <string name="novo_registro">Novo Registro</string>
-    <string name="coordenadas_convertidas">Coordenadas convertidas com sucesso.</string>
+    <string name="coordenadas_convertidas">Coordenadas convertidas com sucesso</string>
     <string name="graus">Graus</string>
     <string name="minutos">Minutos</string>
     <string name="segundos">Segundos</string>
     <string name="grau">grau</string>
     <string name="min">min</string>
     <string name="seg">seg</string>
-    <string name="conv_gms">Graus, minutos e segundos</string>
+    <string name="conv_gms">Latitude/Longitude (graus, minutos e segundos)</string>
     <string name="pontos">Pontos</string>
     <string name="linha">Linha</string>
     <string name="poligono">Polígono</string>
@@ -52,29 +50,27 @@
     <string name="valor_latitude">O valor da latitude não está preenchido</string>
     <string name="latminmax">Latitude deve ter os valores entre 0 e 90</string>
     <string name="lonminmax">Longitude deve ser entre 0 e 180</string>
-    <string name="quadrante_formato">Quadrante tem que ser forma: Numero Letra. Exemplo: 24 L</string>
-    <string name="norte_formato">Valor da coordenada Norte deve ser entre 0 e 10000000</string>
-    <string name="leste_formato">Valores das Coordenadas Leste devem ser entre 160000 e 10000000</string>
+    <string name="quadrante_formato">O valor do quadrante é inválido</string>
+    <string name="norte_formato">Valor da coordenada Norte deve ser entre 0 e 10 000 000</string>
+    <string name="leste_formato">Valores das Coordenadas Leste devem ser entre 160 000 e 834 000</string>
     <string name="minminmax">Valores de minutos devem ser maior ou igual a 0 e menor que 60</string>
     <string name="segminmax">Valores de segundos devem ser maior ou igual a 0 e menor que 60</string>
     <string name="strMarcar">Marcar</string>
     <string name="nao_loc">Não foi possível obter a localização atual</string>
-    <string name="nao_gps_loc">GPS desativado ou ainda não foi possível obter a localização atual</string>
     <string name="no_camada">O nome da camada não pode ficar em branco</string>
     <string name="arquivo_salvo">Arquivo salvo com sucesso</string>
-    <string name="ultima_localizacao">Ultima localizalçao recebida em: </string>
+    <string name="ultima_localizacao">Última localização recebida em: </string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
     <string name="N">N</string>
     <string name="S">S</string>
     <string name="W">W</string>
     <string name="E">E</string>
-    <string name="documentacao">Documentação</string>
+    <string name="documentacao">Ajuda</string>
     <string name="por">Português</string>
     <string name="esp">Español</string>
     <string name="eng">English</string>
-    <string name="num_satelites">Número de Satelites: </string>
-    <string name="escolher">Escolher </string>
+    <string name="escolher">Salvar em </string>
     <string name="limpar">Limpar</string>
     <string name="fechar">Fechar</string>
     <string name="simbolo_grau">\u00B0</string>
@@ -82,13 +78,27 @@
     <string name="simbolo_seg">\'\'</string>
     <string name="num_registros">Número de Registros: </string>
     <string name="gps_status">Status do GPS:</string>
-    <string name="req_loc">Requisitando localização...</string>
+    <string name="req_loc">Obtendo localização...</string>
     <string name="gps_desativado">GPS desativado</string>
+
+    <string name="strLetra">A</string>
+    <string name="strNum">00</string>
+    <string name="strDocMarcar">Marcar ponto no GPS</string>
+    <string name="strDocVer">Ver detalhes dos pontos marcados</string>
+    <string name="strDocMapa">Visualizar os registros salvos no mapa</string>
+    <string name="strDocRemover">Remover registros selecionados</string>
+    <string name="strDocExportar">Exportas os pontos selecionados para camada vetorial</string>
+    <string name="strDocConverteUTM">Converter coordenadas em UTM</string>
+    <string name="strDocConvertLL">Converter Latitude/Longitude em graus decimais</string>
+    <string name="strDocConvertGMS">Converter Latitude/Longitude em graus, minutos e segundos</string>
+    <string name="strDocSalvar">Salvar modificações</string>
+    <string name="strDocProx">Próximo registro salvo</string>
+    <string name="strDocAnt">Ir para o registro anterior</string>
 
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>
-        <item>@string/mapa</item>
+        <item>@string/pontos_marcados</item>
         <item>@string/converter</item>
-        <item>@string/ver_pontos</item>
     </string-array>
+
 </resources>

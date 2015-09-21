@@ -6,7 +6,6 @@
     import android.support.v4.app.Fragment;
     import android.content.Context;
     import android.os.Bundle;
-    import android.support.v4.app.FragmentManager;
     import android.support.v4.app.FragmentTransaction;
     import android.util.Log;
     import android.view.KeyEvent;
@@ -26,7 +25,6 @@
     import java.io.IOException;
     import java.util.ArrayList;
     import geocodigos.geoconv.Database.DatabaseHelper;
-    import geocodigos.geoconv.Map.MapActivity;
     import geocodigos.geoconv.Registro.VerRegistro;
     import geocodigos.geoconv.kml.ExportarKML;
     import geocodigos.geoconv.model.PointModel;
@@ -35,7 +33,7 @@
     public class VerPontos extends Fragment {
 
         DatabaseHelper database;
-        private ImageButton ibExportar, ibMapa, ibExcluir;
+        private ImageButton ibExportar, ibExcluir, ibMapa;
         private TextView tvRegistro, tvData, tvHora, tvPontos;
         public ListView listView;
 
@@ -55,16 +53,24 @@
             //TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             ibExportar = (ImageButton) view.findViewById(R.id.ib_exportar);
             ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
-            ibMapa = (ImageButton) view.findViewById(R.id.ib_mapa);
+            ibMapa  = (ImageButton) view.findViewById(R.id.ib_mapa);
             tvPontos = (TextView) view.findViewById(R.id.tv_pontos);
             listView = (ListView) view.findViewById(R.id.lv_registro);
 
             refreshPoints();
+            ibMapa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.remove(VerPontos.this);
+                    transaction.commit();
+                }
+            });
 
             ibExportar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(campos.size()>0) {
+                    if (campos.size() > 0) {
                         //final FileOutputStream out;
                         AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
                         alerta.setTitle(R.string.exportar_kml);
@@ -82,11 +88,15 @@
                             @Override
                             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                                 final InputMethodManager imm;
-                                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                                if (event.getAction() == KeyEvent.ACTION_DOWN ||
                                         keyCode == KeyEvent.KEYCODE_ENTER) {
                                     imm = (InputMethodManager) getActivity().getSystemService(
                                             Context.INPUT_METHOD_SERVICE);
                                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                                }
+                                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                    ViewGroup parent = (ViewGroup) Kml.getParent();
+                                    parent.removeView(Kml);
                                 }
                                 return false;
                             }
@@ -140,22 +150,10 @@
                 }
             });
 
-            ibMapa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    //MapActivity mapa = new MapActivity();
-                    //transaction.replace(R.id.layout_principal, mapa);
-                    transaction.addToBackStack(null);
-                    transaction.remove(VerPontos.this);
-                    transaction.commit();
-                }
-            });
-
             ibExcluir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(campos.size()>0) {
+                    if (campos.size() > 0) {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
                         alerta.setTitle(R.string.apagar_registros);
                         //alerta.setMessage("teste");
@@ -184,13 +182,13 @@
                                 database.close();
                                 refreshPoints();
                                 listView.setAdapter(new ListAdapter(getActivity()));
-                                synchronized(listView) {
+                                synchronized (listView) {
                                     listView.notifyAll();
                                 }
                             }
                         }).show();
                     } else {
-                        Toast.makeText(getActivity(),R.string.sem_pontos,
+                        Toast.makeText(getActivity(), R.string.sem_pontos,
                                 Toast.LENGTH_SHORT);
                     }
                 }
@@ -346,7 +344,6 @@
         @Override
         public void onDetach(){
             super.onDetach();
-            Log.i("VerPontos", "onDetach");
         }
 
         @Override

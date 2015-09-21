@@ -18,13 +18,15 @@
                 android:text="@string/latitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"/>
+                android:layout_alignParentLeft="true"
+                />
 
             <TextView
                 android:id="@+id/textviewLat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textSize="@dimen/fonteNormal"
                 />
 
         </RelativeLayout>
@@ -32,7 +34,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            >
 
             <TextView
                 android:text="@string/longitude"
@@ -46,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textSize="@dimen/fonteNormal"
                 />
 
         </RelativeLayout>
@@ -75,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textSize="@dimen/fonteNormal"
                 />
 
         </RelativeLayout>
@@ -96,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textSize="@dimen/fonteNormal"
                 />
 
         </RelativeLayout>
@@ -117,6 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textSize="@dimen/fonteNormal"
                 />
 
         </RelativeLayout>

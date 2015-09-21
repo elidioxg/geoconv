@@ -34,7 +34,6 @@ public class VerRegistro extends Activity {
 
     @Override
     public void onBackPressed() {
-        Log.i("Botao Voltar "," Fechando Activity");
         finish();
         return;
     }

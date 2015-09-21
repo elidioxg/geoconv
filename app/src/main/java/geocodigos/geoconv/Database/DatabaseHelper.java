@@ -5,7 +5,6 @@
     import android.database.Cursor;
     import android.database.sqlite.SQLiteDatabase;
     import android.database.sqlite.SQLiteOpenHelper;
-    import android.util.Log;
 
     import java.util.ArrayList;
 
@@ -159,7 +158,6 @@
                         pointModel.hora = cursor.getString(cursor.getColumnIndex(dbHora));
                         pointModel.data = cursor.getString(cursor.getColumnIndex(dbData));
                         pointModel.selecionado=cursor.getString(cursor.getColumnIndex(dbSel));
-                        Log.i("id", pointModel.id.toString());
                         ponto.add(pointModel);
                     } while (cursor.moveToNext());
                 }

@@ -41,6 +41,7 @@ import geocodigos.geoconv.VerPontos;
 import geocodigos.geoconv.model.PointModel;
 
 public class MapActivity extends Fragment implements LocationListener {
+    private int requests = 7000;
     private static GoogleMap mapa;
     DatabaseHelper database;
     double minLat, maxLat, minLon, maxLon;
@@ -70,9 +71,7 @@ public class MapActivity extends Fragment implements LocationListener {
         view = inflater.inflate(R.layout.map_layout, container, false);
         locationManager = (LocationManager) getActivity().
                 getSystemService(Context.LOCATION_SERVICE);
-        //Criteria criteria = new Criteria();
         provider = locationManager.GPS_PROVIDER;
-        //provider = locationManager.getBestProvider(criteria, false);
         location = locationManager.getLastKnownLocation(provider);
         if (location != null) {
             onLocationChanged(location);
@@ -81,23 +80,7 @@ public class MapActivity extends Fragment implements LocationListener {
         rgGeometria.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.rb_pontos:
-                        Log.i("rb_pontos","Marcado");
-                        addMarkers(true, "pontos");
-                        break;
-                    case R.id.rb_linha:
-                        Log.i("rb_linha","Marcado");
-                        addMarkers(true, "linha");
-                        break;
-                    case R.id.rb_poligono:
-                        Log.i("rb_poligono","Marcado");
-                        addMarkers(true, "poligono");
-                        break;
-                    default:
-                        addMarkers(false, "pontos");
-                        break;
-                }
+                setGeometry(false);
             }
         });
         rbPontos = (RadioButton) view.findViewById(R.id.rb_pontos);
@@ -108,42 +91,20 @@ public class MapActivity extends Fragment implements LocationListener {
             @Override
             public void onClick(View v) {
                 VerPontos ver_pontos = new VerPontos();
+                //FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_map, ver_pontos);
-                transaction.addToBackStack(null);
                 //transaction.remove(MapActivity.this);
+                //transaction.add(R.id.fragment_container, ver_pontos);
+                //transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
-
-        supportFragment = ((SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map));
-
-        mapa = supportFragment.getMap();
-        mapa.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                switch(rgGeometria.getCheckedRadioButtonId()){
-                    case R.id.rb_pontos:
-                        addMarkers(true, "pontos");
-                        break;
-                    case R.id.rb_linha:
-                        addMarkers(true, "linha");
-                        break;
-                    case R.id.rb_poligono:
-                        addMarkers(true, "poligono");
-                        break;
-                    default:
-                        addMarkers(true, "pontos");
-                        break;
-                }
-            }
-        });
+        initializeMap();
         //setRetainInstance(false);
-        locationManager.requestLocationUpdates(provider, 5000, 1, this);
+        locationManager.requestLocationUpdates(provider, requests, 1, this);
         return view;
     }
-
 
     @Override
     public void onLocationChanged(Location location) {
@@ -151,10 +112,10 @@ public class MapActivity extends Fragment implements LocationListener {
         String strLoc = getResources().getString(R.string.localizacao_atual);
         lat_atual = location.getLatitude();
         lon_atual = location.getLongitude();
-        if (marcador != null) {
-            marcador.remove();
-        }
         if(lat_atual!=0  && lon_atual!=0) {
+            if (marcador != null) {
+                marcador.remove();
+            }
             if (mapa != null) {
                 marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_loc))
@@ -177,20 +138,45 @@ public class MapActivity extends Fragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
-/*
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+
+    private void initializeMap() {
+        supportFragment = ((SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map));
+
+        mapa = supportFragment.getMap();
+        mapa.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                setGeometry(true);
+            }
+        });
     }
-*/
+
+    private void setGeometry(boolean vision){
+        switch (rgGeometria.getCheckedRadioButtonId()){
+            case R.id.rb_pontos:
+                addMarkers(vision, "pontos");
+                break;
+            case R.id.rb_linha:
+                addMarkers(vision, "linha");
+                break;
+            case R.id.rb_poligono:
+                addMarkers(vision, "poligono");
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void onPause(){
+        super.onPause();
         if(marcador!=null){
             marcador.remove();
         }
         if(mapa!=null) {
             //getFragmentManager().beginTransaction().remove(getChildFragmentManager()
-              //      .findFragmentById(R.id.map)).commitAllowingStateLoss();
+            //      .findFragmentById(R.id.map)).commitAllowingStateLoss();
             mapa=null;
         }
         if(poligono!=null){
@@ -198,41 +184,25 @@ public class MapActivity extends Fragment implements LocationListener {
         }
         if(line!=null){line.remove();}
         locationManager.removeUpdates(this);
-        /*if(supportFragment.isResumed()){
-            getFragmentManager().beginTransaction().remove(supportFragment).
-                    commitAllowingStateLoss();
 
-        }*/
-        super.onPause();
-    }
+/*        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.remove(supportFragment);
+        ft.commit();
+ */   }
+
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        //if fragmentVisivel?
-        //locationManager.removeUpdates(this);
-        locationManager.requestLocationUpdates(provider, 5000, 1, this);
-        /*switch(rgGeometria.getCheckedRadioButtonId()){
-            case R.id.rb_pontos:
-                addMarkers(true, "pontos");
-                break;
-            case R.id.rb_linha:
-                addMarkers(true, "linha");
-                break;
-            case R.id.rb_poligono:
-                addMarkers(true, "poligono");
-                break;
-            default:
-                addMarkers(true, "pontos");
-                break;
-        }*/
+        locationManager.requestLocationUpdates(provider, requests, 1, this);
+   //     initializeMap();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser){
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            addMarkers(false, "pontos");
+            setGeometry(true);
         }
         fragmentVisivel = isVisibleToUser;
     }
@@ -266,48 +236,43 @@ public class MapActivity extends Fragment implements LocationListener {
             if(pontos.size()>0){
                     for (int i = 0; i < pontos.size() ; i++) {
                         String selecionado = pontos.get(i).getSelecao();
-                        if (Integer.parseInt(selecionado.trim()) == 1) {
-                            String latitude = pontos.get(i).getlatitude();
-                            String longitude = pontos.get(i).getLongitude();
-                            String nome = pontos.get(i).getRegistro();
-                            lat = Double.parseDouble(latitude);
-                            lon = Double.parseDouble(longitude);
-                            if (i == 0) {
-                                minLat = lat;
-                                maxLat = lat;
-                                minLon = lon;
-                                maxLon = lon;
-                            }
-                            if (minLat > lat) {
-                                minLat = lat;
-                            }
-                            if (maxLat < lat) {
-                                maxLat = lat;
-                            }
-                            if (minLon > lon) {
-                                minLon = lon;
-                            }
-                            if (maxLon < lon) {
-                                maxLon = lon;
-                            }
-                            if (tipo=="pontos") {
-                                Log.i("rbPontos", "isChecked()");
-                                mapa.addMarker(new MarkerOptions()
-                                        .position(new LatLng(lat, lon))
-                                        .title(nome));
-                            }
-                            if (tipo=="linha") {
-                                Log.i("rbLinhas", "isChecked()");
-                                linha.add(new LatLng(lat, lon));
-                                numLinhas++;
-                            }
-                            if (tipo=="poligono") {
-                                Log.i("rbPoligono", "isChecked()");
-                                poly.add(new LatLng(lat, lon));
-                                numPoligono++;
-                            }
+                        String latitude = pontos.get(i).getlatitude();
+                        String longitude = pontos.get(i).getLongitude();
+                        String nome = pontos.get(i).getRegistro();
+                        lat = Double.parseDouble(latitude);
+                        lon = Double.parseDouble(longitude);
+                        if (i == 0) {
+                            minLat = lat;
+                            maxLat = lat;
+                            minLon = lon;
+                            maxLon = lon;
                         }
-                }
+                        if (minLat > lat) {
+                            minLat = lat;
+                        }
+                        if (maxLat < lat) {
+                            maxLat = lat;
+                        }
+                        if (minLon > lon) {
+                            minLon = lon;
+                        }
+                        if (maxLon < lon) {
+                            maxLon = lon;
+                        }
+                        if (tipo=="pontos") {
+                            mapa.addMarker(new MarkerOptions()
+                                    .position(new LatLng(lat, lon))
+                                    .title(nome));
+                        }
+                        if (tipo=="linha") {
+                            linha.add(new LatLng(lat, lon));
+                            numLinhas++;
+                        }
+                        if (tipo=="poligono") {
+                            poly.add(new LatLng(lat, lon));
+                            numPoligono++;
+                        }
+                    }
                 if(tipo=="linha" && numLinhas>1){
                     List<LatLng> lista = linha.getPoints();
                     //linha.addAll(lista);

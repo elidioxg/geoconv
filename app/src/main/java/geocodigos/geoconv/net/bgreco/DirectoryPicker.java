@@ -137,6 +137,7 @@ public class DirectoryPicker extends ListActivity {
             try {
                 outputStream = openFileOutput(nome, Context.MODE_PRIVATE);
                 outputStream.write(param_camada.getBytes());
+                Log.i("camada: ", param_camada);
                 outputStream.close();
                 Toast.makeText(getApplicationContext(), R.string.arquivo_salvo,
                         Toast.LENGTH_SHORT).show();

@@ -19,6 +19,148 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/layoutGPS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:layout_marginBottom="@dimen/margem"
+                android:background="@color/branco">
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gps_status"
+                    android:layout_margin="@dimen/margem_grande"
+                    />
+
+                <TextView
+                    android:id="@+id/in_status"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tvStatus"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutLast"
+                android:layout_below="@+id/layoutGPS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:layout_marginBottom="@dimen/margem"
+                android:background="@color/branco"
+                >
+
+                <TextView
+                    android:id="@+id/tv_ultima"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ultima_localizacao"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fontePequena"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_data"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_ultima"
+                    android:text=""
+                    android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
+                    />
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/layout_latlong"
+                android:layout_below="@+id/layoutLast"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margem"
+                android:layout_marginBottom="@dimen/margem"
+                android:background="@color/branco"
+                >
+
+                <TextView
+                    android:id="@+id/tv_latitude"
+                    android:text="@string/latitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="@dimen/fonteNormal"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/in_latitude"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/in_lat_gms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_alignParentRight="true"
+                    android:text=""
+                    android:gravity="right"
+                    android:textSize="@dimen/fontePequena"/>
+
+                <TextView
+                    android:id="@+id/tv_longitude"
+                    android:text="@string/longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fonteNormal"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_below="@+id/in_latitude"
+                    android:layout_alignParentLeft="true"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/in_longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/in_latitude"
+                    android:textSize="@dimen/fonteNormal"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/in_lon_gms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/in_latitude"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:text=""
+                    android:textSize="@dimen/fontePequena"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/layout1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -34,9 +176,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/altitude"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -46,6 +189,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/sem_valor"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -53,9 +197,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/precisao"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_toLeftOf="@+id/in_precisao"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -65,83 +210,8 @@
                     android:text="@string/sem_valor"
                     android:layout_alignParentRight="true"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
                     />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_latlong"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/margem"
-                android:layout_marginBottom="@dimen/margem"
-                android:layout_alignParentTop="true"
-                android:background="@color/branco"
-                >
-
-                <TextView
-                    android:id="@+id/tv_latitude"
-                    android:text="@string/latitude"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="@dimen/texto"
-                    android:layout_margin="@dimen/margem_grande"
-                    />
-
-                <TextView
-                    android:id="@+id/in_latitude"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_margin="@dimen/margem_grande"
-                    android:textSize="@dimen/texto"
-                    android:gravity="center"
-                    />
-
-                <TextView
-                    android:id="@+id/in_lat_gms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margem_grande"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:gravity="right" />
-
-                <TextView
-                    android:id="@+id/tv_longitude"
-                    android:text="@string/longitude"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/texto"
-                    android:layout_margin="@dimen/margem_grande"
-                    android:layout_below="@+id/in_latitude"
-                    android:layout_alignParentLeft="true"
-                    />
-
-                <TextView
-                    android:id="@+id/in_longitude"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_margin="@dimen/margem_grande"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/in_latitude"
-                    android:textSize="@dimen/texto"
-                    android:gravity="center"
-                    />
-
-                <TextView
-                    android:id="@+id/in_lon_gms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/in_latitude"
-                    android:layout_margin="@dimen/margem_grande"
-                    android:layout_alignParentRight="true"
-                    android:gravity="right"
-                    android:text=""/>
 
             </RelativeLayout>
 
@@ -161,9 +231,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quadrante"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentLeft="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -174,6 +245,7 @@
                     android:text=""
                     android:layout_marginTop="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -181,9 +253,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Norte"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -193,6 +266,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@+id/tv_norte"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -201,9 +275,10 @@
                     android:layout_height="wrap_content"
                     android:text="Leste"
                     android:layout_below="@+id/tv_norte"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -215,67 +290,14 @@
                     android:layout_toRightOf="@+id/tv_leste"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentRight="true"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout4"
-                android:layout_below="@+id/layout3"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margem"
-                android:layout_marginBottom="@dimen/margem"
-                android:background="@color/branco"
-                >
 
-                <TextView
-                    android:id="@+id/tv_ultima"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ultima_localizacao"
-                    android:layout_margin="@dimen/margem_grande"
-                    />
 
-                <TextView
-                    android:id="@+id/tv_data"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_ultima"
-                    android:text=""
-                    android:layout_margin="@dimen/margem_grande"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layout4"
-                android:layout_margin="@dimen/margem"
-                android:layout_marginBottom="@dimen/margem"
-                android:background="@color/branco">
-
-                <TextView
-                    android:id="@+id/num_satelites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margem"
-                    android:layout_margin="@dimen/margem_grande"
-                    android:text="@string/num_satelites"/>
-
-                <TextView
-                    android:id="@+id/in_satelites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/num_satelites"
-                    android:text=""
-                    android:layout_margin="@dimen/margem_grande"
-                    />
-
-            </RelativeLayout>
-
-           </RelativeLayout>
+        </RelativeLayout>
 
         </ScrollView>
 
@@ -288,11 +310,11 @@
 
         <ImageButton
             android:id="@+id/ibmarcar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/buttons"
+            android:layout_height="@dimen/buttons"
             android:contentDescription="@string/marcar_ponto"
-            android:background="@mipmap/mapmarker"
-            android:layout_alignParentRight="true"
+            android:background="@mipmap/ic_marcar"
+            android:layout_centerHorizontal="true"
             />
 
     </RelativeLayout>

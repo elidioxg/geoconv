@@ -28,10 +28,11 @@
 
                 <TextView
                     android:id="@+id/tvStatus"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gps_status"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -42,6 +43,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:text=""
                     android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
             </RelativeLayout>
@@ -62,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ultima_localizacao"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -72,11 +75,10 @@
                     android:text=""
                     android:textStyle="bold"
                     android:layout_margin="@dimen/margem_grande"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
             </RelativeLayout>
-
-
 
             <RelativeLayout
                 android:id="@+id/layout_latlong"
@@ -95,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
                     />
@@ -108,7 +110,7 @@
                     android:text=""
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:gravity="center"
                     />
 
@@ -119,14 +121,15 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentRight="true"
                     android:text=""
-                    android:gravity="right" />
+                    android:gravity="right"
+                    android:textSize="@dimen/fontePequena"/>
 
                 <TextView
                     android:id="@+id/tv_longitude"
                     android:text="@string/longitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_below="@+id/in_latitude"
                     android:layout_alignParentLeft="true"
@@ -142,7 +145,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/in_latitude"
                     android:textStyle="bold"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:gravity="center"
                     />
 
@@ -154,7 +157,8 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentRight="true"
                     android:gravity="right"
-                    android:text=""/>
+                    android:text=""
+                    android:textSize="@dimen/fontePequena"/>
 
             </RelativeLayout>
 
@@ -174,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/altitude"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
@@ -188,6 +192,7 @@
                     android:text="@string/sem_valor"
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -195,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/precisao"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_toLeftOf="@+id/in_precisao"
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
@@ -209,6 +214,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="@dimen/margem_grande"
                     android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
             </RelativeLayout>
@@ -229,7 +235,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quadrante"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentLeft="true"
                     android:textStyle="bold"
@@ -244,6 +250,7 @@
                     android:layout_marginTop="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
                     android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -251,7 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Norte"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
                     android:textStyle="bold"
@@ -265,6 +272,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@+id/tv_norte"
                     android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
                 <TextView
@@ -273,7 +281,7 @@
                     android:layout_height="wrap_content"
                     android:text="Leste"
                     android:layout_below="@+id/tv_norte"
-                    android:textSize="@dimen/texto"
+                    android:textSize="@dimen/fonteNormal"
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
                     android:textStyle="bold"
@@ -289,6 +297,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_alignParentRight="true"
                     android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
                     />
 
             </RelativeLayout>
@@ -311,8 +320,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/marcar_ponto"
-            android:background="@mipmap/mapmarker"
-            android:layout_alignParentRight="true"
+            android:background="@mipmap/ic_marcar"
+            android:layout_centerHorizontal="true"
             />
 
     </RelativeLayout>

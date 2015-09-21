@@ -3,8 +3,8 @@ package geocodigos.geoconv;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 import geocodigos.geoconv.Conversion.ConversaoGMS;
@@ -28,11 +27,27 @@ import geocodigos.geoconv.model.PointModel;
 
 public class ConverterCoordenadas extends android.support.v4.app.Fragment {
     DatabaseHelper database;
-    private EditText etLat, etLon, etSet, etNor, etLes, etLatGrau,
+    private EditText etLat, etLon, etSet1, etSet2, etNor, etLes, etLatGrau,
             etLatMin, etLatSeg, etLonGrau, etLonMin, etLonSeg;
-    private ImageButton ibUtmLatLon, ibLatLonUtm, ibGraus,ibAddPoint,ibClear;
+    private ImageButton ibUtmLatLon, ibLatLonUtm, ibGraus;
     private RadioButton rbN, rbS, rbW, rbE;
     private String lat, lon , set, nor, les;
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.remove(this);
+        ft.commit();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.attach(ConverterCoordenadas.this);
+        ft.commit();
+    }
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState){
@@ -48,7 +63,8 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
 
         etLat = (EditText) view.findViewById(R.id.etlat);
         etLon = (EditText) view.findViewById(R.id.etlong);
-        etSet = (EditText) view.findViewById(R.id.etquadrante);
+        etSet1 = (EditText) view.findViewById(R.id.etNum);
+        etSet2 = (EditText) view.findViewById(R.id.etLetra);
         etNor = (EditText) view.findViewById(R.id.etnorte);
         etLes = (EditText) view.findViewById(R.id.etleste);
         etLatGrau = (EditText) view.findViewById(R.id.etLatgraus);
@@ -66,7 +82,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         rbE = (RadioButton) view.findViewById(R.id.rb_E);
         rbW = (RadioButton) view.findViewById(R.id.rb_W);
 
-        etSet.setOnKeyListener(new View.OnKeyListener(){
+        etSet1.setOnKeyListener(new View.OnKeyListener(){
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 final InputMethodManager imm;
@@ -75,7 +91,21 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                     imm = (InputMethodManager) getActivity().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                    etNor.requestFocus();
+                    etSet1.requestFocus();
+                }
+                return false;
+            }
+        });
+        etSet2.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etSet2.requestFocus();
                 }
                 return false;
             }
@@ -89,7 +119,6 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                     imm = (InputMethodManager) getActivity().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                    etLat.requestFocus();
                     ibLatLonUtm.callOnClick();
                 }
                 return false;
@@ -104,25 +133,81 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                     imm = (InputMethodManager) getActivity().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                    etNor.requestFocus();
                     ibUtmLatLon.callOnClick();
                 }
                 return false;
             }
         });
-        /*etLatGrau.setOnKeyListener(new View.OnKeyListener() {
+        etLatGrau.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 final InputMethodManager imm;
                 if(event.getAction()==KeyEvent.ACTION_DOWN &&
                         keyCode==KeyEvent.KEYCODE_ENTER) {
-                    //imm = (InputMethodManager) getActivity().getSystemService(
-                      //      Context.INPUT_METHOD_SERVICE);
+                    imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etLatGrau.requestFocus();
+                }
+                return false;
+            }
+        });
+        etLatMin.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                     etLatMin.requestFocus();
                 }
                 return false;
             }
-        });*/
+        });
+        etLatSeg.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etLatSeg.requestFocus();
+                }
+                return false;
+            }
+        });
+        etLonGrau.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etLonGrau.requestFocus();
+                }
+                return false;
+            }
+        });
+        etLonMin.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                final InputMethodManager imm;
+                if(event.getAction()==KeyEvent.ACTION_DOWN &&
+                        keyCode==KeyEvent.KEYCODE_ENTER) {
+                    imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    etLonMin.requestFocus();
+                }
+                return false;
+            }
+        });
         etLonSeg.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -142,7 +227,8 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
 
-                if (etSet.getText().toString().trim().isEmpty()) {
+                if (etSet1.getText().toString().trim().isEmpty() ||
+                        etSet2.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getActivity(), R.string.quadrante_formato,
                             Toast.LENGTH_LONG).show();
                 } else {
@@ -154,65 +240,91 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                             Toast.makeText(getActivity(), R.string.leste_formato,
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            if(validacao(etSet.getText().toString(),
+                            set = String.valueOf(etSet1.getText().toString())
+                                    +" "+etSet2.getText().toString();
+                            ConversaoGMS conversao = new ConversaoGMS();
+                            switch (conversao.validacao(set,
                                     etNor.getText().toString(),
-                                    etLes.getText().toString())) {
-                                etNor.requestFocus();
-                                nor=etNor.getText().toString();
-                                les=etLes.getText().toString();
-                                set=etSet.getText().toString();
-                                String strUtm = etSet.getText().toString() + " " +
-                                        etNor.getText().toString() + " " +
-                                        etLes.getText().toString();
-                                CoordinateConversion cc = new CoordinateConversion();
-                                double[] latlon = cc.utm2LatLon(strUtm);
-                                lat=String.format("%.5f", latlon[0]);
-                                lon=String.format("%.5f", latlon[1]);
+                                    etLes.getText().toString())){
+                                case 0:
+                                    etNor.requestFocus();
+                                    nor=etNor.getText().toString();
+                                    les=etLes.getText().toString();
+                                    String strUtm = set + " " +
+                                            etNor.getText().toString() + " " +
+                                            etLes.getText().toString();
+                                    CoordinateConversion cc = new CoordinateConversion();
+                                    double[] latlon = cc.utm2LatLon(strUtm);
+                                    lat=String.format("%.5f", latlon[0]);
+                                    lon=String.format("%.5f", latlon[1]);
 
-                                ArrayList<String> array = new ArrayList<String>();
-                                array =  conversaoGraus(latlon[0], latlon[1]);
-                                String latgms = array.get(0).toString()+
-                                        "\u00B0 "+array.get(1).toString()+"' "
-                                        +array.get(2).toString()+"''";
-                                String longms = array.get(3).toString()+"\u00B0 "+
-                                        array.get(4).toString()+"' "
+                                    ArrayList<String> array = new ArrayList<String>();
+                                    array =  conversao.conversaoGraus(latlon[0], latlon[1]);
+                                    String latgms = array.get(0).toString()+
+                                            "\u00B0 "+array.get(1).toString()+"' "
+                                            +array.get(2).toString()+"''";
+                                    String longms = array.get(3).toString()+"\u00B0 "+
+                                            array.get(4).toString()+"' "
 
-                                        +array.get(5).toString()+"''";
-                                String strNorte="N", strLeste="E";
-                                if(latlon[0]<0){ strNorte="S";}
-                                if (latlon[1] < 0) {
-                                    strLeste = "W";
-                                }
-                                tvLat.setText(String.format("%.5f       %s %s", latlon[0], strNorte,
-                                        latgms));
-                                tvLon.setText(String.format("%.5f       %s %s", latlon[1], strLeste,
-                                        longms));
-                                tvSet.setText(etSet.getText().toString());
-                                tvNor.setText(etNor.getText().toString());
-                                tvLes.setText(etLes.getText().toString());
-
-                                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                                alert.setView(coord_conv);
-                                alert.setCancelable(false);
-                                alert.setNegativeButton(R.string.fechar, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ViewGroup parent = (ViewGroup) coord_conv.getParent();
-                                        parent.removeView(coord_conv);
+                                            +array.get(5).toString()+"''";
+                                    String strNorte="N", strLeste="E";
+                                    if(latlon[0]<0){ strNorte="S";}
+                                    if (latlon[1] < 0) {
+                                        strLeste = "W";
                                     }
-                                });
-                                alert.setPositiveButton(R.string.marcar_ponto, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ViewGroup parent = (ViewGroup) coord_conv.getParent();
-                                        parent.removeView(coord_conv);
-                                        addPoint();
-                                    }
-                                });
-                                alert.setTitle(R.string.coordenadas_convertidas).show();
+                                    tvLat.setText(String.format("%.5f       %s %s", latlon[0], strNorte,
+                                            latgms));
+                                    tvLon.setText(String.format("%.5f       %s %s", latlon[1], strLeste,
+                                            longms));
+                                    tvSet.setText(set);
+                                    tvNor.setText(etNor.getText().toString());
+                                    tvLes.setText(etLes.getText().toString());
 
-
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                                    alert.setView(coord_conv);
+                                    alert.setCancelable(false);
+                                    alert.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                                        @Override
+                                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                                ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                                parent.removeView(coord_conv);
+                                            }
+                                            return false;
+                                        }
+                                    });
+                                    alert.setNegativeButton(R.string.fechar, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                            parent.removeView(coord_conv);
+                                        }
+                                    });
+                                    alert.setPositiveButton(R.string.marcar_ponto, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                            parent.removeView(coord_conv);
+                                            addPoint();
+                                        }
+                                    });
+                                    alert.setTitle(R.string.coordenadas_convertidas).show();
+                                    break;
+                                case 1:
+                                    Toast.makeText(getActivity(), R.string.quadrante_formato,
+                                            Toast.LENGTH_LONG).show();
+                                    break;
+                                case 2:
+                                    Toast.makeText(getActivity(), R.string.norte_formato,
+                                            Toast.LENGTH_LONG).show();
+                                    break;
+                                case 3:
+                                    Toast.makeText(getActivity(),
+                                            R.string.leste_formato,
+                                            Toast.LENGTH_LONG).show();
+                                    break;
                             }
+                            etSet1.requestFocus();
                         }
                     }
                 }
@@ -233,61 +345,84 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         //substituir por Double.parseDouble()
                         double strLat = Float.valueOf(etLat.getText().toString());
                         double strLon = Float.valueOf(etLon.getText().toString());
-                        if (validacao(strLat, strLon)){
-                            etLat.requestFocus();
-                            CoordinateConversion cc = new CoordinateConversion();
-                            String latlon = cc.latLon2UTM(strLat, strLon);
-                            String coord[] = latlon.split(" ");
-                            lat=etLat.getText().toString();
-                            lon=etLon.getText().toString();
-                            set=coord[0] + " " + coord[1];
-                            nor=coord[2];
-                            les=coord[3];
-                            ArrayList<String> array = new ArrayList<String>();
-                            array = conversaoGraus(strLat, strLon);
-                            String latgms = array.get(0).toString()+
-                                    "\u00B0 "+array.get(1).toString()+"' "
-                                    +array.get(2).toString()+"''";
-                            String longms = array.get(3).toString()+"\u00B0 "+
-                                    array.get(4).toString()+"' "
+                        ConversaoGMS conversao = new ConversaoGMS();
+                        switch (conversao.validacao(strLat,strLon)){
+                            case 0:
+                                etLat.requestFocus();
+                                CoordinateConversion cc = new CoordinateConversion();
+                                String latlon = cc.latLon2UTM(strLat, strLon);
+                                String coord[] = latlon.split(" ");
+                                lat=etLat.getText().toString();
+                                lon=etLon.getText().toString();
+                                set=coord[0] + " " + coord[1];
+                                nor=coord[2];
+                                les=coord[3];
+                                ArrayList<String> array = new ArrayList<String>();
+                                array = conversao.conversaoGraus(strLat, strLon);
+                                String latgms = array.get(0).toString()+
+                                        "\u00B0 "+array.get(1).toString()+"' "
+                                        +array.get(2).toString()+"''";
+                                String longms = array.get(3).toString()+"\u00B0 "+
+                                        array.get(4).toString()+"' "
 
-                                    +array.get(5).toString()+"''";
-                            String strNorte="N", strLeste="E";
-                            if(strLat<0){ strNorte="S";}
-                            if (strLon < 0) {
-                                strLeste = "W";
-                            }
-
-                            tvSet.setText(coord[0] + " " + coord[1]);
-                            tvNor.setText(coord[2]);
-                            tvLes.setText(coord[3]);
-
-                            tvLat.setText(String.format("%s       %s %s",
-                                    etLat.getText().toString(), strNorte,
-                                    latgms));
-                            tvLon.setText(String.format("%s       %s %s",
-                                    etLon.getText().toString(), strLeste,
-                                    longms));
-
-                            AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-                            ad.setView(coord_conv);
-                            ad.setTitle(R.string.coordenadas_convertidas);
-                            ad.setNegativeButton(R.string.fechar,new DialogInterface.OnClickListener(){
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ViewGroup parent = (ViewGroup) coord_conv.getParent();
-                                    parent.removeView(coord_conv);
+                                        +array.get(5).toString()+"''";
+                                String strNorte="N", strLeste="E";
+                                if(strLat<0){ strNorte="S";}
+                                if (strLon < 0) {
+                                    strLeste = "W";
                                 }
-                            });
-                            ad.setPositiveButton(R.string.marcar_ponto, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ViewGroup parent = (ViewGroup) coord_conv.getParent();
-                                    parent.removeView(coord_conv);
-                                    addPoint();
-                                }
-                            }).show();
-                            }
+
+                                tvSet.setText(coord[0] + " " + coord[1]);
+                                tvNor.setText(coord[2]);
+                                tvLes.setText(coord[3]);
+
+                                tvLat.setText(String.format("%s       %s %s",
+                                        etLat.getText().toString(), strNorte,
+                                        latgms));
+                                tvLon.setText(String.format("%s       %s %s",
+                                        etLon.getText().toString(), strLeste,
+                                        longms));
+
+                                AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                                ad.setView(coord_conv);
+                                ad.setTitle(R.string.coordenadas_convertidas);
+                                ad.setNegativeButton(R.string.fechar, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                        parent.removeView(coord_conv);
+                                    }
+                                });
+                                ad.setPositiveButton(R.string.marcar_ponto, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                        parent.removeView(coord_conv);
+                                        addPoint();
+                                    }
+                                });
+                                ad.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                                    @Override
+                                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                            ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                            parent.removeView(coord_conv);
+                                        }
+                                        return false;
+                                    }
+                                });
+                                ad.show();
+                                break;
+                            case 1:
+                                Toast.makeText(getActivity(), R.string.latminmax,
+                                        Toast.LENGTH_LONG).show();
+                                break;
+                            case 2:
+                                Toast.makeText(getActivity(), R.string.lonminmax,
+                                        Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                        etLat.requestFocus();
                     }
                 }
             }
@@ -321,65 +456,95 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                 if(strLonSeg.trim().isEmpty()){
                     strLonSeg="0";
                 }
-                if (validacao(strLatGrau, strLatMin, strLatSeg, strLonGrau,
+                ConversaoGMS cg = new ConversaoGMS();
+                switch (cg.validacao(strLatGrau, strLatMin, strLatSeg, strLonGrau,
                         strLatMin, strLonSeg)){
-                    etLatGrau.requestFocus();
-                    double grau = Double.parseDouble(strLatGrau);
-                    double min = Double.parseDouble(strLatMin);
-                    double seg = Double.parseDouble(strLatSeg);
-                    boolean sinal = true;
-                    String strNorte = "N";
-                    if(rbS.isChecked()){
-                        sinal = false; strNorte="S";
-                    }
-                    ConversaoGMS cg = new ConversaoGMS();
-                    String latitude = cg.grausConverte(sinal,grau, min, seg);
-                    grau = Double.parseDouble(strLonGrau);
-                    min = Double.parseDouble(strLonMin);
-                    seg = Double.parseDouble(strLonSeg);
-                    String strLeste="E";
-                    if(rbW.isChecked()){
-                        sinal = false; strLeste="W";
-                    } else {sinal = true;}
-                    String longitude = cg.grausConverte(sinal,grau, min, seg);
-                    CoordinateConversion cc = new CoordinateConversion();
-                    String utm = cc.latLon2UTM(Double.parseDouble(latitude),
-                            Double.parseDouble(longitude));
-                    String utms[] = utm.split(" ");
-                    lat=latitude;
-                    lon=longitude;
-                    set=utms[0] + " " + utms[1];
-                    nor=utms[2];
-                    les=utms[3];
-                    tvSet.setText(set);
-                    tvNor.setText(nor);
-                    tvLes.setText(les);
-                    tvLat.setText(String.format("%s       %s %s",
-                            latitude, strNorte,
-                            strNorte));
-                    tvLon.setText(String.format("%s       %s %s",
-                            longitude, strLeste,
-                            strLeste));
+                    case 0:
+                        etLatGrau.requestFocus();
+                        double grau = Double.parseDouble(strLatGrau);
+                        double min = Double.parseDouble(strLatMin);
+                        double seg = Double.parseDouble(strLatSeg);
+                        boolean sinal = true;
+                        String strNorte = "N";
+                        if(rbS.isChecked()){
+                            sinal = false; strNorte="S";
+                        }
 
-                    AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-                    ad.setView(coord_conv);
-                    ad.setTitle(R.string.coordenadas_convertidas);
-                    ad.setNegativeButton(R.string.fechar,new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ViewGroup parent = (ViewGroup) coord_conv.getParent();
-                            parent.removeView(coord_conv);
-                        }
-                    });
-                    ad.setPositiveButton(R.string.marcar_ponto, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ViewGroup parent = (ViewGroup) coord_conv.getParent();
-                            parent.removeView(coord_conv);
-                            addPoint();
-                        }
-                    }).show();
+                        String latitude = cg.grausConverte(sinal,grau, min, seg);
+                        grau = Double.parseDouble(strLonGrau);
+                        min = Double.parseDouble(strLonMin);
+                        seg = Double.parseDouble(strLonSeg);
+                        String strLeste="E";
+                        if(rbW.isChecked()){
+                            sinal = false; strLeste="W";
+                        } else {sinal = true;}
+                        String longitude = cg.grausConverte(sinal,grau, min, seg);
+                        CoordinateConversion cc = new CoordinateConversion();
+                        String utm = cc.latLon2UTM(Double.parseDouble(latitude),
+                                Double.parseDouble(longitude));
+                        String utms[] = utm.split(" ");
+                        lat=latitude;
+                        lon=longitude;
+                        set=utms[0] + " " + utms[1];
+                        nor=utms[2];
+                        les=utms[3];
+                        tvSet.setText(set);
+                        tvNor.setText(nor);
+                        tvLes.setText(les);
+                        tvLat.setText(latitude);
+                        tvLon.setText(longitude);
+
+                        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                        ad.setView(coord_conv);
+                        ad.setTitle(R.string.coordenadas_convertidas);
+                        ad.setNegativeButton(R.string.fechar, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                parent.removeView(coord_conv);
+                            }
+                        });
+                        ad.setPositiveButton(R.string.marcar_ponto, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                parent.removeView(coord_conv);
+                                addPoint();
+                            }
+                        });
+                        ad.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                    ViewGroup parent = (ViewGroup) coord_conv.getParent();
+                                    parent.removeView(coord_conv);
+                                }
+                                return false;
+                            }
+                        });
+                        ad.show();
+                        break;
+                    case 1:
+                        Toast.makeText(getActivity(),R.string.latminmax,Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(getActivity(), R.string.lonminmax, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        Toast.makeText(getActivity(), R.string.minminmax, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4:
+                        Toast.makeText(getActivity(), R.string.minminmax, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 5:
+                        Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 6:
+                        Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
+                        break;
+
                 }
+                etLatGrau.requestFocus();
             }
         });
 
@@ -498,108 +663,20 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
                         Toast.makeText(getActivity(), R.string.ponto_marcado,
-                                Toast.LENGTH_LONG);
+                                Toast.LENGTH_LONG).show();
                     }
                 });
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    ViewGroup parent = (ViewGroup) view_marcar.getParent();
+                    parent.removeView(view_marcar);
+                }
+                return false;
+            }
+        });
         alertDialog.show();
-    }
-
-
-    private ArrayList<String> conversaoGraus(double lat, double lon) {
-        ArrayList<String> arrayList = new ArrayList<String>();
-        ConversaoGMS cg = new ConversaoGMS();
-        String strLat = cg.converteGraus(lat);
-        String strLon = cg.converteGraus(lon);
-        String coordLat[] = strLat.split(" ");
-        String coordLon[] = strLon.split(" ");
-        arrayList.add(coordLat[0]);
-        arrayList.add(coordLat[1]);
-        arrayList.add(coordLat[2]);
-        arrayList.add(coordLon[0]);
-        arrayList.add(coordLon[1]);
-        arrayList.add(coordLon[2]);
-        return arrayList;
-    }
-    private boolean validacao(double latitude, double longitude){
-        if (latitude <= -90.0 || latitude >= 90.0) {
-            Toast.makeText(getActivity(),R.string.latminmax,
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if(longitude <= -180.0 || longitude >= 180.0)
-        {
-            Toast.makeText(getActivity(), R.string.lonminmax,
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-    //Colocar procedimentso validacao em ConversaoGMS
-    private boolean validacao (String setor, String norte, String leste){
-
-        boolean arg=true;
-        Log.i("setor.length",String.valueOf(setor.length()));
-
-        if(setor.length()==4){
-
-        }
-        if (setor.length() <4 || setor.length()>4) {
-            Toast.makeText(getActivity(), R.string.quadrante_formato,
-                    Toast.LENGTH_LONG).show();
-            arg=false;
-        }
-        if(Double.parseDouble(norte) <0 || Double.parseDouble(norte) >10000000){
-            Toast.makeText(getActivity(), R.string.norte_formato,
-                    Toast.LENGTH_LONG).show();
-            arg=false;
-        }
-        if(Double.parseDouble(leste) <160000 || Double.parseDouble(leste) >10000000){//834000
-            Toast.makeText(getActivity(),
-                    R.string.leste_formato,
-                    Toast.LENGTH_LONG).show();
-            arg=false;
-        }
-        return arg;
-    }
-
-    private boolean validacao(String latgrau, String latmin, String latseg,
-                              String longrau, String lonmin, String lonseg ){
-        boolean arg=true;
-        if(Double.parseDouble(latgrau) >90 || Double.parseDouble(latgrau) <-90){
-            arg=false;
-            Toast.makeText(getActivity(),R.string.latminmax,Toast.LENGTH_SHORT).show();
-        }
-        if(arg==true) {
-            if (Double.parseDouble(longrau) > 180 || Double.parseDouble(longrau) < -180) {
-                arg = false;
-                Toast.makeText(getActivity(), R.string.lonminmax, Toast.LENGTH_SHORT).show();
-            }
-        }
-        if(arg==true) {
-            if (Double.parseDouble(latmin) >= 60 || Double.parseDouble(latmin) < 0) {
-                arg = false;
-                Toast.makeText(getActivity(), R.string.minminmax, Toast.LENGTH_SHORT).show();
-            }
-        }
-        if(arg==true) {
-            if (Double.parseDouble(lonmin) >= 60 || Double.parseDouble(lonmin) < 0) {
-                arg = false;
-                Toast.makeText(getActivity(), R.string.minminmax, Toast.LENGTH_SHORT).show();
-            }
-        }
-        if(arg==true) {
-            if (Double.parseDouble(latseg) >= 60 || Double.parseDouble(latseg) < 0) {
-                arg = false;
-                Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
-            }
-        }
-        if(arg==true) {
-            if (Double.parseDouble(lonseg) >= 60 || Double.parseDouble(lonseg) < 0) {
-                arg = false;
-                Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
-            }
-        }
-        return arg;
     }
 
 }

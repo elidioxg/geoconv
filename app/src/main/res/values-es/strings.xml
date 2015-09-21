@@ -4,7 +4,6 @@
     <string name="converter">Convertir</string>
     <string name="converter_coord">Convertir Coordenadas</string>
     <string name="marcar_ponto">Marcar Ponto</string>
-    <string name="ver_pontos">Puntos Obtenidos</string>
     <string name="pontos_marcados">Puntos Obtenidos</string>
     <string name="conversor_coordenadas">Convertidor de Coordenadas</string>
     <string name="coordenadas">Coordenadas Actuales:</string>
@@ -20,7 +19,6 @@
     <string name="norte">Norte</string>
     <string name="precisao">Precisión</string>
     <string name="altitude">Altitud</string>
-    <string name="title_activity_kml">kmlActivity</string>
     <string name="descricao">Descripción</string>
     <string name="sem_valor"> </string>
     <string name="hora">Tiempo:</string>
@@ -52,14 +50,13 @@
     <string name="valor_latitude">El valor de la latitud está vacío</string>
     <string name="latminmax">La latitud debe tener valores entre -90 y 90</string>
     <string name="lonminmax">La latitud debe tener valores entre -180 y 180</string>
-    <string name="quadrante_formato">Quadrante tem que ser forma: Numero Letra. Exemplo: 24 L</string>
-    <string name="norte_formato">Valor da coordenada Norte deve ser entre 0 e 10000000</string>
-    <string name="leste_formato">Valores das Coordenadas Leste devem ser entre 160000 e 10000000</string>
-    <string name="minminmax">Valores de minutos devem ser maior ou igual a 0 e menor que 60</string>
-    <string name="segminmax">Valores de segundos devem ser maior ou igual a 0 e menor que 60</string>
+    <string name="quadrante_formato">Quadrante tem que ser forma: Numero Letra. \n Exemplo: 24 L</string>
+    <string name="norte_formato">Valor de coordenada Norte debe estar entre  0 y 10 000 000</string>
+    <string name="leste_formato">Valor de Coordenada Leste debe estar entre 160 000 y 834 000</string>
+    <string name="minminmax">Valores de minutos deben ser mayores que o gual a 0 y menor que 60</string>
+    <string name="segminmax">Valores de segundos deben ser mayores que o igual a 0 y menor que 60</string>
     <string name="strMarcar">Marcar</string>
     <string name="nao_loc">No pudo obtener la ubicación actual</string>
-    <string name="nao_gps_loc">GPS desativado ou ainda não foi possível obter a localização atual</string>
     <string name="no_camada">El nombre de la capa no puede estar en blanco</string>
     <string name="arquivo_salvo">Archivo guardado con éxito</string>
     <string name="ultima_localizacao">Última ubicación recibido en: </string>
@@ -69,12 +66,11 @@
     <string name="S">S</string>
     <string name="W">W</string>
     <string name="E">E</string>
-    <string name="documentacao">Documentación</string>
+    <string name="documentacao">Ayuda</string>
     <string name="por">Português</string>
     <string name="esp">Español</string>
     <string name="eng">English</string>
-    <string name="num_satelites">Número de Satelites: </string>
-    <string name="escolher">Elejir </string>
+    <string name="escolher">Guardar en </string>
     <string name="limpar">Limpiar</string>
     <string name="fechar">Cerrar</string>
     <string name="simbolo_grau">\u00B0</string>
@@ -82,12 +78,26 @@
     <string name="simbolo_seg">\'\'</string>
     <string name="num_registros">Número de Registros: </string>
     <string name="gps_status">Status do GPS:</string>
-    <string name="req_loc">Requisitando localização...</string>
-    <string name="gps_desativado">GPS desativado</string>
+    <string name="req_loc">Solicitud de ubicación...</string>
+    <string name="gps_desativado">GPS desactivado</string>
+
+    <string name="strLetra">A</string>
+    <string name="strNum">00</string>
+    <string name="strDocMarcar">Marcar ponto no GPS</string>
+    <string name="strDocVer">Ver detalhes dos pontos marcados</string>
+    <string name="strDocMapa">Visualizar os registros salvos no mapa</string>
+    <string name="strDocRemover">Remover registros selecionados</string>
+    <string name="strDocExportar">Exportas os pontos selecionados para camada vetorial</string>
+    <string name="strDocConverteUTM">Convert UTM Coordinates</string>
+    <string name="strDocConvertLL">Convert Latitude/Longitude Coordinates</string>
+    <string name="strDocConvertGMS">Convert Latitude/Longitude in degrees, minutes and secconds</string>
+    <string name="strDocSalvar">Salvar modificações</string>
+    <string name="strDocProx">Próximo registro salvo</string>
+    <string name="strDocAnt">Ir para o registro anterior</string>
 
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>
-        <item>@string/ver_pontos</item>
+        <item>@string/pontos_marcados</item>
         <item>@string/converter</item>
     </string-array>
 </resources>

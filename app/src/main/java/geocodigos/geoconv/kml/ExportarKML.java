@@ -38,7 +38,6 @@ public class ExportarKML extends Activity implements XmlSerializer {
         database.getWritableDatabase();
         campos.clear();
         campos = database.pegarPontos();
-        Log.i("campos:", campos.toString());
         database.close();
         return campos;
     }
@@ -57,7 +56,7 @@ public class ExportarKML extends Activity implements XmlSerializer {
                 "http://www.opengis.net/kml/2.2");
         xmlSerializer.startTag("", "Document");
         xmlSerializer.startTag("", "name");
-        xmlSerializer.text("geoconver");
+        xmlSerializer.text(nome_camada);
         xmlSerializer.endTag("", "name");
 
         switch (tipo) {

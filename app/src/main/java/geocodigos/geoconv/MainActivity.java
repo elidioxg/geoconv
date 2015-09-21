@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,7 @@ public class MainActivity extends FragmentActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
+        final View viewAjuda = View.inflate(MainActivity.this, R.layout.documentacao, null);
         final View viewLanguage = View.inflate(MainActivity.this,R.layout.choose_lang,null);
         final RadioButton rb1 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang1);
         final RadioButton rb2 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang2);
@@ -50,15 +51,25 @@ public class MainActivity extends FragmentActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_lang:
-                alertDialog.setTitle(R.string.marcar_ponto);
+                alertDialog.setTitle(R.string.idioma);
                 alertDialog.setView(viewLanguage);
+                alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if(keyCode==event.KEYCODE_BACK) {
+                            ViewGroup parent = (ViewGroup) viewLanguage.getParent();
+                            parent.removeView(viewLanguage);
+                        }
+                        return false;
+                    }
+                });
                 alertDialog.setNegativeButton(R.string.cancelar,
                         new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ViewGroup parent = (ViewGroup) viewLanguage.getParent();
-                                parent.removeView(viewLanguage);
+                                    ViewGroup parent = (ViewGroup) viewLanguage.getParent();
+                                    parent.removeView(viewLanguage);
                             }
                         });
                 alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
@@ -88,15 +99,34 @@ public class MainActivity extends FragmentActivity {
                 alertDialog.show();
                 break;
             case R.id.action_doc:
+                alertDialog.setTitle(R.string.documentacao);
+                alertDialog.setView(viewAjuda);
+                alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if(keyCode==event.KEYCODE_BACK){
+                            ViewGroup parent = (ViewGroup) viewAjuda.getParent();
+                            parent.removeView(viewAjuda);
+                        }
+                        return false;
+                    }
+                });
+                alertDialog.setPositiveButton(R.string.fechar, new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog,  int which){
+                    ViewGroup parent = (ViewGroup) viewAjuda.getParent();
+                    parent.removeView(viewAjuda);
+                }
+
+            });
+                alertDialog.show();
+                /*
+                Intent intent = new Intent(MainActivity.this, ajuda.class);
+                startActivity(intent);*/
                 break;
             default:
                 break;
         }
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -108,13 +138,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-        state.putInt("view", 1);
     }
 
-/*
-    @Override
-    public void onDestroy() {
-        //viewPager.removeAllViews();
-        super.onDestroy();
-    }*/
 }

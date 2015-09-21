@@ -16,10 +16,10 @@
                 android:id="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="@dimen/margem"
                 android:layout_marginBottom="@dimen/margem"
                 android:background="@color/branco"
+                android:layout_below="@+id/layout_utmll"
                 >
 
                 <TextView
@@ -27,6 +27,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/longitudeUtm"
+                    android:textSize="@dimen/fontePequena"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/margem"
                     />
@@ -80,14 +81,13 @@
                     android:layout_below="@id/etlong"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/margem"
-                    android:background="@mipmap/ic_convert"
+                    android:background="@mipmap/ic_latlon"
                     />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_utmll"
-                android:layout_below="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margem"
@@ -97,6 +97,7 @@
                 <TextView
                     android:id="@+id/tv_converter"
                     android:text="@string/utmLongitude"
+                    android:textSize="@dimen/fontePequena"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margem"
@@ -114,17 +115,29 @@
 
                 <EditText
                     android:layout_below="@+id/tvquadrante"
-                    android:id="@+id/etquadrante"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/etNum"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:layout_margin="@dimen/margem_grande"
-                    android:layout_centerHorizontal="true"
-                    android:hint="@string/quadrante"
+                    android:hint="@string/strNum"
+                    android:inputType="number"
+                    />
+
+                <EditText
+                    android:id="@+id/etLetra"
+                    android:layout_toRightOf="@+id/etNum"
+                    android:layout_below="@+id/tvquadrante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:hint="@string/strLetra"
+                    android:inputType="text"
                     />
 
                 <TextView
-                    android:layout_below="@+id/etquadrante"
+                    android:layout_below="@+id/etLetra"
                     android:id="@+id/tvnorte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -173,14 +186,14 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/etleste"
                     android:layout_margin="@dimen/margem"
-                    android:background="@mipmap/ic_convert"
+                    android:background="@mipmap/ic_utm"
                     />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_graus"
-                android:layout_below="@+id/layout_utmll"
+                android:layout_below="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margem"
@@ -191,9 +204,10 @@
                 <TextView
                     android:id="@+id/tv_gms"
                     android:text="@string/conv_gms"
+                    android:textSize="@dimen/fontePequena"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margem"
+                    android:layout_margin="@dimen/margem_grande"
                     android:layout_marginBottom="@dimen/margem"
                     />
 
@@ -201,14 +215,16 @@
                     android:id="@+id/layout_latgraus"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margem_grande">
+                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_marginBottom="@dimen/margem">
 
                     <TextView
                         android:id="@+id/tvlatitude"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:text="@string/latitude"
-                        android:layout_margin="@dimen/margem"
+                        android:layout_margin="@dimen/margem_grande"
                         />
 
                     <RadioGroup
@@ -242,7 +258,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/grau"
-                        android:inputType="numberDecimal|numberSigned"
+                        android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         />
 
@@ -262,7 +278,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/min"
-                        android:inputType="numberDecimal|numberSigned"
+                        android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         android:layout_centerHorizontal="true"
                         />
@@ -285,7 +301,7 @@
                         android:layout_toLeftOf="@+id/tvsimlatseg"
                         android:hint="@string/seg"
                         android:layout_margin="@dimen/margem"
-                        android:inputType="numberDecimal|numberSigned"
+                        android:inputType="number"
                         />
 
                     <TextView
@@ -314,6 +330,7 @@
                         android:id="@+id/tvlongitude"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:text="@string/longitude"
                         android:layout_margin="@dimen/margem"
                         />
@@ -349,7 +366,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/grau"
-                        android:inputType="numberDecimal|numberSigned"
+                        android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         />
 
@@ -369,7 +386,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/min"
-                        android:inputType="numberDecimal|numberSigned"
+                        android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         android:layout_centerHorizontal="true"
                         />
@@ -390,7 +407,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/seg"
-                        android:inputType="numberDecimal|numberSigned"
+                        android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         android:layout_toLeftOf="@+id/tvsimlonseg"
                         />
@@ -416,7 +433,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/layout_longraus"
                     android:layout_margin="@dimen/margem"
-                    android:background="@mipmap/ic_convert"
+                    android:background="@mipmap/ic_gms"
                     />
 
             </RelativeLayout>
