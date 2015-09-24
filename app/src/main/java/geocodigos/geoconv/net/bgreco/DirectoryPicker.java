@@ -1,24 +1,25 @@
 package geocodigos.geoconv.net.bgreco;
-        import java.io.File;
-        import java.io.FileOutputStream;
-        import java.util.ArrayList;
-        import java.util.Collections;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 
-        import android.app.ListActivity;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.os.Environment;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.AdapterView.OnItemClickListener;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.ListView;
-        import android.widget.Toast;
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
-        import geocodigos.geoconv.R;
+import com.google.android.gms.internal.os;
+
+import geocodigos.geoconv.R;
 /**
  Modified by elidioxg
     August,2015
@@ -86,7 +87,7 @@ public class DirectoryPicker extends ListActivity {
         if(name.length() == 0)
             name = "/";
 
-        btnChoose.setText(getResources().getString(R.string.escolher) + "'" + name + "'?");
+        btnChoose.setText(getResources().getString(R.string.escolher) + " '" + name + "'?");
         btnChoose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 returnDir(dir.getAbsolutePath());
@@ -131,13 +132,13 @@ public class DirectoryPicker extends ListActivity {
         if(requestCode == PICK_DIRECTORY && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             path = (String) extras.get(DirectoryPicker.CHOSEN_DIRECTORY);
-            file = new File(getApplicationContext().getFilesDir(), nome);
-            FileOutputStream outputStream;
+            file = new File(path+"/"+nome+".kml");
 
             try {
-                outputStream = openFileOutput(nome, Context.MODE_PRIVATE);
+                file.createNewFile();
+                FileOutputStream outputStream;
+                outputStream = new FileOutputStream(file);
                 outputStream.write(param_camada.getBytes());
-                Log.i("camada: ", param_camada);
                 outputStream.close();
                 Toast.makeText(getApplicationContext(), R.string.arquivo_salvo,
                         Toast.LENGTH_SHORT).show();

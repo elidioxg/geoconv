@@ -27,7 +27,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/longitudeUtm"
-                    android:textSize="@dimen/fontePequena"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/margem"
                     />
@@ -98,6 +98,8 @@
                     android:id="@+id/tv_converter"
                     android:text="@string/utmLongitude"
                     android:textSize="@dimen/fontePequena"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margem"
@@ -205,9 +207,11 @@
                     android:id="@+id/tv_gms"
                     android:text="@string/conv_gms"
                     android:textSize="@dimen/fontePequena"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margem_grande"
+                    android:layout_margin="@dimen/margem"
                     android:layout_marginBottom="@dimen/margem"
                     />
 
@@ -232,7 +236,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvlatitude"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/margem">
 
                         <RadioButton
                             android:id="@+id/rb_N"

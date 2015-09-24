@@ -77,7 +77,7 @@ public class MainActivity extends FragmentActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Locale locale = new Locale("en");
                         if (rb1.isChecked()) {
-                            locale = new Locale("br");
+                            locale = new Locale("pt");
                         } else {
                             if (rb3.isChecked()) {
                                 locale = new Locale("es");

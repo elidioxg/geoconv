@@ -1,14 +1,9 @@
 package geocodigos.geoconv.Conversion;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
-import geocodigos.geoconv.R;
-
 public class ConversaoGMS {
-//to do: colocar os procedimentos de validação aqui
+
     public void ConversaoGMS(){
 
     }

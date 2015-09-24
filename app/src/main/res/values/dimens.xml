@@ -5,8 +5,8 @@
     <dimen name="margem">4dp</dimen>
     <dimen name="margem_grande">15dp</dimen>
     <dimen name="fonteGrande">16sp</dimen>
-    <dimen name="fonteNormal">13sp</dimen>
-    <dimen name="fontePequena">11sp</dimen>
+    <dimen name="fonteNormal">14sp</dimen>
+    <dimen name="fontePequena">12sp</dimen>
     <dimen name="margem_mgrande">25dp</dimen>
     <dimen name="buttons">50dp</dimen>
 </resources>

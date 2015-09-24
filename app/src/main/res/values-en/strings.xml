@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Geoconver</string>
     <string name="converter">Convert</string>
     <string name="converter_coord">Convert Coordinates</string>
     <string name="marcar_ponto">Save Record</string>
@@ -62,14 +61,7 @@
     <string name="ultima_localizacao">Last location received on: </string>
     <string name="sim">Yes</string>
     <string name="nao">No</string>
-    <string name="N">N</string>
-    <string name="S">S</string>
-    <string name="W">W</string>
-    <string name="E">E</string>
     <string name="documentacao">Help</string>
-    <string name="por">Português</string>
-    <string name="esp">Español</string>
-    <string name="eng">English</string>
     <string name="escolher">Choose </string>
     <string name="limpar">Clear</string>
     <string name="fechar">Close</string>
@@ -88,9 +80,9 @@
     <string name="strDocMapa">View the records saved on map</string>
     <string name="strDocRemover">Remove selected records</string>
     <string name="strDocExportar">Export the selected points to vector layer</string>
-    <string name="strDocConverteUTM">Convert UTM Coordinates</string>
-    <string name="strDocConvertLL">Convert Latitude/Longitude Coordinates</string>
-    <string name="strDocConvertGMS">Convert Latitude/Longitude in degrees, minutes and secconds</string>
+    <string name="strDocConverteUTM">Convert from UTM Coordinates</string>
+    <string name="strDocConvertLL">Convert from Latitude/Longitude Coordinates</string>
+    <string name="strDocConvertGMS">Convert from Latitude/Longitude (degrees, minutes and secconds)</string>
     <string name="strDocSalvar">Save modifications on database</string>
     <string name="strDocProx">Next record saved</string>
     <string name="strDocAnt">Previous record saved</string>

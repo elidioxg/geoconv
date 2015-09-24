@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -440,7 +439,6 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                 if(strLatGrau.trim().isEmpty()){
                     strLatGrau="0";
                 }
-                Log.i("strLatGrau = ", strLatGrau);
                 if(strLatMin.trim().isEmpty()){
                     strLatMin="0";
                 }
@@ -469,8 +467,8 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         if(rbS.isChecked()){
                             sinal = false; strNorte="S";
                         }
-
                         String latitude = cg.grausConverte(sinal,grau, min, seg);
+
                         grau = Double.parseDouble(strLonGrau);
                         min = Double.parseDouble(strLonMin);
                         seg = Double.parseDouble(strLonSeg);
@@ -479,6 +477,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                             sinal = false; strLeste="W";
                         } else {sinal = true;}
                         String longitude = cg.grausConverte(sinal,grau, min, seg);
+
                         CoordinateConversion cc = new CoordinateConversion();
                         String utm = cc.latLon2UTM(Double.parseDouble(latitude),
                                 Double.parseDouble(longitude));
@@ -542,7 +541,8 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                     case 6:
                         Toast.makeText(getActivity(), R.string.segminmax, Toast.LENGTH_SHORT).show();
                         break;
-
+                    default:
+                        break;
                 }
                 etLatGrau.requestFocus();
             }
@@ -624,7 +624,6 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         }
 
                         strAux = String.valueOf(numId);
-                        Log.i("Salvando com ID : ", strAux);
                         PointModel pm = new PointModel();
                         pm.setId(strAux);
 

@@ -2,9 +2,6 @@ package geocodigos.geoconv.implementation;
 
 import java.util.Calendar;
 
-/**
- * Created by root on 06/01/15.
- */
 public class getDate {
 
     public String returnDate() {

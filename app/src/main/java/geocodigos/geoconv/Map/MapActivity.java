@@ -100,9 +100,9 @@ public class MapActivity extends Fragment implements LocationListener {
                 transaction.commit();
             }
         });
-        initializeMap();
         //setRetainInstance(false);
         locationManager.requestLocationUpdates(provider, requests, 1, this);
+        initializeMap();
         return view;
     }
 
@@ -152,16 +152,16 @@ public class MapActivity extends Fragment implements LocationListener {
         });
     }
 
-    private void setGeometry(boolean vision){
+    private void setGeometry(boolean updateVision){
         switch (rgGeometria.getCheckedRadioButtonId()){
             case R.id.rb_pontos:
-                addMarkers(vision, "pontos");
+                addMarkers(updateVision, "pontos");
                 break;
             case R.id.rb_linha:
-                addMarkers(vision, "linha");
+                addMarkers(updateVision, "linha");
                 break;
             case R.id.rb_poligono:
-                addMarkers(vision, "poligono");
+                addMarkers(updateVision, "poligono");
                 break;
             default:
                 break;
@@ -185,17 +185,17 @@ public class MapActivity extends Fragment implements LocationListener {
         if(line!=null){line.remove();}
         locationManager.removeUpdates(this);
 
-/*        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+   /*     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.remove(supportFragment);
-        ft.commit();
- */   }
+        ft.commit();*/
+    }
 
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
         locationManager.requestLocationUpdates(provider, requests, 1, this);
-   //     initializeMap();
+        initializeMap();
     }
 
     @Override
