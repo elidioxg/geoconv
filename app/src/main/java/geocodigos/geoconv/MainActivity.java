@@ -59,6 +59,7 @@ public class MainActivity extends FragmentActivity {
                         if(keyCode==event.KEYCODE_BACK) {
                             ViewGroup parent = (ViewGroup) viewLanguage.getParent();
                             parent.removeView(viewLanguage);
+                            dialog.dismiss();
                         }
                         return false;
                     }
@@ -107,6 +108,7 @@ public class MainActivity extends FragmentActivity {
                         if(keyCode==event.KEYCODE_BACK){
                             ViewGroup parent = (ViewGroup) viewAjuda.getParent();
                             parent.removeView(viewAjuda);
+                            dialog.dismiss();
                         }
                         return false;
                     }

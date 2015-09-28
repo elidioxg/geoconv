@@ -77,17 +77,11 @@ public class ConversaoGMS {
     }
 
     public int validacao (String setor, String norte, String leste){
-
-        if(setor.length()==4){
-
-        }
-        if (setor.length() <4 || setor.length()>4) {
-            return 1;
-        }
+        //fazer validacao para setor
         if(Double.parseDouble(norte) <0 || Double.parseDouble(norte) >10000000){
             return 2;
-         }                              //0                                  //1000000
-        if(Double.parseDouble(leste) <160000 || Double.parseDouble(leste) >834000){//834000
+         }
+        if(Double.parseDouble(leste) <160000 || Double.parseDouble(leste) >834000){
             return 3;
         }
         return 0;

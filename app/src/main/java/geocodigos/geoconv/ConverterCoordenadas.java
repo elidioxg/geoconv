@@ -375,12 +375,12 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                                 tvNor.setText(coord[2]);
                                 tvLes.setText(coord[3]);
 
-                                tvLat.setText(String.format("%s       %s %s",
-                                        etLat.getText().toString(), strNorte,
-                                        latgms));
-                                tvLon.setText(String.format("%s       %s %s",
-                                        etLon.getText().toString(), strLeste,
-                                        longms));
+                                double doubleLat = Double.parseDouble(etLat.getText().toString());
+                                double doubleLon = Double.parseDouble(etLon.getText().toString());
+                                tvLat.setText(String.format("%.5f       %s %s", doubleLat,
+                                        strNorte, latgms));
+                                tvLon.setText(String.format("%.5f       %s %s", doubleLon,
+                                        strLeste, longms));
 
                                 AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                                 ad.setView(coord_conv);
@@ -563,7 +563,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 final InputMethodManager imm;
-                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                if (event.getAction() == KeyEvent.ACTION_DOWN ||
                         keyCode == KeyEvent.KEYCODE_ENTER) {
                     imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
@@ -575,7 +575,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 final InputMethodManager imm;
-                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                if (event.getAction() == KeyEvent.ACTION_DOWN ||
                         keyCode == KeyEvent.KEYCODE_ENTER) {
                     imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
@@ -586,7 +586,6 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         alertDialog.setTitle(R.string.marcar_ponto);
         alertDialog.setView(view_marcar);
         //alertDialog.setCancelable(true);
-
         alertDialog.setNegativeButton(R.string.cancelar,
                 new DialogInterface.OnClickListener() {
 
@@ -619,10 +618,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                                 strId = database.pegarId(String.valueOf(numId));
                             } while (strId == true);
 
-                        } else {
-
                         }
-
                         strAux = String.valueOf(numId);
                         PointModel pm = new PointModel();
                         pm.setId(strAux);
@@ -671,6 +667,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     ViewGroup parent = (ViewGroup) view_marcar.getParent();
                     parent.removeView(view_marcar);
+                    dialog.dismiss();
                 }
                 return false;
             }

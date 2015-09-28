@@ -40,7 +40,7 @@
     <string name="idioma">Language</string>
     <string name="exportar_kml">Exportar os Pontos selecionados para KML?</string>
     <string name="apagar_registros">Apagar registros selecionados?</string>
-    <string name="sem_pontos">Não há pontos selecionados</string>
+    <string name="sem_pontos">Não há pontos no banco de dados</string>
     <string name="latlon_gms">Latitude/Longitude (graus, min , seg)</string>
     <string name="localizacao_atual">Localizaçao Atual</string>
     <string name="cancelar">Cancelar</string>
@@ -72,6 +72,8 @@
     <string name="gps_status">Status do GPS:</string>
     <string name="req_loc">Obtendo localização...</string>
     <string name="gps_desativado">GPS desativado</string>
+    <string name="alteracoes_salvas">Alterações Salvas</string>
+    <string name="nenhuma_modificacao">Nenhuma modificação para salvar</string>
 
     <string name="strLetra">A</string>
     <string name="strNum">00</string>

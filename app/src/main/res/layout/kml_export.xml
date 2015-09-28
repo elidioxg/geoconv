@@ -13,6 +13,7 @@
         android:textColor="@color/cinza"
         android:textColorHint="@color/cinza_claro"
         android:maxLines="1"
+        android:singleLine="true"
         />
     <RadioGroup
         android:layout_width="fill_parent"

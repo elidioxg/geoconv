@@ -104,6 +104,7 @@
             contentValues.put(dbLeste, pointModel.leste);
             contentValues.put(dbSetor, pointModel.setor);
             contentValues.put(dbAltitude, pointModel.altitude);
+            contentValues.put(dbPrecisao, pointModel.precisao);
 
             contentValues.put(dbData, pointModel.data);
             contentValues.put(dbHora, pointModel.hora);
@@ -114,7 +115,7 @@
             db.close();
         }
 
-        public void deleteAllFields() {
+        /*public void deleteAllFields() {
             try {
                 SQLiteDatabase db = this.getWritableDatabase();
                 db.execSQL("DELETE FROM "+dbTable+" ;");
@@ -122,7 +123,7 @@
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         public void removePonto(String id) {
 
@@ -171,12 +172,14 @@
         public ArrayList<PointModel> pegarPontos(String registro) {
 
             ponto.clear();
-            SQLiteDatabase db = this.getWritableDatabase();     //substituido pelas constantes
-            Cursor cursor = db.query(true, dbTable, new String[] { dbRegister,  dbDescription,
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor  cursor = db.rawQuery("SELECT * FROM " + dbTable + " WHERE " + dbRegister + " = ? ",
+                    new String[]{registro});
+            /*Cursor cursor = db.query(true, dbTable, new String[]{dbRegister, dbDescription,
                             dbLatitude, dbLongitude, dbNorte, dbLeste, dbSetor,
                             dbAltitude, dbHora, dbData, dbSel},
-                    dbRegister+" = ? ", new String[] {registro}, null, null, null, null, null);
-
+                    dbRegister + " = ? ", new String[]{registro}, null, null, null, null, null);
+            */
             if (cursor.getCount() != 0) {
                 if (cursor.moveToFirst()) {
                     do {
@@ -208,8 +211,11 @@
             //verifica se já existe o id, ja que id é unique
             boolean existe = false;
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.query(true, dbTable, new String[] { dbId },
+            Cursor cursor = db.rawQuery("SELECT * FROM "+dbTable+" WHERE "+dbId+" = ? ",
+                    new String[]{strId});
+            /*Cursor cursor = db.query(true, dbTable, new String[] { dbId },
                     dbId+" = ? ", new String[] {strId}, null, null, null, null, null);
+            */
             if(cursor.getCount() > 0 ) {
                 existe = true;
             }

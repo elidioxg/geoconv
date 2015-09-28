@@ -51,6 +51,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
                     android:hint="@string/latitude"
+                    android:singleLine="true"
                     />
 
                 <TextView
@@ -72,6 +73,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:layout_centerHorizontal="true"
                     android:hint="@string/longitude"
+                    android:singleLine="true"
                     />
 
                 <ImageButton
@@ -121,6 +123,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxLength="2"
                     android:layout_margin="@dimen/margem_grande"
                     android:hint="@string/strNum"
                     android:inputType="number"
@@ -133,6 +137,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxLength="1"
                     android:layout_margin="@dimen/margem_grande"
                     android:hint="@string/strLetra"
                     android:inputType="text"
@@ -145,7 +151,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/norte"
                     android:layout_centerHorizontal="true"
-                    android:maxLines="1"
                     android:layout_margin="@dimen/margem"
                     />
 
@@ -158,6 +163,7 @@
                     android:inputType="number"
                     android:layout_margin="@dimen/margem_grande"
                     android:hint="@string/norte"
+                    android:singleLine="true"
                     />
 
                 <TextView
@@ -179,6 +185,7 @@
                     android:inputType="number"
                     android:layout_margin="@dimen/margem_grande"
                     android:hint="@string/leste"
+                    android:singleLine="true"
                     />
 
                 <ImageButton
@@ -265,6 +272,8 @@
                         android:hint="@string/grau"
                         android:inputType="number"
                         android:layout_margin="@dimen/margem"
+                        android:singleLine="true"
+                        android:maxLength="2"
                         />
 
                     <TextView
@@ -286,6 +295,8 @@
                         android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         android:layout_centerHorizontal="true"
+                        android:singleLine="true"
+                        android:maxLength="2"
                         />
 
                     <TextView
@@ -307,6 +318,8 @@
                         android:hint="@string/seg"
                         android:layout_margin="@dimen/margem"
                         android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
                         />
 
                     <TextView
@@ -373,6 +386,8 @@
                         android:hint="@string/grau"
                         android:inputType="number"
                         android:layout_margin="@dimen/margem"
+                        android:singleLine="true"
+                        android:maxLength="3"
                         />
 
                     <TextView
@@ -394,6 +409,8 @@
                         android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         android:layout_centerHorizontal="true"
+                        android:singleLine="true"
+                        android:maxLength="2"
                         />
 
                     <TextView
@@ -415,6 +432,8 @@
                         android:inputType="number"
                         android:layout_margin="@dimen/margem"
                         android:layout_toLeftOf="@+id/tvsimlonseg"
+                        android:singleLine="true"
+                        android:maxLength="2"
                         />
 
                     <TextView

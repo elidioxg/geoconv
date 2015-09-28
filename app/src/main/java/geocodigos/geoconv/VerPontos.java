@@ -97,6 +97,7 @@
                                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                                     ViewGroup parent = (ViewGroup) Kml.getParent();
                                     parent.removeView(Kml);
+                                    dialog.dismiss();
                                 }
                                 return false;
                             }
@@ -146,6 +147,8 @@
 
                             }
                         }).show();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.sem_pontos, Toast.LENGTH_LONG).show();
                     }
                 }
             });

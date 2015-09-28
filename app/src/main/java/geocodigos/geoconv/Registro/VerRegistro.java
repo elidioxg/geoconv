@@ -57,6 +57,7 @@ public class VerRegistro extends Activity {
                 if (posicao > 0) {
                     posicao--;
                     preencheCampos(posicao);
+                    modificado=false;
                 }
             }
         });
@@ -67,6 +68,7 @@ public class VerRegistro extends Activity {
                 if (posicao < (total - 1)) {
                     posicao++;
                     preencheCampos(posicao);
+                    modificado=false;
                 }
             }
         });
@@ -144,9 +146,9 @@ public class VerRegistro extends Activity {
             pm.setSelecao(arrayList.get(posicao).getSelecao());
             database.updatePoint(pm);
             database.close();
-            Toast.makeText(this, "Alterações salvas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.alteracoes_salvas, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Nenhuma modificação para salvar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.nenhuma_modificacao, Toast.LENGTH_SHORT).show();
         }
     }
 

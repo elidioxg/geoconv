@@ -49,6 +49,7 @@
         android:textColor="@color/cinza"
         android:textColorHint="@color/cinza_claro"
         android:maxLines="1"
+        android:singleLine="true"
         />
 
     <EditText
@@ -60,6 +61,7 @@
         android:hint="@string/descricao"
         android:textColor="@color/cinza"
         android:textColorHint="@color/cinza_claro"
+        android:singleLine="true"
         />
 
 </LinearLayout>
