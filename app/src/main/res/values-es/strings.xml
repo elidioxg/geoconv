@@ -26,7 +26,7 @@
     <string name="apagar">Borrar</string>
     <string name="strRegistro">Registro </string>
     <string name="novo_registro">Novo Registro</string>
-    <string name="coordenadas_convertidas">Coordenadas convertidas con éxito.</string>
+    <string name="coordenadas_convertidas">Coordenadas convertidas con éxito</string>
     <string name="graus">Grados</string>
     <string name="minutos">Minutos</string>
     <string name="segundos">Segundos</string>
@@ -82,12 +82,13 @@
     <string name="strDocMapa">Visualizar os registros salvos no mapa</string>
     <string name="strDocRemover">Remover registros selecionados</string>
     <string name="strDocExportar">Exportas os pontos selecionados para camada vetorial</string>
-    <string name="strDocConverteUTM">Convert UTM Coordinates</string>
-    <string name="strDocConvertLL">Convert Latitude/Longitude Coordinates</string>
-    <string name="strDocConvertGMS">Convert Latitude/Longitude in degrees, minutes and secconds</string>
     <string name="strDocSalvar">Salvar modificações</string>
     <string name="strDocProx">Próximo registro salvo</string>
     <string name="strDocAnt">Ir para o registro anterior</string>
+
+    <string name="convert_utm">Convert from UTM coordinates</string>
+    <string name="convert_latlon">Convert from Latitude/Longitude</string>
+    <string name="convert_gms">Convert from deg, min, sec</string>
 
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>

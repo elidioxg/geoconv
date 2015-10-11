@@ -11,7 +11,7 @@
     <string name="action_settings">Settings</string>
     <string name="registro">Record Name</string>
     <string name="utmLongitude">Universal Tranverse Mercator</string>
-    <string name="leste">Easting:</string>
+    <string name="leste">Easting</string>
     <string name="longitudeUtm">Latitude/Longitude</string>
     <string name="quadrante">Zone</string>
     <string name="salvar_ponto">Save Record</string>
@@ -62,7 +62,7 @@
     <string name="sim">Yes</string>
     <string name="nao">No</string>
     <string name="documentacao">Help</string>
-    <string name="escolher">Choose </string>
+    <string name="escolher">Save on </string>
     <string name="limpar">Clear</string>
     <string name="fechar">Close</string>
     <string name="simbolo_grau">\u00B0</string>
@@ -82,12 +82,13 @@
     <string name="strDocMapa">View the records saved on map</string>
     <string name="strDocRemover">Remove selected records</string>
     <string name="strDocExportar">Export the selected points to vector layer</string>
-    <string name="strDocConverteUTM">Convert from UTM Coordinates</string>
-    <string name="strDocConvertLL">Convert from Latitude/Longitude Coordinates</string>
-    <string name="strDocConvertGMS">Convert from Latitude/Longitude (degrees, minutes and secconds)</string>
     <string name="strDocSalvar">Save modifications on database</string>
     <string name="strDocProx">Next record saved</string>
     <string name="strDocAnt">Previous record saved</string>
+
+    <string name="convert_utm">Convert from UTM coordinates</string>
+    <string name="convert_latlon">Convert from Latitude/Longitude</string>
+    <string name="convert_gms">Convert from deg, min, sec</string>
 
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>

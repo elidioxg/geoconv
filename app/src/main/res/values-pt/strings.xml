@@ -89,6 +89,10 @@
     <string name="strDocProx">Próximo registro salvo</string>
     <string name="strDocAnt">Ir para o registro anterior</string>
 
+    <string name="convert_utm">Converter a partir de UTM</string>
+    <string name="convert_latlon">Converter a partir de Lat/Lon</string>
+    <string name="convert_gms">Converter a partir de graus, min, seg</string>
+
     <string-array name="androidstrings">
         <item>@string/marcar_ponto</item>
         <item>@string/pontos_marcados</item>

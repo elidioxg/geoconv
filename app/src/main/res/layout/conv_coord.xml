@@ -76,14 +76,14 @@
                     android:singleLine="true"
                     />
 
-                <ImageButton
+                <Button
                     android:id="@+id/ib_latlonutm"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/buttons"
                     android:layout_below="@id/etlong"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/margem"
-                    android:background="@mipmap/ic_latlon"
+                    android:text="@string/convert_latlon"
                     />
 
             </RelativeLayout>
@@ -145,8 +145,8 @@
                     />
 
                 <TextView
-                    android:layout_below="@+id/etLetra"
                     android:id="@+id/tvnorte"
+                    android:layout_below="@+id/etleste"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/norte"
@@ -155,8 +155,8 @@
                     />
 
                 <EditText
-                    android:layout_below="@+id/tvnorte"
                     android:id="@+id/etnorte"
+                    android:layout_below="@+id/tvnorte"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -168,17 +168,17 @@
 
                 <TextView
                     android:id="@+id/tvleste"
+                    android:layout_below="@+id/etLetra"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/etnorte"
                     android:text="@string/leste"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/margem"
                     />
 
                 <EditText
-                    android:layout_below="@+id/tvleste"
                     android:id="@+id/etleste"
+                    android:layout_below="@+id/tvleste"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -188,14 +188,14 @@
                     android:singleLine="true"
                     />
 
-                <ImageButton
+                <Button
                     android:id="@+id/ib_utmlatlon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/buttons"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/etleste"
+                    android:layout_below="@+id/etnorte"
                     android:layout_margin="@dimen/margem"
-                    android:background="@mipmap/ic_utm"
+                    android:text="@string/convert_utm"
                     />
 
             </RelativeLayout>
@@ -450,14 +450,14 @@
 
                 </RelativeLayout>
 
-                <ImageButton
+                <Button
                     android:id="@+id/ib_graus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/buttons"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/layout_longraus"
                     android:layout_margin="@dimen/margem"
-                    android:background="@mipmap/ic_gms"
+                    android:text="@string/convert_gms"
                     />
 
             </RelativeLayout>
