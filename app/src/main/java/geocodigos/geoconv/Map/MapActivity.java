@@ -2,7 +2,6 @@ package geocodigos.geoconv.Map;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,12 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -43,20 +40,20 @@ import geocodigos.geoconv.model.PointModel;
 public class MapActivity extends Fragment implements LocationListener {
     private int requests = 7000;
     private static GoogleMap mapa;
-    DatabaseHelper database;
-    double minLat, maxLat, minLon, maxLon;
-    int num_pontos = 0;
-    ArrayList<PointModel> pontos = new ArrayList<PointModel>();
-    double lat_atual=0, lon_atual=0;
-    final double dif = 0.2;
+    private DatabaseHelper database;
+    private double minLat, maxLat, minLon, maxLon;
+    private int num_pontos = 0;
+    private ArrayList<PointModel> pontos = new ArrayList<PointModel>();
+    private double lat_atual=0, lon_atual=0;
+    private final double dif = 0.2;
     public Marker marcador;
     public Polygon poligono;//private
     public Polyline line;
     public View view;
     private boolean fragmentVisivel;
     private Location location;
-    LocationManager locationManager;
-    String provider;
+    private LocationManager locationManager;
+    private String provider;
     private RadioGroup rgGeometria;
     private RadioButton rbPontos, rbLinhas, rbPoligono;
     private ImageButton ibPontos;
@@ -64,10 +61,6 @@ public class MapActivity extends Fragment implements LocationListener {
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        if(container==null){
-            return null;
-        }
-
         view = inflater.inflate(R.layout.map_layout, container, false);
         locationManager = (LocationManager) getActivity().
                 getSystemService(Context.LOCATION_SERVICE);
@@ -91,12 +84,8 @@ public class MapActivity extends Fragment implements LocationListener {
             @Override
             public void onClick(View v) {
                 VerPontos ver_pontos = new VerPontos();
-                //FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_map, ver_pontos);
-                //transaction.remove(MapActivity.this);
-                //transaction.add(R.id.fragment_container, ver_pontos);
-                //transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -175,8 +164,6 @@ public class MapActivity extends Fragment implements LocationListener {
             marcador.remove();
         }
         if(mapa!=null) {
-            //getFragmentManager().beginTransaction().remove(getChildFragmentManager()
-            //      .findFragmentById(R.id.map)).commitAllowingStateLoss();
             mapa=null;
         }
         if(poligono!=null){
@@ -184,10 +171,6 @@ public class MapActivity extends Fragment implements LocationListener {
         }
         if(line!=null){line.remove();}
         locationManager.removeUpdates(this);
-
-   /*     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.remove(supportFragment);
-        ft.commit();*/
     }
 
     @Override
@@ -202,7 +185,7 @@ public class MapActivity extends Fragment implements LocationListener {
     public void setUserVisibleHint(boolean isVisibleToUser){
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            setGeometry(true);
+            setGeometry(false);
         }
         fragmentVisivel = isVisibleToUser;
     }
@@ -239,8 +222,11 @@ public class MapActivity extends Fragment implements LocationListener {
                         String latitude = pontos.get(i).getlatitude();
                         String longitude = pontos.get(i).getLongitude();
                         String nome = pontos.get(i).getRegistro();
-                        lat = Double.parseDouble(latitude);
-                        lon = Double.parseDouble(longitude);
+                        latitude = latitude.replace(",",".");
+                        longitude = longitude.replace(",",".");
+
+                        lat = (Double)Double.parseDouble(latitude);
+                        lon = (Double)Double.parseDouble(longitude);
                         if (i == 0) {
                             minLat = lat;
                             maxLat = lat;
@@ -275,7 +261,6 @@ public class MapActivity extends Fragment implements LocationListener {
                     }
                 if(tipo=="linha" && numLinhas>1){
                     List<LatLng> lista = linha.getPoints();
-                    //linha.addAll(lista);
                     line = mapa.addPolyline(linha);
                     line.setWidth(3);
                     line.setColor(Color.BLUE);

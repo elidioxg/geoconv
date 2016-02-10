@@ -140,8 +140,13 @@ public class DirectoryPicker extends ListActivity {
                 outputStream = new FileOutputStream(file);
                 outputStream.write(param_camada.getBytes());
                 outputStream.close();
-                Toast.makeText(getApplicationContext(), R.string.arquivo_salvo,
-                        Toast.LENGTH_SHORT).show();
+                if(file.exists()) {
+                    Toast.makeText(getApplicationContext(), R.string.arquivo_salvo,
+                            Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), R.string.file_not_saved,
+                            Toast.LENGTH_SHORT).show();
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();

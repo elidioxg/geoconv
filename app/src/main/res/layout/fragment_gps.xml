@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/adView1"
+        android:background="@color/branco">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margem"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_marcar1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/branco"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ibmarcar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/ic_marcar"
+                    android:contentDescription="@string/marcar_ponto" />
+
+                <TextView
+                    android:id="@+id/in_status"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text=""
+                    android:textSize="@dimen/fonteGrande"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow"
+                    android:gravity="center_horizontal"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="vertical"
+                android:background="@color/preto">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/latitude"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textStyle="bold"
+                        android:textColor="@color/branco"/>
+
+                    <TextView
+                        android:id="@+id/in_latitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text=""
+                        android:textSize="@dimen/fonteNormal"
+                        android:textStyle="bold"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"/>
+
+                    <TextView
+                        android:id="@+id/in_lat_gms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text=""
+                        android:textSize="@dimen/fontePequena"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/longitude"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textStyle="bold"
+                        android:textColor="@color/branco"/>
+
+                    <TextView
+                        android:id="@+id/in_longitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text=""
+                        android:textSize="@dimen/fonteNormal"
+                        android:textStyle="bold"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"/>
+
+                    <TextView
+                        android:id="@+id/in_lon_gms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text=""
+                        android:textSize="@dimen/fontePequena"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="horizontal"
+                android:background="@color/preto">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text="@string/altitude"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
+                    android:textColor="@color/branco"/>
+
+                <TextView
+                    android:id="@+id/in_altitude"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
+                    android:textColor="@color/yellow"
+                    android:gravity="right"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="vertical"
+                android:background="@color/preto">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_grande"
+                        android:text="@string/quadrante"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textColor="@color/branco"
+                        />
+
+                    <TextView
+                        android:id="@+id/in_quadrante"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_grande"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_grande"
+                        android:text="@string/norte"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textColor="@color/branco"/>
+
+                    <TextView
+                        android:id="@+id/in_norte"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_grande"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_grande"
+                        android:text="@string/leste"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textColor="@color/branco"/>
+
+                    <TextView
+                        android:id="@+id/in_leste"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_grande"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteNormal"
+                        android:textColor="@color/yellow"
+                        android:gravity="right"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="horizontal"
+                android:background="@color/preto">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text="@string/precisao"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
+                    android:textColor="@color/branco"/>
+
+                <TextView
+                    android:id="@+id/in_precisao"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textSize="@dimen/fonteNormal"
+                    android:textColor="@color/yellow"
+                    android:gravity="right"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="vertical"
+                android:background="@color/preto">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text="@string/ultima_localizacao"
+                    android:textSize="@dimen/fonteNormal"
+                    android:textColor="@color/branco"/>
+
+                <TextView
+                    android:id="@+id/tv_data"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text=""
+                    android:textSize="@dimen/fonteNormal"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow"
+                    android:gravity="right"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="vertical"
+                android:background="@color/preto">
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/ad1">
+    </com.google.android.gms.ads.AdView>
+
+</RelativeLayout>

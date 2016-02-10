@@ -6,13 +6,13 @@
     <string name="pontos_marcados">Pontos Marcados</string>
     <string name="conversor_coordenadas">Conversor de Coordenadas</string>
     <string name="coordenadas">Coordenadas Atuais:</string>
-    <string name="latitude">Latitude</string>
+    <string name="latitude">Latitude </string>
     <string name="longitude">Longitude</string>
     <string name="action_settings">Configurações</string>
     <string name="registro">Nome do Registro</string>
     <string name="utmLongitude">Universal Tranverse Mercator</string>
     <string name="leste">Leste</string>
-    <string name="longitudeUtm">Latitude/Longitude (graus decimais)</string>
+    <string name="latlon_decimal">Latitude/Longitude (graus decimais)</string>
     <string name="quadrante">Setor</string>
     <string name="salvar_ponto">Salvar Ponto</string>
     <string name="norte">Norte</string>
@@ -88,6 +88,7 @@
     <string name="strDocSalvar">Salvar modificações</string>
     <string name="strDocProx">Próximo registro salvo</string>
     <string name="strDocAnt">Ir para o registro anterior</string>
+    <string name="file_not_saved">O arquivo não pôde ser salvo</string>
 
     <string name="convert_utm">Converter a partir de UTM</string>
     <string name="convert_latlon">Converter a partir de Lat/Lon</string>

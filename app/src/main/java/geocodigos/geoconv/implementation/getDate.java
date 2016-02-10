@@ -10,7 +10,7 @@ public class getDate {
         int iMes = c.get(Calendar.MONTH);
         int iDia = c.get(Calendar.DAY_OF_MONTH);
         String sqlData =
-                String.valueOf(iAno)+"-"+String.valueOf(iMes)+
+                String.valueOf(iAno)+"-"+String.valueOf(iMes+1)+
                         "-"+String.valueOf(iDia);
         return sqlData;
     }

@@ -8,9 +8,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,35 +17,67 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import java.util.ArrayList;
-
-import geocodigos.geoconv.Conversion.ConversaoGMS;
 import geocodigos.geoconv.Conversion.CoordinateConversion;
+import geocodigos.geoconv.Conversion.DMSConversion;
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.implementation.getDate;
 import geocodigos.geoconv.implementation.getTime;
 import geocodigos.geoconv.model.PointModel;
 
 public class MarcarPontos extends Fragment implements LocationListener {
-    private int requests = 10000;
-    private int min_distance=20;
+    private int requests = 3000;
+    private int min_distance=1;
     private Location location;
     private LocationManager locationManager;
     private String provider;
-    public String strLatitude, strLongitude, strPrecisao, strAltitude, strDate, strTime;
+    private String strLatitude, strLongitude, strPrecisao, strAltitude, strDate, strTime;
     private ImageButton ibMarcar;
     private DatabaseHelper database;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
         tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms, tvGpsStatus;
 
-    private View view;
     private static boolean fragmentVisivel;
     private double latitude, longitude, altitude, precisao;
 
+    private final String keyLatitude = "lat";
+    private final String keyLongitude = "lon";
+    private final String keySector = "sec";
+    private final String keyNorth = "north";
+    private final String keyEast = "east";
+    private final String keyPrecision ="prec";
+    private final String keyAltitude = "alt";
+    private final String keyDate = "date";
+    private final String keyLatGms = "latgms";
+    private final String keyLonGms = "longms";
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(keyLatitude, tvLatitude.getText().toString());
+        outState.putString(keyLongitude, tvLongitude.getText().toString());
+        outState.putString(keySector, tvSetor.getText().toString());
+        outState.putString(keyNorth, tvNorte.getText().toString());
+        outState.putString(keyEast, tvLeste.getText().toString());
+        outState.putString(keyPrecision, tvPrecisao.getText().toString());
+        outState.putString(keyAltitude, tvAltitude.getText().toString());
+        outState.putString(keyDate, tvData.getText().toString());
+        outState.putString(keyLatGms, tvLatgms.getText().toString());
+        outState.putString(keyLonGms, tvLongms.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.marcar_pontos,
+
+        View view = inflater.inflate(R.layout.fragment_gps,
                 container, false);
+
+        AdView av = (AdView) view.findViewById(R.id.adView1);
+        AdRequest ar = new AdRequest.Builder().build();
+                //.addTestDevice("DC230321FB9742079A931AC2BB5B27A5").build();
+        av.loadAd(ar);
 
         final View view_marcar = View.inflate(getActivity(),R.layout.adicionar_registro, null);
         final EditText etRegistro = (EditText) view_marcar.findViewById(R.id.add_registro);
@@ -124,7 +153,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
                                 String strAux;
                                 database = new DatabaseHelper(getActivity());
                                 database.getWritableDatabase();
-                                //al = database.pegarPontos();
+                                al = database.pegarPontos();
                                 numId = al.size() + 1;
                                 if (database.pegarId(String.valueOf(numId))) {
                                     do {
@@ -186,6 +215,7 @@ public class MarcarPontos extends Fragment implements LocationListener {
                                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                                     ViewGroup parent = (ViewGroup) view_marcar.getParent();
                                     parent.removeView(view_marcar);
+                                    dialog.dismiss();
                                 }
                                 return false;
                             }
@@ -202,7 +232,49 @@ public class MarcarPontos extends Fragment implements LocationListener {
             }
 
         });
+        if(savedInstanceState!=null){
+            if(savedInstanceState.containsKey(keyLatitude)){
+                String str = savedInstanceState.getString(keyLatitude);
+                tvLatitude.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyLongitude)){
+                String str = savedInstanceState.getString(keyLongitude);
+                tvLongitude.setText(str);
+            }
+            if(savedInstanceState.containsKey(keySector)){
+                String str = savedInstanceState.getString(keySector);
+                tvSetor.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyNorth)){
+                String str = savedInstanceState.getString(keyNorth);
+                tvNorte.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyEast)){
+                String str = savedInstanceState.getString(keyEast);
+                tvLeste.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyDate)){
+                String str = savedInstanceState.getString(keyDate);
+                tvData.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyAltitude)){
+                String str = savedInstanceState.getString(keyAltitude);
+                tvAltitude.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyPrecision)){
+                String str = savedInstanceState.getString(keyPrecision);
+                tvPrecisao.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyLatGms)){
+                String str = savedInstanceState.getString(keyLatGms);
+                tvLatgms.setText(str);
+            }
+            if(savedInstanceState.containsKey(keyLonGms)){
+                String str = savedInstanceState.getString(keyLonGms);
+                tvLongms.setText(str);
+            }
 
+        }
         gpsStatus();
         return view;
     }
@@ -229,37 +301,37 @@ public class MarcarPontos extends Fragment implements LocationListener {
 
     public void preencheCampos(){
         if(latitude!=0 && longitude!=0) {
-            ConversaoGMS cg = new ConversaoGMS();
-            String sLat = cg.converteGraus(latitude);
-            String sLon = cg.converteGraus(longitude);
+            DMSConversion dms = new DMSConversion();
+            String sLat = dms.convertFromDegrees(latitude);
+            String sLon = dms.convertFromDegrees(longitude);
             String coordLat[] = sLat.split(" ");
             String coordLon[] = sLon.split(" ");
-            String norte = "N";
-            String leste = "E";
+            String norte = "N ";
+            String leste = "E ";
             if (latitude < 0) {
-                norte = "S";
+                norte = "S ";
             }
             if (longitude < 0) {
-                leste = "W";
+                leste = "W ";
             }
-            strLatitude = coordLat[0] + "\u00B0 " + coordLat[1] + "' " + coordLat[2] + "'' " + norte;
-            strLongitude = coordLon[0] + "\u00B0 " + coordLon[1] + "' " + coordLon[2] + "'' " + leste;
+            strLatitude = coordLat[0] + "\u00B0 " + coordLat[1] + "' " + coordLat[2] + "'' "+norte ;
+            strLongitude = coordLon[0] + "\u00B0 " + coordLon[1] + "' " + coordLon[2] + "'' "+leste;
             strPrecisao = String.format("%.1f", precisao);
             strAltitude = String.format("%.1f", altitude);
-            tvLatitude.setText(String.format("%.5f", latitude));
-            tvLongitude.setText(String.format("%.5f", longitude));
+            tvLatitude.setText(String.format("%.4f", latitude));
+            tvLongitude.setText(String.format("%.4f", longitude));
             tvLatgms.setText(strLatitude);
             tvLongms.setText(strLongitude);
-            tvPrecisao.setText(strPrecisao);
-            tvAltitude.setText(strAltitude);
-            tvData.setText(strTime + "   -   " + strDate);
+            tvPrecisao.setText(strPrecisao+" m");
+            tvAltitude.setText(strAltitude+" m");
+            tvData.setText(strTime + "     -     " + strDate);
 
             CoordinateConversion cc = new CoordinateConversion();
             String latlon = cc.latLon2UTM(latitude, longitude);
             String coord[] = latlon.split(" ");
             tvSetor.setText(coord[0] + " " + coord[1]);
-            tvNorte.setText(coord[2]);
-            tvLeste.setText(coord[3]);
+            tvLeste.setText(coord[2]);
+            tvNorte.setText(coord[3]);
         }
     }
 
@@ -267,20 +339,14 @@ public class MarcarPontos extends Fragment implements LocationListener {
     public void onPause(){
         super.onPause();
         locationManager.removeUpdates(this);
-        /*FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.remove(this);
-        ft.commit();*/
     }
 
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        /*FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.attach(MarcarPontos.this);
-        ft.commit();*/
         locationManager.requestLocationUpdates(provider, requests, min_distance, this);
-        //preencheCampos();
+        preencheCampos();
         gpsStatus();
     }
 

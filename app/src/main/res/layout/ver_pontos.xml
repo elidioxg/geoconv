@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:background="@color/preto">
+        android:background="@color/cinza_claro">
 
         <ImageButton
             android:id="@+id/ib_exportar"
@@ -41,7 +41,7 @@
             android:layout_height="@dimen/buttons"
             android:contentDescription="@string/marcar_ponto"
             android:src="@mipmap/ic_kml"
-            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/margem"
             />
 
@@ -50,9 +50,9 @@
             android:layout_width="@dimen/buttons"
             android:layout_height="@dimen/buttons"
             android:contentDescription="@string/mapa"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
             android:layout_margin="@dimen/margem"
-            android:background="@mipmap/ic_mapa"
+            android:background="@mipmap/ic_map"
             />
 
         <ImageButton

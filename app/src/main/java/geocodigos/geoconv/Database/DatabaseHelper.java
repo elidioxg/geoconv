@@ -13,7 +13,7 @@ import geocodigos.geoconv.model.PointModel;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
     public static String dbId="id_";
-    public static String dbName = "database98";
+    public static String dbName = "database6643";
     public static String dbTable = "pontos";
     public static String dbRegister = "registro";
     public static String dbDescription ="descricao";

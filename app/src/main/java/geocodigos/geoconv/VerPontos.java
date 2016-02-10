@@ -32,7 +32,7 @@
 
     public class VerPontos extends Fragment {
 
-        DatabaseHelper database;
+        private DatabaseHelper database;
         private ImageButton ibExportar, ibExcluir, ibMapa;
         private TextView tvRegistro, tvData, tvHora, tvPontos;
         public ListView listView;
@@ -50,7 +50,6 @@
             final RadioButton rbLinha = (RadioButton) Kml.findViewById(R.id.rblinha);
             final RadioButton rbPoligono = (RadioButton) Kml.findViewById(R.id.rbpoligono);
 
-            //TextView tvMarcar = (TextView) view.findViewById(R.id.tv_pontos);
             ibExportar = (ImageButton) view.findViewById(R.id.ib_exportar);
             ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
             ibMapa  = (ImageButton) view.findViewById(R.id.ib_mapa);
@@ -341,7 +340,7 @@
             }
             database.close();
             tvPontos.setText(getResources().getString(R.string.num_registros)
-                    + Integer.toString(campos.size()));
+                    +"  "+ Integer.toString(campos.size()));
         }
 
         @Override
@@ -358,10 +357,6 @@
                 synchronized(listView) {
                     listView.notifyAll();
                 }
-            } else {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.remove(VerPontos.this);
-                transaction.commit();
             }
         }
     }

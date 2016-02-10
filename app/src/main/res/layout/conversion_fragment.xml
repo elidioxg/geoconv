@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/preto">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:background="@color/branco"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:text="@string/utmLongitude"
+                    android:textSize="@dimen/fonteNormal"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/quadrante"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/etNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:hint="@string/strNum"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:singleLine="true"
+                        android:maxLines="1"/>
+
+                    <EditText
+                        android:id="@+id/etLetra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:maxLength="1"
+                        android:hint="@string/strLetra"
+                        android:inputType="text"
+                        android:textAllCaps="true"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/norte"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/etnorte"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:inputType="number"
+                        android:hint="@string/norte"
+                        android:singleLine="true"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/leste"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"
+                        />
+
+                    <EditText
+                        android:id="@+id/etleste"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:hint="@string/leste"
+                        android:inputType="number"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/ib_utmlatlon"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/buttons"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text="@string/convert_utm"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:background="@color/branco"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:text="@string/latlon_decimal"
+                    android:textSize="@dimen/fonteNormal"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/latitude"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"
+                        />
+
+                    <EditText
+                        android:id="@+id/etlat"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:hint="@string/latitude"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true"
+                        android:textSize="@dimen/fonteGrande"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/longitude"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"
+                        />
+
+                    <EditText
+                        android:id="@+id/etlong"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:hint="@string/longitude"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true"
+                        android:textSize="@dimen/fonteGrande"
+                        />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/ib_latlonutm"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/buttons"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text="@string/convert_latlon"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                android:orientation="vertical"
+                android:background="@color/branco">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:text="@string/conv_gms"
+                    android:textSize="@dimen/fonteNormal"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/latitude"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"/>
+
+                    <RadioGroup
+                        android:id="@+id/rg_latitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_N"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margem_normal"
+                            android:text="@string/N"
+                            android:checked="true"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rb_S"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margem_normal"
+                            android:text="@string/S"
+                            />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etLatgraus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_pequena"
+                        android:hint="@string/grau"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/simbolo_grau"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteGrande"/>
+
+                    <EditText
+                        android:id="@+id/etLatminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_pequena"
+                        android:hint="@string/min"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_min"
+                        android:textSize="@dimen/fonteGrande"/>
+
+                    <EditText
+                        android:id="@+id/etLatsegundos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_pequena"
+                        android:hint="@string/seg"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvsimlatseg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/simbolo_seg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteGrande"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem_normal"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_normal"
+                        android:text="@string/longitude"
+                        android:textSize="@dimen/fonteGrande"
+                        android:textStyle="bold"/>
+
+                    <RadioGroup
+                        android:id="@+id/rg_longitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_E"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margem_normal"
+                            android:text="@string/E"
+                            android:checked="true"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rb_W"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margem_normal"
+                            android:text="@string/W"
+                            />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margem"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etLongraus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_pequena"
+                        android:hint="@string/grau"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="3"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="@string/simbolo_grau"
+                        android:textSize="@dimen/fonteGrande"/>
+
+                    <EditText
+                        android:id="@+id/etLonminutos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_pequena"
+                        android:hint="@string/min"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/simbolo_min"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteGrande"/>
+
+                    <EditText
+                        android:id="@+id/etLonsegundos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margem_pequena"
+                        android:hint="@string/seg"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvsimlonseg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/simbolo_seg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fonteGrande"
+                        />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/ib_graus"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/buttons"
+                    android:layout_margin="@dimen/margem_grande"
+                    android:text="@string/convert_gms"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margem"
+                >
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -16,13 +16,13 @@ import java.util.Locale;
 import geocodigos.geoconv.implementation.tabListener;
 
 public class MainActivity extends FragmentActivity {
-
+    AlertDialog.Builder alertDialog;
     public ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if(alertDialog!=null){ alertDialog=null; }
         viewPager = (ViewPager) findViewById(R.id.fragment_container);
         viewPager.setAdapter(new tabListener(getSupportFragmentManager(), this));
         viewPager.setBackgroundColor(getResources().getColor(R.color.branco));
@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity {
         final RadioButton rb1 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang1);
         final RadioButton rb2 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang2);
         final RadioButton rb3 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang3);
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog = new AlertDialog.Builder(MainActivity.this);
 
         int id = item.getItemId();
         switch (id){
@@ -105,7 +105,7 @@ public class MainActivity extends FragmentActivity {
                 alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
                     @Override
                     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        if(keyCode==event.KEYCODE_BACK){
+                        if (keyCode == event.KEYCODE_BACK) {
                             ViewGroup parent = (ViewGroup) viewAjuda.getParent();
                             parent.removeView(viewAjuda);
                             dialog.dismiss();
@@ -118,13 +118,10 @@ public class MainActivity extends FragmentActivity {
                 public void onClick(DialogInterface dialog,  int which){
                     ViewGroup parent = (ViewGroup) viewAjuda.getParent();
                     parent.removeView(viewAjuda);
+                    dialog.dismiss();
                 }
-
             });
                 alertDialog.show();
-                /*
-                Intent intent = new Intent(MainActivity.this, ajuda.class);
-                startActivity(intent);*/
                 break;
             default:
                 break;

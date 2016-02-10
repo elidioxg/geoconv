@@ -6,13 +6,13 @@
     <string name="pontos_marcados">Records Saved</string>
     <string name="conversor_coordenadas">Coordinates Conversor</string>
     <string name="coordenadas">Current Coordinates:</string>
-    <string name="latitude">Latitude</string>
+    <string name="latitude">Latitude </string>
     <string name="longitude">Longitude</string>
     <string name="action_settings">Settings</string>
     <string name="registro">Record Name</string>
     <string name="utmLongitude">Universal Tranverse Mercator</string>
     <string name="leste">Easting</string>
-    <string name="longitudeUtm">Latitude/Longitude</string>
+    <string name="latlon_decimal">Latitude/Longitude (decimal degrees)</string>
     <string name="quadrante">Zone</string>
     <string name="salvar_ponto">Save Record</string>
     <string name="norte">Northing</string>
@@ -85,6 +85,7 @@
     <string name="strDocSalvar">Save modifications on database</string>
     <string name="strDocProx">Next record saved</string>
     <string name="strDocAnt">Previous record saved</string>
+    <string name="file_not_saved">File could not be saved</string>
 
     <string name="convert_utm">Convert from UTM coordinates</string>
     <string name="convert_latlon">Convert from Latitude/Longitude</string>

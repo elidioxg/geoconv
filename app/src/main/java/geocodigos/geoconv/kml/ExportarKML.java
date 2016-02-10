@@ -130,7 +130,6 @@ public class ExportarKML extends Activity implements XmlSerializer {
                     break;
                 default:
                     break;
-
         }
         xmlSerializer.endTag("", "Document");
         xmlSerializer.endTag("", "kml");

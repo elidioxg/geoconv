@@ -7,6 +7,7 @@
     <item name="preto" type="color">#000000</item>
     <item name="vermelho" type="color">#FFA0A0</item>
     <item name="verde" type="color">#00FF00</item>
+    <item name="yellow" type="color">#FFFF00</item>
 
     <integer-array name="androidcolors">
         <item>@color/azul</item>
