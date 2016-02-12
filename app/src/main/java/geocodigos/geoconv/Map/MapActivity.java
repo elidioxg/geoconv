@@ -8,13 +8,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,9 +33,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import geocodigos.geoconv.Conversion.CoordinateConversion;
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.R;
 import geocodigos.geoconv.VerPontos;
+import geocodigos.geoconv.implementation.getDate;
+import geocodigos.geoconv.implementation.getTime;
 import geocodigos.geoconv.model.PointModel;
 
 public class MapActivity extends Fragment implements LocationListener {
@@ -57,6 +61,8 @@ public class MapActivity extends Fragment implements LocationListener {
     private RadioGroup rgGeometria;
     private RadioButton rbPontos, rbLinhas, rbPoligono;
     private ImageButton ibPontos;
+    private ToggleButton tbAddMarker;
+    private boolean addMarkerTouch = false;
     public SupportMapFragment supportFragment;
 
     public View onCreateView(LayoutInflater inflater,
@@ -87,6 +93,17 @@ public class MapActivity extends Fragment implements LocationListener {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_map, ver_pontos);
                 transaction.commit();
+            }
+        });
+        tbAddMarker = (ToggleButton) view.findViewById(R.id.tb_add_marker);
+        tbAddMarker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    addMarkerTouch = true;
+                } else {
+                    addMarkerTouch = false;
+                }
             }
         });
         //setRetainInstance(false);
@@ -137,6 +154,42 @@ public class MapActivity extends Fragment implements LocationListener {
             @Override
             public void onMapLoaded() {
                 setGeometry(true);
+            }
+        });
+        mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if(addMarkerTouch){
+                    mapa.addMarker(new MarkerOptions().position(latLng));
+                    DatabaseHelper database = new DatabaseHelper(getActivity());
+                    PointModel pm = new PointModel();
+                    pm.setLatidude(String.format("%.4f", latLng.latitude));
+                    pm.setLongitude(String.format("%.4f", latLng.longitude));
+                    pm.setAltitude("");
+                    pm.setPrecisao("");
+                    pm.setSelecao("1");
+                    getDate date = new getDate();
+                    getTime time = new getTime();
+                    pm.setHora(time.returnTime());
+                    pm.setData(date.returnDate());
+                    CoordinateConversion cc = new CoordinateConversion();
+                    String utm = cc.latLon2UTM(latLng.latitude,latLng.longitude);
+                    String strUtm[] = utm.split(" ");
+                    pm.setSetor(strUtm[0] + " " + strUtm[1]);
+                    pm.setLeste(strUtm[2]);
+                    pm.setNorte(strUtm[3]);
+                    pm.setRegistro(getResources().getString(R.string.strMarkerName));
+                    pm.setDescricao(getResources().getString(R.string.strAddedTouch));
+                    int id = 0;
+                    String strId;
+                    do{
+                        strId= String.valueOf(id);
+                        id++;
+                    } while(database.pegarId(strId));
+                    pm.setId(strId);
+                    database.addPoint(pm);
+                    database.close();
+                }
             }
         });
     }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="strMarkerName">Marker</string>
+    <string name="strAddedTouch">Added on Map</string>
     <string name="converter">Convert</string>
     <string name="converter_coord">Convert Coordinates</string>
     <string name="marcar_ponto">Save Record</string>

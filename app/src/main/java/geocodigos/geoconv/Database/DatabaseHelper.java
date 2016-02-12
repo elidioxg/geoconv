@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static String dbHora="hora";
     public static String dbSel = "selecionado";
 
-    Context c;
+    private Context c;
 
     public DatabaseHelper(Context context) {
         super(context, dbName, null, 33);
@@ -62,21 +62,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(dbId, pointModel.id);
-        contentValues.put(dbRegister, pointModel.registro);
-        contentValues.put(dbDescription, pointModel.descricao);
-        contentValues.put(dbLatitude, pointModel.latitude);
-        contentValues.put(dbLongitude, pointModel.longitude);
-        contentValues.put(dbNorte, pointModel.norte);
-        contentValues.put(dbLeste, pointModel.leste);
-        contentValues.put(dbSetor, pointModel.setor);
-        contentValues.put(dbAltitude, pointModel.altitude);
+        contentValues.put(dbId, pointModel.getId());
+        contentValues.put(dbRegister, pointModel.getRegistro());
+        contentValues.put(dbDescription, pointModel.getDescricao());
+        contentValues.put(dbLatitude, pointModel.getlatitude());
+        contentValues.put(dbLongitude, pointModel.getLongitude());
+        contentValues.put(dbNorte, pointModel.getNorte());
+        contentValues.put(dbLeste, pointModel.getLeste());
+        contentValues.put(dbSetor, pointModel.getSetor());
+        contentValues.put(dbAltitude, pointModel.getAltitude());
 
-        contentValues.put(dbData, pointModel.data);
-        contentValues.put(dbHora, pointModel.hora);
+        contentValues.put(dbData, pointModel.getData());
+        contentValues.put(dbHora, pointModel.getHora());
 
-        contentValues.put(dbPrecisao, pointModel.precisao);
-        contentValues.put(dbSel, pointModel.selecionado);
+        contentValues.put(dbPrecisao, pointModel.getPrecisao());
+        contentValues.put(dbSel, pointModel.getSelecao());
 
         db.insert(dbTable, null, contentValues);
         db.close();
@@ -85,8 +85,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateSelecao(PointModel pointModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(dbSel, pointModel.selecionado);
-        db.update(dbTable, contentValues, dbId+"="+pointModel.id, null);
+        contentValues.put(dbSel, pointModel.getSelecao());
+        db.update(dbTable, contentValues, dbId+"="+pointModel.getId(), null);
         db.close();
     }
 
@@ -95,23 +95,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(dbId, pointModel.id);
-        contentValues.put(dbRegister, pointModel.registro);
-        contentValues.put(dbDescription, pointModel.descricao);
-        contentValues.put(dbLatitude, pointModel.latitude);
-        contentValues.put(dbLongitude, pointModel.longitude);
-        contentValues.put(dbNorte, pointModel.norte);
-        contentValues.put(dbLeste, pointModel.leste);
-        contentValues.put(dbSetor, pointModel.setor);
-        contentValues.put(dbAltitude, pointModel.altitude);
-        contentValues.put(dbPrecisao, pointModel.precisao);
+        contentValues.put(dbId, pointModel.getId());
+        contentValues.put(dbRegister, pointModel.getRegistro());
+        contentValues.put(dbDescription, pointModel.getDescricao());
+        contentValues.put(dbLatitude, pointModel.getlatitude());
+        contentValues.put(dbLongitude, pointModel.getLongitude());
+        contentValues.put(dbNorte, pointModel.getNorte());
+        contentValues.put(dbLeste, pointModel.getLeste());
+        contentValues.put(dbSetor, pointModel.getSetor());
+        contentValues.put(dbAltitude, pointModel.getAltitude());
+        contentValues.put(dbPrecisao, pointModel.getPrecisao());
 
-        contentValues.put(dbData, pointModel.data);
-        contentValues.put(dbHora, pointModel.hora);
+        contentValues.put(dbData, pointModel.getHora());
+        contentValues.put(dbHora, pointModel.getHora());
 
-        contentValues.put(dbSel, pointModel.selecionado);
+        contentValues.put(dbSel, pointModel.getSelecao());
 
-        db.update(dbTable, contentValues, dbId+" = "+pointModel.id, null);
+        db.update(dbTable, contentValues, dbId+" = "+pointModel.getId(), null);
         db.close();
     }
 
@@ -147,19 +147,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     PointModel pointModel = new PointModel();
-                    pointModel.id = cursor.getString(cursor.getColumnIndex(dbId));
-                    pointModel.registro = cursor.getString(cursor.getColumnIndex(dbRegister));
-                    pointModel.descricao = cursor.getString(cursor.getColumnIndex(dbDescription));
-                    pointModel.latitude = cursor.getString(cursor.getColumnIndex(dbLatitude));
-                    pointModel.longitude = cursor.getString(cursor.getColumnIndex(dbLongitude));
-                    pointModel.norte = cursor.getString(cursor.getColumnIndex(dbNorte));
-                    pointModel.leste = cursor.getString(cursor.getColumnIndex(dbLeste));
-                    pointModel.setor = cursor.getString(cursor.getColumnIndex(dbSetor));
-                    pointModel.altitude  = cursor.getString(cursor.getColumnIndex(dbAltitude));
-                    pointModel.precisao = cursor.getString(cursor.getColumnIndex(dbPrecisao));
-                    pointModel.hora = cursor.getString(cursor.getColumnIndex(dbHora));
-                    pointModel.data = cursor.getString(cursor.getColumnIndex(dbData));
-                    pointModel.selecionado=cursor.getString(cursor.getColumnIndex(dbSel));
+                    pointModel.setId(cursor.getString(cursor.getColumnIndex(dbId)));
+                    pointModel.setRegistro(cursor.getString(cursor.getColumnIndex(dbRegister)));
+                    pointModel.setDescricao(cursor.getString(cursor.getColumnIndex(dbDescription)));
+                    pointModel.setLatidude(cursor.getString(cursor.getColumnIndex(dbLatitude)));
+                    pointModel.setLongitude(cursor.getString(cursor.getColumnIndex(dbLongitude)));
+                    pointModel.setNorte(cursor.getString(cursor.getColumnIndex(dbNorte)));
+                    pointModel.setLeste(cursor.getString(cursor.getColumnIndex(dbLeste)));
+                    pointModel.setSetor(cursor.getString(cursor.getColumnIndex(dbSetor)));
+                    pointModel.setAltitude(cursor.getString(cursor.getColumnIndex(dbAltitude)));
+                    pointModel.setPrecisao(cursor.getString(cursor.getColumnIndex(dbPrecisao)));
+                    pointModel.setHora(cursor.getString(cursor.getColumnIndex(dbHora)));
+                    pointModel.setData(cursor.getString(cursor.getColumnIndex(dbData)));
+                    pointModel.setSelecao(cursor.getString(cursor.getColumnIndex(dbSel)));
                     ponto.add(pointModel);
                 } while (cursor.moveToNext());
             }
@@ -185,20 +185,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     PointModel pointModel = new PointModel();
-                    pointModel.id=cursor.getString(cursor.getColumnIndex(dbId));
-                    pointModel.registro= cursor.getString(cursor.getColumnIndex(dbRegister));
-                    pointModel.descricao= cursor.getString(cursor.getColumnIndex(dbDescription));
-                    pointModel.latitude = cursor.getString(cursor.getColumnIndex(dbLatitude));
-                    pointModel.longitude = cursor.getString(cursor.getColumnIndex(dbLongitude));
-                    pointModel.norte = cursor.getString(cursor.getColumnIndex(dbNorte));
-                    pointModel.leste = cursor.getString(cursor.getColumnIndex(dbLeste));
-                    pointModel.setor = cursor.getString(cursor.getColumnIndex(dbSetor));
-                    pointModel.altitude  = cursor.getString(cursor.getColumnIndex(dbAltitude));
-                    pointModel.precisao = cursor.getString(cursor.getColumnIndex(dbPrecisao));
-                    pointModel.data = cursor.getString(cursor.getColumnIndex(dbData));
-                    pointModel.hora = cursor.getString(cursor.getColumnIndex(dbHora));
-                    pointModel.selecionado = cursor.getString(cursor.getColumnIndex(dbSel));
-
+                    pointModel.setId(cursor.getString(cursor.getColumnIndex(dbId)));
+                    pointModel.setRegistro(cursor.getString(cursor.getColumnIndex(dbRegister)));
+                    pointModel.setDescricao(cursor.getString(cursor.getColumnIndex(dbDescription)));
+                    pointModel.setLatidude(cursor.getString(cursor.getColumnIndex(dbLatitude)));
+                    pointModel.setLongitude(cursor.getString(cursor.getColumnIndex(dbLongitude)));
+                    pointModel.setNorte(cursor.getString(cursor.getColumnIndex(dbNorte)));
+                    pointModel.setLeste(cursor.getString(cursor.getColumnIndex(dbLeste)));
+                    pointModel.setSetor(cursor.getString(cursor.getColumnIndex(dbSetor)));
+                    pointModel.setAltitude(cursor.getString(cursor.getColumnIndex(dbAltitude)));
+                    pointModel.setPrecisao(cursor.getString(cursor.getColumnIndex(dbPrecisao)));
+                    pointModel.setHora(cursor.getString(cursor.getColumnIndex(dbHora)));
+                    pointModel.setData(cursor.getString(cursor.getColumnIndex(dbData)));
+                    pointModel.setSelecao(cursor.getString(cursor.getColumnIndex(dbSel)));
                     ponto.add(pointModel);
                 } while (cursor.moveToNext());
             }

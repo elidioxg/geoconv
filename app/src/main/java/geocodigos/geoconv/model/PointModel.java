@@ -1,7 +1,7 @@
     package geocodigos.geoconv.model;
 
     public class PointModel {
-        public String id="",registro="", descricao="", latitude="",
+        private String id="",registro="", descricao="", latitude="",
                 longitude="", norte="", leste="", setor="",
                 altitude="", precisao = "",
                 data="", hora="", selecionado="";
