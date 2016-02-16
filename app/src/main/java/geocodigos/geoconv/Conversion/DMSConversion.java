@@ -63,9 +63,8 @@ public class DMSConversion {
     }
     public ArrayList<String> DegreesConversion(double lat, double lon) {
         ArrayList<String> arrayList = new ArrayList<>();
-        DMSConversion cg = new DMSConversion();
-        String strLat = cg.convertFromDegrees(lat);
-        String strLon = cg.convertFromDegrees(lon);
+        String strLat = convertFromDegrees(lat);
+        String strLon = convertFromDegrees(lon);
         String coordLat[] = strLat.split(" ");
         String coordLon[] = strLon.split(" ");
         arrayList.add(coordLat[0]);

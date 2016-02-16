@@ -1,6 +1,8 @@
 package geocodigos.geoconv.Map;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -8,13 +10,18 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,15 +41,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geocodigos.geoconv.Conversion.CoordinateConversion;
+import geocodigos.geoconv.Conversion.DMSConversion;
 import geocodigos.geoconv.Database.DatabaseHelper;
+import geocodigos.geoconv.Dialogs.DialogAddPoint;
 import geocodigos.geoconv.R;
+import geocodigos.geoconv.Utils.CoordinatesArray;
 import geocodigos.geoconv.VerPontos;
 import geocodigos.geoconv.implementation.getDate;
 import geocodigos.geoconv.implementation.getTime;
 import geocodigos.geoconv.model.PointModel;
 
 public class MapActivity extends Fragment implements LocationListener {
-    private int requests = 7000;
+    private String strFormat = "%.5f";
+    private int requests = 1000;
     private static GoogleMap mapa;
     private DatabaseHelper database;
     private double minLat, maxLat, minLon, maxLon;
@@ -50,10 +61,10 @@ public class MapActivity extends Fragment implements LocationListener {
     private ArrayList<PointModel> pontos = new ArrayList<PointModel>();
     private double lat_atual=0, lon_atual=0;
     private final double dif = 0.2;
-    public Marker marcador;
-    public Polygon poligono;//private
-    public Polyline line;
-    public View view;
+    private Marker marcador;
+    private Polygon poligono;
+    private  Polyline line;
+    private View view;
     private boolean fragmentVisivel;
     private Location location;
     private LocationManager locationManager;
@@ -62,12 +73,12 @@ public class MapActivity extends Fragment implements LocationListener {
     private RadioButton rbPontos, rbLinhas, rbPoligono;
     private ImageButton ibPontos;
     private ToggleButton tbAddMarker;
-    private boolean addMarkerTouch = false;
     public SupportMapFragment supportFragment;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.map_layout, container, false);
+
         locationManager = (LocationManager) getActivity().
                 getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.GPS_PROVIDER;
@@ -93,17 +104,6 @@ public class MapActivity extends Fragment implements LocationListener {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_map, ver_pontos);
                 transaction.commit();
-            }
-        });
-        tbAddMarker = (ToggleButton) view.findViewById(R.id.tb_add_marker);
-        tbAddMarker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    addMarkerTouch = true;
-                } else {
-                    addMarkerTouch = false;
-                }
             }
         });
         //setRetainInstance(false);
@@ -156,42 +156,62 @@ public class MapActivity extends Fragment implements LocationListener {
                 setGeometry(true);
             }
         });
-        mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        mapa.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
-                if(addMarkerTouch){
-                    mapa.addMarker(new MarkerOptions().position(latLng));
-                    DatabaseHelper database = new DatabaseHelper(getActivity());
-                    PointModel pm = new PointModel();
-                    pm.setLatidude(String.format("%.4f", latLng.latitude));
-                    pm.setLongitude(String.format("%.4f", latLng.longitude));
-                    pm.setAltitude("");
-                    pm.setPrecisao("");
-                    pm.setSelecao("1");
-                    getDate date = new getDate();
-                    getTime time = new getTime();
-                    pm.setHora(time.returnTime());
-                    pm.setData(date.returnDate());
-                    CoordinateConversion cc = new CoordinateConversion();
-                    String utm = cc.latLon2UTM(latLng.latitude,latLng.longitude);
-                    String strUtm[] = utm.split(" ");
-                    pm.setSetor(strUtm[0] + " " + strUtm[1]);
-                    pm.setLeste(strUtm[2]);
-                    pm.setNorte(strUtm[3]);
-                    pm.setRegistro(getResources().getString(R.string.strMarkerName));
-                    pm.setDescricao(getResources().getString(R.string.strAddedTouch));
-                    int id = 0;
-                    String strId;
-                    do{
-                        strId= String.valueOf(id);
-                        id++;
-                    } while(database.pegarId(strId));
-                    pm.setId(strId);
-                    database.addPoint(pm);
-                    database.close();
-                }
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                //TODO colocar o nome do registro como unique no banco de dados
             }
         });
+        mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(final LatLng latLng) {
+                Marker marker = mapa.addMarker(new MarkerOptions().position(latLng));
+                String strN = "N";
+                String strE = "E";
+                if(latLng.latitude<0){ strN= "S";}
+                if(latLng.longitude<0) { strE = "W";}
+
+                PointModel pm = new PointModel();
+                DMSConversion conversion = new DMSConversion();
+                ArrayList<String> array = conversion.DegreesConversion(latLng.latitude,
+                        latLng.longitude);
+                CoordinatesArray formater = new CoordinatesArray();
+                pm.setLatDms(formater.formatCoordinateToDMS(strN, array.get(0), array.get(1),
+                        array.get(2)));
+                pm.setLonDms(formater.formatCoordinateToDMS(strE, array.get(3), array.get(4),
+                        array.get(5)));
+                pm.setLatidude(String.format(strFormat, latLng.latitude));
+                pm.setLongitude(String.format(strFormat, latLng.longitude));
+                getDate date = new getDate();
+                pm.setData(date.returnDate());
+                getTime time = new getTime();
+                pm.setHora(time.returnTime());
+                CoordinateConversion cc = new CoordinateConversion();
+                String utm = cc.latLon2UTM(latLng.latitude, latLng.longitude);
+                String[]  strUtm = utm.split(" ");
+                pm.setSetor(strUtm[0] + " " + strUtm[1]);
+                pm.setLeste(strUtm[2]);
+                pm.setNorte(strUtm[3]);
+                pm.setPrecisao("");
+                pm.setAltitude("");
+
+                DialogAddPoint dialog = new DialogAddPoint(getActivity(), pm);
+                AlertDialog.Builder alert = dialog.createAlertAdd(view);
+                alert.show();
+            }
+
+            });
+
     }
 
     private void setGeometry(boolean updateVision){
@@ -265,7 +285,7 @@ public class MapActivity extends Fragment implements LocationListener {
             if(poligono!=null){poligono.remove();}
             mapa.clear();
             if(lat_atual!=0 && lon_atual!=0) {
-                marcador = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
+                Marker marker = mapa.addMarker(new MarkerOptions().position(new LatLng(lat_atual, lon_atual))
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_loc))
                         .title(getResources().getString(R.string.localizacao_atual)));
             }
@@ -299,7 +319,7 @@ public class MapActivity extends Fragment implements LocationListener {
                             maxLon = lon;
                         }
                         if (tipo=="pontos") {
-                            mapa.addMarker(new MarkerOptions()
+                            Marker marker = mapa.addMarker(new MarkerOptions()
                                     .position(new LatLng(lat, lon))
                                     .title(nome));
                         }

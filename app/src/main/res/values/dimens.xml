@@ -6,8 +6,8 @@
     <dimen name="margem_pequena">10dp</dimen>
     <dimen name="margem_normal">13dp</dimen>
     <dimen name="margem_grande">14dp</dimen>
-    <dimen name="fonteGrande">18sp</dimen>
-    <dimen name="fonteNormal">16sp</dimen>
+    <dimen name="fonteGrande">22sp</dimen>
+    <dimen name="fonteNormal">18sp</dimen>
     <dimen name="fontePequena">14sp</dimen>
     <dimen name="margem_mgrande">25dp</dimen>
     <dimen name="buttons">50dp</dimen>

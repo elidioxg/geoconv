@@ -4,7 +4,7 @@
         private String id="",registro="", descricao="", latitude="",
                 longitude="", norte="", leste="", setor="",
                 altitude="", precisao = "",
-                data="", hora="", selecionado="";
+                data="", hora="", selecionado="", latdms = "", londms="";
 
         public String getId() {
             return id;
@@ -102,6 +102,22 @@
 
         public void setSelecao(String selecionado) {
             this.selecionado=selecionado;
+        }
+
+        public String getLatDms() {
+            return latdms;
+        }
+
+        public void setLatDms(String lat){
+            this.latdms= lat;
+        }
+
+        public String getLonDms() {
+            return londms;
+        }
+
+        public void setLonDms(String lon) {
+            this.londms= lon;
         }
 
 }
