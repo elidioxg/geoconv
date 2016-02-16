@@ -308,8 +308,14 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
         ibLatLonUtm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double strLat = Double.parseDouble(etLat.getText().toString());
-                double strLon = Double.parseDouble(etLon.getText().toString());
+                double strLat = 0.;
+                double strLon = 0.;
+                if (!etLat.getText().toString().trim().isEmpty()) {
+                    strLat = Double.parseDouble(etLat.getText().toString());
+                }
+                if (!etLon.getText().toString().trim().isEmpty()) {
+                    strLon = Double.parseDouble(etLon.getText().toString());
+                }
                 ValidateConversion vc = new ValidateConversion();
                 switch (vc.validate(strLat, strLon)) {
                     case 0:

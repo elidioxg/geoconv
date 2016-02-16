@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/branco"
     android:onClick="OnItemClick"
-    android:background="@color/branco">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -15,50 +15,64 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <CheckBox
                 android:id="@+id/cb_ponto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_margin="@dimen/margem"
                 android:layout_centerVertical="true"
-                />
+                android:layout_margin="@dimen/margem"
+                android:checked="true" />
+
+            <LinearLayout
+                android:id="@+id/layout_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/cb_ponto"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/ibUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageButton
+                    android:id="@+id/ibDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
 
             <TextView
                 android:id="@+id/tvregistro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Registro"
-                android:textSize="@dimen/fonteGrande"
-                android:layout_margin="@dimen/margem"
                 android:layout_below="@+id/tvhora"
-                android:layout_toRightOf="@+id/cb_ponto"
-                />
+                android:layout_margin="@dimen/margem"
+                android:layout_toRightOf="@+id/layout_position"
+                android:text="Registro"
+                android:textSize="@dimen/fonteGrande" />
 
             <TextView
                 android:id="@+id/tv_descricao"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/descricao"
-                android:textSize="@dimen/fonteNormal"
                 android:layout_below="@+id/tvdata"
                 android:layout_margin="@dimen/margem"
-                android:layout_toRightOf="@+id/cb_ponto"
-                android:maxLines="2"
-                />
+                android:layout_toRightOf="@+id/layout_position"
+                android:maxLines="1"
+                android:text="@string/descricao"
+                android:textSize="@dimen/fonteNormal" />
 
             <TextView
                 android:id="@+id/tvhora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hora"
-                android:textSize="@dimen/fonteNormal"
                 android:layout_alignParentRight="true"
-                />
+                android:text="hora"
+                android:textSize="@dimen/fonteNormal" />
 
             <TextView
                 android:id="@+id/tvdata"
@@ -67,7 +81,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/tvregistro"
                 android:text="data"
-                android:textSize="@dimen/fonteNormal"/>
+                android:textSize="@dimen/fonteNormal" />
 
         </RelativeLayout>
 

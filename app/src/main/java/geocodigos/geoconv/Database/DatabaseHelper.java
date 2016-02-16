@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,21 +13,22 @@ import geocodigos.geoconv.model.PointModel;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private ArrayList<PointModel> ponto = new ArrayList<PointModel>();
-    public static String dbId="id_";
-    public static String dbName = "database6643";
-    public static String dbTable = "pontos";
-    public static String dbRegister = "registro";
-    public static String dbDescription ="descricao";
-    public static String dbLatitude = "latitude";
-    public static String dbLongitude = "longitude";
-    public static String dbNorte = "norte";
-    public static String dbLeste = "leste";
-    public static String dbSetor = "setor";
-    public static String dbAltitude="altitude";
-    public static String dbPrecisao="precisao";
-    public static String dbData="data";
-    public static String dbHora="hora";
-    public static String dbSel = "selecionado";
+    private static String dbId="id_";
+    private static String dbName = "database4000";
+    private static String dbTable = "pontos";
+    private static String dbRegister = "registro";
+    private static String dbDescription ="descricao";
+    private static String dbLatitude = "latitude";
+    private static String dbLongitude = "longitude";
+    private static String dbNorte = "norte";
+    private static String dbLeste = "leste";
+    private static String dbSetor = "setor";
+    private static String dbAltitude="altitude";
+    private static String dbPrecisao="precisao";
+    private static String dbData="data";
+    private static String dbHora="hora";
+    private static String dbSel = "selecionado";
+    private static String dbOrder = "position";
 
     private Context c;
 
@@ -40,15 +42,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS "+dbTable+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + dbTable +
                 //" ("+dbId+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                " ("+dbId+" INTEGER PRIMARY KEY , "+
-                dbRegister+" TEXT, "+dbDescription+" TEXT, "+
-                dbLatitude+" TEXT, "+dbLongitude+" TEXT, "+
-                dbNorte+ " TEXT, "+dbLeste+" TEXT, "+ dbSetor +
-                " TEXT, "+dbAltitude +
-                " TEXT, "+dbHora+" TEXT, "+dbData+" TEXT, "+
-                dbPrecisao+" TEXT, "+dbSel+" TEXT);");
+                " (" + dbId + " INTEGER PRIMARY KEY , " +
+                dbRegister + " TEXT, " + dbDescription + " TEXT, " +
+                dbLatitude + " TEXT, " + dbLongitude + " TEXT, " +
+                dbNorte + " TEXT, " + dbLeste + " TEXT, " + dbSetor +
+                " TEXT, " + dbAltitude +
+                " TEXT, " + dbHora + " TEXT, " + dbData + " TEXT, " +
+                dbPrecisao + " TEXT, " + dbSel + " TEXT," +
+                dbOrder + " TEXT);");
     }
 
     @Override
@@ -77,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(dbPrecisao, pointModel.getPrecisao());
         contentValues.put(dbSel, pointModel.getSelecao());
+        contentValues.put(dbOrder, pointModel.getOrder());
 
         db.insert(dbTable, null, contentValues);
         db.close();
@@ -86,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbSel, pointModel.getSelecao());
-        db.update(dbTable, contentValues, dbId+"="+pointModel.getId(), null);
+        db.update(dbTable, contentValues, dbId + "=" + pointModel.getId(), null);
         db.close();
     }
 
@@ -110,8 +114,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(dbHora, pointModel.getHora());
 
         contentValues.put(dbSel, pointModel.getSelecao());
+        contentValues.put(dbOrder, pointModel.getOrder());
 
-        db.update(dbTable, contentValues, dbId+" = "+pointModel.getId(), null);
+        db.update(dbTable, contentValues, dbId + " = " + pointModel.getId(), null);
         db.close();
     }
 
@@ -125,15 +130,90 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }*/
 
-    public void removePonto(String id) {
-
-        try {
-            String[] args = {id};
+    public void removePoints(ArrayList<String> array){
+        try{
             SQLiteDatabase db = this.getWritableDatabase();
-            db.delete(dbTable, dbId +" = ? ", args);
+            for(int i = 0; i<array.size()-1;i++){
+                String[] args = {array.get(i)};
+                db.delete(dbTable, dbId +" = ? ", args);
+            }
+            ContentValues contentValues = new ContentValues();
+            Cursor cursor = db.rawQuery("SELECT "+dbId + ", " + dbOrder + " FROM "
+                    + dbTable+" ORDER BY "+dbOrder+" ;",null);
+            int order = 0;
+            while (cursor.moveToNext()){
+                PointModel pm = new PointModel();
+                pm.setOrder(String.valueOf(order));
+                contentValues.put(dbOrder, pm.getOrder());
+                db.update(dbTable,contentValues,dbId+" = "+
+                        cursor.getString(cursor.getColumnIndex(dbId)),null);
+            }
+            cursor.close();
             db.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        } catch (Exception e){
+
+        }
+    }
+
+    public void changeOrderUp(int pos) {
+        if (pos >= 1) {
+            try {
+                SQLiteDatabase db = this.getWritableDatabase();
+                Cursor cursor = db.rawQuery("SELECT " + dbId + " FROM " + dbTable +
+                        " WHERE " + dbOrder + " = ? ", new String[]{String.valueOf(pos)});
+                String strId = cursor.getString(cursor.getColumnIndex(dbId));
+                ContentValues cv = new ContentValues();
+                cv.put(dbOrder, String.valueOf(pos));
+                db.update(dbTable, cv, dbOrder + " = ? ", new String[]{String.valueOf(pos - 1)});
+                cv = new ContentValues();
+                cv.put(dbOrder, pos-1);
+                db.update(dbTable, cv, dbId + "= ? ", new String[]{strId});
+
+                /*Cursor cursor = db.rawQuery("SELECT "+dbId+" FROM "+dbTable+" WHERE "+dbOrder+
+                        "= ? ", new String[] {String.valueOf(pos)});
+                String strId = cursor.getString(cursor.getColumnIndex(dbId));
+                db.rawQuery("UPDATE "+dbTable+" ("+dbOrder+") VALUES ( ? ) WHERE "+dbOrder+"= ? "
+                        , new String[] {String.valueOf(pos), String.valueOf(pos-1)});
+                db.rawQuery("UPDATE "+dbTable+" ("+dbOrder+") VALUES ( ? ) WHERE "+dbId+"= ? "
+                        , new String[] {String.valueOf(pos-1), strId});*/
+
+                //cursor.close();
+                db.close();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    public void changeOrderDown(int pos){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery("SELECT * FROM " + dbTable + " ORDER BY "+dbOrder+" ;",
+                    null);
+            if (pos <= cursor.getCount() - 1) {
+                cursor = db.rawQuery("SELECT "+dbId + " FROM " + dbTable + " WHERE " + dbOrder +
+                        "= ? ", new String[] {String.valueOf(pos)});
+                String strId = cursor.getString(cursor.getColumnIndex(dbId));
+                ContentValues cv = new ContentValues();
+                cv.put(dbOrder, String.valueOf(pos));
+                db.update(dbTable, cv, dbOrder + "= ? ", new String[]{String.valueOf(pos + 1)});
+                cv = new ContentValues();
+                cv.put(dbOrder, ++pos);
+                db.update(dbTable, cv, dbId + "= ? ", new String[]{strId});
+                /*cursor = db.rawQuery("SELECT "+dbId+" FROM "+dbTable+" WHERE "+dbOrder+
+                        "= ? ", new String[] {String.valueOf(pos)});
+                String strId = cursor.getString(cursor.getColumnIndex(dbId));
+                db.rawQuery("UPDATE "+dbTable+" ("+dbOrder+") VALUES ( ? ) WHERE "+dbOrder+"= ? "
+                        , new String[] {String.valueOf(pos), String.valueOf(pos+1)});
+                db.rawQuery("UPDATE "+dbTable+" ("+dbOrder+") VALUES ( ? ) WHERE "+dbId+"= ? "
+                        , new String[] {String.valueOf(pos+1), strId});*/
+
+            }
+            cursor.close();
+            db.close();
+        }catch (Exception e){
+
         }
     }
 
@@ -141,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ponto.clear();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+dbTable+";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM "+dbTable+" ORDER BY "+dbOrder+ " ASC ;", null);
 
         if (cursor.getCount() != 0 ) {
             if (cursor.moveToFirst()) {
@@ -160,7 +240,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     pointModel.setHora(cursor.getString(cursor.getColumnIndex(dbHora)));
                     pointModel.setData(cursor.getString(cursor.getColumnIndex(dbData)));
                     pointModel.setSelecao(cursor.getString(cursor.getColumnIndex(dbSel)));
+                    pointModel.setOrder(cursor.getString(cursor.getColumnIndex(dbOrder)));
                     ponto.add(pointModel);
+                    Log.i(pointModel.getRegistro(), " Order: "+ pointModel.getOrder());
                 } while (cursor.moveToNext());
             }
 
@@ -174,7 +256,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ponto.clear();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor  cursor = db.rawQuery("SELECT * FROM " + dbTable + " WHERE " + dbRegister + " = ? ",
+        Cursor  cursor = db.rawQuery("SELECT * FROM " + dbTable + " WHERE " + dbRegister + " = ? ;",
                 new String[]{registro});
             /*Cursor cursor = db.query(true, dbTable, new String[]{dbRegister, dbDescription,
                             dbLatitude, dbLongitude, dbNorte, dbLeste, dbSetor,
@@ -198,6 +280,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     pointModel.setHora(cursor.getString(cursor.getColumnIndex(dbHora)));
                     pointModel.setData(cursor.getString(cursor.getColumnIndex(dbData)));
                     pointModel.setSelecao(cursor.getString(cursor.getColumnIndex(dbSel)));
+                    pointModel.setOrder(cursor.getString(cursor.getColumnIndex(dbOrder)));
                     ponto.add(pointModel);
                 } while (cursor.moveToNext());
             }
@@ -212,7 +295,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //verifica se já existe o id, ja que id é unique
         boolean existe = false;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+dbTable+" WHERE "+dbId+" = ? ",
+        Cursor cursor = db.rawQuery("SELECT "+dbId+" FROM "+dbTable+" WHERE "+dbId+" = ? ",
                 new String[]{strId});
             /*Cursor cursor = db.query(true, dbTable, new String[] { dbId },
                     dbId+" = ? ", new String[] {strId}, null, null, null, null, null);
