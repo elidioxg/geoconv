@@ -74,7 +74,9 @@ public class DMSConversion {
         if(!positive) {
             degrees *=-1;
         }
-        return doubleToStr(degrees);
+        String result = String.format(formatPrecision, degrees);
+        result = result.replace(",", ".");
+        return result;
     }
 
     /**
