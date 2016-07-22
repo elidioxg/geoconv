@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="hora"
+                android:text="time"
                 android:textSize="@dimen/fonteNormal" />
 
             <TextView
