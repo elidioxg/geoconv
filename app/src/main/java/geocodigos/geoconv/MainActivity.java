@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import java.util.Locale;
-import geocodigos.geoconv.implementation.tabListener;
+import geocodigos.geoconv.Implementation.TabsListener;
 
 public class MainActivity extends FragmentActivity {
     AlertDialog.Builder alertDialog;
@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         if(alertDialog!=null){ alertDialog=null; }
         viewPager = (ViewPager) findViewById(R.id.fragment_container);
-        viewPager.setAdapter(new tabListener(getSupportFragmentManager(), this));
+        viewPager.setAdapter(new TabsListener(getSupportFragmentManager(), this));
         viewPager.setBackgroundColor(getResources().getColor(R.color.branco));
         getFragmentManager();
     }

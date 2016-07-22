@@ -49,13 +49,13 @@
 
         </activity>
         <activity
-            android:name=".Registro.VerRegistro"
+            android:name=".ViewPoint.ViewReccord"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="stateHidden"
             >
         </activity>
 
-        <activity android:name=".net.bgreco.DirectoryPicker"
+        <activity android:name=".Implementation.DirectoryPicker"
             android:windowSoftInputMode="stateHidden">
         </activity>
 

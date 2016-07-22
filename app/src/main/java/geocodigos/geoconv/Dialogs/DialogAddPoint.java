@@ -10,12 +10,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.ArrayList;
+
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.R;
-import geocodigos.geoconv.implementation.getDate;
-import geocodigos.geoconv.implementation.getTime;
-import geocodigos.geoconv.model.PointModel;
+import geocodigos.geoconv.Models.PointModel;
 
 public class DialogAddPoint extends AlertDialog.Builder {
 
@@ -27,6 +25,11 @@ public class DialogAddPoint extends AlertDialog.Builder {
         pointModel = pm;
     }
 
+    /**
+     * Create a Dialog with the Point properties to save
+     * @param v View
+     * @return
+     */
     public AlertDialog.Builder createAlertAdd(final View v){
 
         final View view_marcar = View.inflate(c, R.layout.alert_add,
@@ -43,9 +46,9 @@ public class DialogAddPoint extends AlertDialog.Builder {
 
         tvLat.setText(pointModel.getlatitude());
         tvLon.setText(pointModel.getLongitude());
-        tvSec.setText(pointModel.getSetor());
-        tvLes.setText(pointModel.getLeste());
-        tvNor.setText(pointModel.getNorte());
+        tvSec.setText(pointModel.getSector());
+        tvLes.setText(pointModel.getEast());
+        tvNor.setText(pointModel.getNorth());
         tvLatDMS.setText(pointModel.getLatDms());
         tvLonDMS.setText(pointModel.getLonDms());
 
@@ -112,16 +115,16 @@ public class DialogAddPoint extends AlertDialog.Builder {
                         do {
                             strAux = String.valueOf(id);
                             id++;
-                        } while (database.pegarId(strAux));
+                        } while (database.checkId(strAux));
                         pointModel.setId(strAux);
                         String strReccord = getContext().getResources().getString(R.string.strMarkerName);
                         if (etName.getText().toString().trim().isEmpty()) {
-                            pointModel.setRegistro(strReccord);
+                            pointModel.setName(strReccord);
                         } else {
-                            pointModel.setRegistro(etName.getText().toString());
+                            pointModel.setName(etName.getText().toString());
                         }
-                        pointModel.setSelecao("1");
-                        pointModel.setDescricao(etDesc.getText().toString());
+                        pointModel.setSelected("1");
+                        pointModel.setDescription(etDesc.getText().toString());
                         pointModel.setOrder(String.valueOf(database.getSize()));
 
                         database.addPoint(pointModel);
