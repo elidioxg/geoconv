@@ -1,9 +1,13 @@
-package geocodigos.geoconv.implementation;
+package geocodigos.geoconv.Implementation;
 
 import java.util.Calendar;
 
-public class getDate {
+public class GetDate {
 
+    /**
+     *
+     * @return Formated Date YYYY-MM-DD
+     */
     public String returnDate() {
         Calendar c = Calendar.getInstance();
         int iAno = c.get(Calendar.YEAR);

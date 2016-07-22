@@ -1,4 +1,4 @@
-package geocodigos.geoconv;
+package geocodigos.geoconv.Fragments;
 
 import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
@@ -18,12 +18,13 @@ import com.google.android.gms.ads.AdView;
 import geocodigos.geoconv.Conversion.CoordinateConversion;
 import geocodigos.geoconv.Conversion.DMSConversion;
 import geocodigos.geoconv.Dialogs.DialogAddPoint;
+import geocodigos.geoconv.R;
 import geocodigos.geoconv.Utils.CoordinatesArray;
-import geocodigos.geoconv.implementation.getDate;
-import geocodigos.geoconv.implementation.getTime;
-import geocodigos.geoconv.model.PointModel;
+import geocodigos.geoconv.Implementation.GetDate;
+import geocodigos.geoconv.Implementation.GetTime;
+import geocodigos.geoconv.Models.PointModel;
 
-public class MarcarPontos extends Fragment implements LocationListener {
+public class GpsData extends Fragment implements LocationListener {
     private String strFormat = "%.5f";
     private int requests = 3000;
     private int min_distance=1;
@@ -103,16 +104,16 @@ public class MarcarPontos extends Fragment implements LocationListener {
                         pm.setLatidude(tvLatitude.getText().toString());
                         pm.setLongitude(tvLongitude.getText().toString());
                         pm.setAltitude(tvAltitude.getText().toString());
-                        pm.setPrecisao(tvPrecisao.getText().toString());
-                        pm.setNorte(tvNorte.getText().toString());
-                        pm.setLeste(tvLeste.getText().toString());
-                        pm.setSetor(tvSetor.getText().toString());
-                        getTime time = new getTime();
+                        pm.setPrecision(tvPrecisao.getText().toString());
+                        pm.setNorth(tvNorte.getText().toString());
+                        pm.setEast(tvLeste.getText().toString());
+                        pm.setSector(tvSetor.getText().toString());
+                        GetTime time = new GetTime();
                         String strTime = time.returnTime();
-                        getDate date = new getDate();
+                        GetDate date = new GetDate();
                         String strDate = date.returnDate();
                         pm.setData(strDate);
-                        pm.setHora(strTime);
+                        pm.setTime(strTime);
 
 
                         DialogAddPoint dialog = new DialogAddPoint(getActivity(), pm);
@@ -254,9 +255,9 @@ public class MarcarPontos extends Fragment implements LocationListener {
         longitude = (double) (location.getLongitude());
         altitude = (double) (location.getAltitude());
         precisao = (double) (location.getAccuracy());
-        getTime time = new getTime();
+        GetTime time = new GetTime();
         strTime = time.returnTime();
-        getDate date = new getDate();
+        GetDate date = new GetDate();
         strDate = date.returnDate();
         if (fragmentVisivel) {
             preencheCampos();

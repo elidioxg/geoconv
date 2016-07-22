@@ -1,4 +1,4 @@
-package geocodigos.geoconv;
+package geocodigos.geoconv.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,16 +23,18 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import geocodigos.geoconv.Database.DatabaseHelper;
-import geocodigos.geoconv.Registro.VerRegistro;
-import geocodigos.geoconv.kml.ExportarKML;
-import geocodigos.geoconv.model.PointModel;
-import geocodigos.geoconv.net.bgreco.DirectoryPicker;
+import geocodigos.geoconv.Kml.KmlLine;
+import geocodigos.geoconv.Kml.KmlPoints;
+import geocodigos.geoconv.Kml.KmlPolygon;
+import geocodigos.geoconv.R;
+import geocodigos.geoconv.ViewPoint.ViewReccord;
+import geocodigos.geoconv.Models.PointModel;
+import geocodigos.geoconv.Implementation.DirectoryPicker;
 
-public class VerPontos extends Fragment {
+public class MapView extends Fragment {
 
     private DatabaseHelper database;
     private ImageButton ibExportar, ibExcluir, ibMapa;
@@ -63,7 +65,7 @@ public class VerPontos extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.remove(VerPontos.this);
+                transaction.remove(MapView.this);
                 transaction.commit();
             }
         });
@@ -108,37 +110,47 @@ public class VerPontos extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (!etCamada.getText().toString().isEmpty()) {
-                                int opcao = -1;
-                                String nome_camada = "";
-                                nome_camada = etCamada.getText().toString().trim();
-                                ExportarKML exportar = new ExportarKML(getActivity());
-                                if (rbPontos.isChecked()) {
-                                    opcao = 0;
-                                }
-                                if (rbLinha.isChecked()) {
-                                    opcao = 1;
-                                }
-                                if (rbPoligono.isChecked()) {
-                                    opcao = 2;
-                                }
-                                try {
-                                    String param_camada = (String) exportar.criarCamada(nome_camada, opcao);
-                                    Intent intent = new Intent(getActivity(), DirectoryPicker.class);
-                                    intent.putExtra("nome_camada", nome_camada);
-                                    intent.putExtra("param", param_camada);
-                                    startActivity(intent);
-                                    //startActivityForResult(intent, DirectoryPicker.PICK_DIRECTORY);
-                                } catch (IllegalArgumentException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                } catch (IllegalStateException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
+                                String layerName = etCamada.getText().toString().trim();
+                                String kmlText="";
+                                if(database!=null) {
+                                    ArrayList<PointModel> array = database.getPoints();
+                                    if (rbPontos.isChecked()) {
+                                        try {
+                                            kmlText = (String) KmlPoints.createLayer(layerName, array);
+                                        } catch (Exception e) {
 
+                                        }
+                                    }
+                                    if (rbLinha.isChecked()) {
+                                        try {
+                                            kmlText = (String) KmlLine.createLayer(layerName, array);
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+                                    if (rbPoligono.isChecked()) {
+                                        try {
+                                            kmlText = (String) KmlPolygon.createLayer(layerName, array);
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+                                    try {
+                                        //Open a layout with options to save the file
+                                        //and also save the file
+                                        Intent intent = new Intent(getActivity(), DirectoryPicker.class);
+                                        intent.putExtra("nome_camada", layerName);
+                                        intent.putExtra("param", kmlText);
+                                        startActivity(intent);
+                                        //startActivityForResult(intent, DirectoryPicker.PICK_DIRECTORY);
+                                    } catch (IllegalArgumentException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    } catch (IllegalStateException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                }
                             } else {
                                 Toast.makeText(getActivity(), R.string.no_camada,
                                         Toast.LENGTH_SHORT).show();
@@ -176,11 +188,11 @@ public class VerPontos extends Fragment {
                             database = new DatabaseHelper(getActivity());
                             database.getWritableDatabase();
                             campos.clear();
-                            campos = database.pegarPontos();
+                            campos = database.getPoints();
                             ArrayList<String> al = new ArrayList<>();
                             int campos_size = campos.size();
                             for (int i = 0; i < campos_size; i++) {
-                                if (Integer.parseInt(campos.get(i).getSelecao()) == 1) {
+                                if (Integer.parseInt(campos.get(i).getSelected()) == 1) {
                                     al.add(campos.get(i).getId());
                                 }
                             }
@@ -262,13 +274,13 @@ public class VerPontos extends Fragment {
                         database = new DatabaseHelper(getActivity());
                         database.getWritableDatabase();
                         campos.clear();
-                        campos = database.pegarPontos();
+                        campos = database.getPoints();
                         if (isChecked) {
-                            pm.setSelecao("1");
+                            pm.setSelected("1");
                         } else {
-                            pm.setSelecao("0");
+                            pm.setSelected("0");
                         }
-                        database.updateSelecao(pm);
+                        database.updateSelected(pm);
                         database.close();
                     }
                 });
@@ -307,8 +319,8 @@ public class VerPontos extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putInt("posicao", position);
                         bundle.putInt("total_registros", campos.size());
-                        VerRegistro verRegistro = new VerRegistro();
-                        Intent intent = new Intent(getActivity(), VerRegistro.class);
+                        ViewReccord viewReccord = new ViewReccord();
+                        Intent intent = new Intent(getActivity(), ViewReccord.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
 
@@ -318,11 +330,11 @@ public class VerPontos extends Fragment {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvRegistro.setText(campos.get(position).getRegistro().trim());
+            viewHolder.tvRegistro.setText(campos.get(position).getName().trim());
             viewHolder.tvData.setText(campos.get(position).getData().trim());
-            viewHolder.tvHora.setText(campos.get(position).getHora().trim());
-            viewHolder.tvDescricao.setText(campos.get(position).getDescricao().trim());
-            if (Integer.parseInt(campos.get(position).getSelecao().trim()) == 1) {
+            viewHolder.tvHora.setText(campos.get(position).getTime().trim());
+            viewHolder.tvDescricao.setText(campos.get(position).getDescription().trim());
+            if (Integer.parseInt(campos.get(position).getSelected().trim()) == 1) {
                 viewHolder.cbSelecionado.setChecked(true);
             } else {
                 viewHolder.cbSelecionado.setChecked(false);
@@ -336,36 +348,36 @@ public class VerPontos extends Fragment {
         database.getWritableDatabase();
 
         campos.clear();
-        campos = database.pegarPontos();
+        campos = database.getPoints();
         if (!campos.isEmpty()) {
             for (int i = campos.size(); i < 0; i--) {
 
                 String id = campos.get(i).getId();
-                String registro = campos.get(i).getRegistro();
+                String registro = campos.get(i).getName();
                 String latitude = campos.get(i).getlatitude();
                 String longitude = campos.get(i).getLongitude();
-                String setor = campos.get(i).getSetor();
-                String norte = campos.get(i).getNorte();
-                String leste = campos.get(i).getLeste();
-                String descricao = campos.get(i).getDescricao();
-                String precisao = campos.get(i).getPrecisao();
+                String setor = campos.get(i).getSector();
+                String norte = campos.get(i).getNorth();
+                String leste = campos.get(i).getEast();
+                String descricao = campos.get(i).getDescription();
+                String precisao = campos.get(i).getPrecision();
                 String altitude = campos.get(i).getAltitude();
-                String hora = campos.get(i).getHora();
+                String hora = campos.get(i).getTime();
                 String data = campos.get(i).getData();
 
                 PointModel pointModel = new PointModel();
 
                 pointModel.setId(id);
-                pointModel.setRegistro(registro);
+                pointModel.setName(registro);
                 pointModel.setLatidude(latitude);
                 pointModel.setLongitude(longitude);
-                pointModel.setSetor(setor);
-                pointModel.setNorte(norte);
-                pointModel.setLeste(leste);
-                pointModel.setDescricao(descricao);
+                pointModel.setSector(setor);
+                pointModel.setNorth(norte);
+                pointModel.setEast(leste);
+                pointModel.setDescription(descricao);
                 pointModel.setAltitude(altitude);
-                pointModel.setPrecisao(precisao);
-                pointModel.setHora(hora);
+                pointModel.setPrecision(precisao);
+                pointModel.setTime(hora);
                 pointModel.setData(data);
 
                 campos.add(pointModel);

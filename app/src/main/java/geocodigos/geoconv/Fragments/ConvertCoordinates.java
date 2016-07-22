@@ -1,8 +1,7 @@
-package geocodigos.geoconv;
+package geocodigos.geoconv.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import geocodigos.geoconv.Conversion.CoordinateConversion;
@@ -20,12 +18,13 @@ import geocodigos.geoconv.Conversion.DMSConversion;
 import geocodigos.geoconv.Conversion.ValidateConversion;
 import geocodigos.geoconv.Database.DatabaseHelper;;
 import geocodigos.geoconv.Dialogs.DialogAddPoint;
+import geocodigos.geoconv.R;
 import geocodigos.geoconv.Utils.CoordinatesArray;
-import geocodigos.geoconv.implementation.getDate;
-import geocodigos.geoconv.implementation.getTime;
-import geocodigos.geoconv.model.PointModel;
+import geocodigos.geoconv.Implementation.GetDate;
+import geocodigos.geoconv.Implementation.GetTime;
+import geocodigos.geoconv.Models.PointModel;
 
-public class ConverterCoordenadas extends android.support.v4.app.Fragment {
+public class ConvertCoordinates extends android.support.v4.app.Fragment {
     private DatabaseHelper database;
     private EditText etLat, etLon, etSet1, etSet2, etNor, etLes, etLatGrau,
             etLatMin, etLatSeg, etLonGrau, etLonMin, etLonSeg;
@@ -48,7 +47,7 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.conversion_fragment,
+        view = inflater.inflate(R.layout.convert_coordinates,
                 container, false);
 
         /*AdView ad = (AdView) view.findViewById(R.id.adView2);
@@ -269,17 +268,17 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         PointModel pm = new PointModel();
                         pm.setLatidude(lat);
                         pm.setLongitude(lon);
-                        pm.setSetor(set);
-                        pm.setNorte(nor);
-                        pm.setLeste(les);
+                        pm.setSector(set);
+                        pm.setNorth(nor);
+                        pm.setEast(les);
                         pm.setLatDms(latgms);
                         pm.setLonDms(longms);
-                        getDate date = new getDate();
+                        GetDate date = new GetDate();
                         pm.setData(date.returnDate());
-                        getTime time = new getTime();
-                        pm.setHora(time.returnTime());
+                        GetTime time = new GetTime();
+                        pm.setTime(time.returnTime());
                         pm.setAltitude("");
-                        pm.setPrecisao("");
+                        pm.setPrecision("");
 
                         DialogAddPoint dialog = new DialogAddPoint(getActivity(), pm);
                         AlertDialog.Builder alert = dialog.createAlertAdd(view);
@@ -351,17 +350,17 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         PointModel pm = new PointModel();
                         pm.setLatidude(lat);
                         pm.setLongitude(lon);
-                        pm.setSetor(set);
-                        pm.setNorte(nor);
-                        pm.setLeste(les);
+                        pm.setSector(set);
+                        pm.setNorth(nor);
+                        pm.setEast(les);
                         pm.setLatDms(latgms);
                         pm.setLonDms(longms);
-                        getDate date = new getDate();
+                        GetDate date = new GetDate();
                         pm.setData(date.returnDate());
-                        getTime time = new getTime();
-                        pm.setHora(time.returnTime());
+                        GetTime time = new GetTime();
+                        pm.setTime(time.returnTime());
                         pm.setAltitude("");
-                        pm.setPrecisao("");
+                        pm.setPrecision("");
 
                         DialogAddPoint dialog = new DialogAddPoint(getActivity(), pm);
                         AlertDialog.Builder alert = dialog.createAlertAdd(view);
@@ -457,17 +456,17 @@ public class ConverterCoordenadas extends android.support.v4.app.Fragment {
                         PointModel pm = new PointModel();
                         pm.setLatidude(lat);
                         pm.setLongitude(lon);
-                        pm.setSetor(set);
-                        pm.setNorte(nor);
-                        pm.setLeste(les);
+                        pm.setSector(set);
+                        pm.setNorth(nor);
+                        pm.setEast(les);
                         pm.setLatDms(latgms);
                         pm.setLonDms(longms);
-                        getDate date = new getDate();
+                        GetDate date = new GetDate();
                         pm.setData(date.returnDate());
-                        getTime time = new getTime();
-                        pm.setHora(time.returnTime());
+                        GetTime time = new GetTime();
+                        pm.setTime(time.returnTime());
                         pm.setAltitude("");
-                        pm.setPrecisao("");
+                        pm.setPrecision("");
 
                         DialogAddPoint dialog = new DialogAddPoint(getActivity(), pm);
                         AlertDialog.Builder alert = dialog.createAlertAdd(view);

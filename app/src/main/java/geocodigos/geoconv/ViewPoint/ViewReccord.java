@@ -1,13 +1,9 @@
-package geocodigos.geoconv.Registro;
+package geocodigos.geoconv.ViewPoint;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,9 +14,9 @@ import java.util.ArrayList;
 
 import geocodigos.geoconv.Database.DatabaseHelper;
 import geocodigos.geoconv.R;
-import geocodigos.geoconv.model.PointModel;
+import geocodigos.geoconv.Models.PointModel;
 
-public class VerRegistro extends Activity {
+public class ViewReccord extends Activity {
 
     private DatabaseHelper database;
     private ArrayList<PointModel> arrayList = new ArrayList<PointModel>();
@@ -41,7 +37,7 @@ public class VerRegistro extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ver_registro);
+        setContentView(R.layout.view_reccord);
 
         Bundle args = getIntent().getExtras();
         posicao = (int) args.get("posicao");
@@ -130,20 +126,20 @@ public class VerRegistro extends Activity {
             database = new DatabaseHelper(this);
             database.getWritableDatabase();
             arrayList.clear();
-            arrayList = database.pegarPontos();
+            arrayList = database.getPoints();
             pm.setId(arrayList.get(posicao).getId());
-            pm.setRegistro(arrayList.get(posicao).getRegistro());
-            pm.setDescricao(etDescricao.getText().toString());
+            pm.setName(arrayList.get(posicao).getName());
+            pm.setDescription(etDescricao.getText().toString());
             pm.setLatidude(etLatitude.getText().toString().trim());
             pm.setLongitude(etLongitude.getText().toString().trim());
             pm.setData(etData.getText().toString().trim());
-            pm.setHora(etHora.getText().toString().trim());
+            pm.setTime(etHora.getText().toString().trim());
             pm.setAltitude(etAltitude.getText().toString().trim());
-            pm.setPrecisao(etPrecisao.getText().toString().trim());
-            pm.setSetor(etSetor.getText().toString());
-            pm.setNorte(etNorte.getText().toString().trim());
-            pm.setLeste(etLeste.getText().toString().trim());
-            pm.setSelecao(arrayList.get(posicao).getSelecao());
+            pm.setPrecision(etPrecisao.getText().toString().trim());
+            pm.setSector(etSetor.getText().toString());
+            pm.setNorth(etNorte.getText().toString().trim());
+            pm.setEast(etLeste.getText().toString().trim());
+            pm.setSelected(arrayList.get(posicao).getSelected());
             database.updatePoint(pm);
             database.close();
             Toast.makeText(this, R.string.alteracoes_salvas, Toast.LENGTH_SHORT).show();
@@ -156,19 +152,19 @@ public class VerRegistro extends Activity {
         database = new DatabaseHelper(this);
         database.getWritableDatabase();
         arrayList.clear();
-        arrayList = database.pegarPontos();
+        arrayList = database.getPoints();
 
         etLatitude.setText(arrayList.get(Integer.valueOf(posicao)).getlatitude());
         etLongitude.setText(arrayList.get(Integer.valueOf(posicao)).getLongitude());
-        tvRegistro.setText(arrayList.get(Integer.valueOf(posicao)).getRegistro());
-        etDescricao.setText(arrayList.get(Integer.valueOf(posicao)).getDescricao());
+        tvRegistro.setText(arrayList.get(Integer.valueOf(posicao)).getName());
+        etDescricao.setText(arrayList.get(Integer.valueOf(posicao)).getDescription());
         etData.setText(arrayList.get(Integer.valueOf(posicao)).getData());
-        etHora.setText(arrayList.get(Integer.valueOf(posicao)).getHora());
-        etPrecisao.setText(arrayList.get(Integer.valueOf(posicao)).getPrecisao());
+        etHora.setText(arrayList.get(Integer.valueOf(posicao)).getTime());
+        etPrecisao.setText(arrayList.get(Integer.valueOf(posicao)).getPrecision());
         etAltitude.setText(arrayList.get(Integer.valueOf(posicao)).getAltitude());
-        etSetor.setText(arrayList.get(Integer.valueOf(posicao)).getSetor());
-        etNorte.setText(arrayList.get(Integer.valueOf(posicao)).getNorte());
-        etLeste.setText(arrayList.get(Integer.valueOf(posicao)).getLeste());
+        etSetor.setText(arrayList.get(Integer.valueOf(posicao)).getSector());
+        etNorte.setText(arrayList.get(Integer.valueOf(posicao)).getNorth());
+        etLeste.setText(arrayList.get(Integer.valueOf(posicao)).getEast());
 
         database.close();
     }

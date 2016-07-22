@@ -1,23 +1,21 @@
-package geocodigos.geoconv.implementation;
+package geocodigos.geoconv.Implementation;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
-import geocodigos.geoconv.ConverterCoordenadas;
+import geocodigos.geoconv.Fragments.ConvertCoordinates;
 import geocodigos.geoconv.Map.MapActivity;
-import geocodigos.geoconv.MarcarPontos;
+import geocodigos.geoconv.Fragments.GpsData;
 import geocodigos.geoconv.R;
-import geocodigos.geoconv.VerPontos;
 
-public class tabListener extends FragmentStatePagerAdapter {
+public class TabsListener extends FragmentStatePagerAdapter {
 
     final int PAGE_COUNT=3;
     public String titulos[];
-    public tabListener(FragmentManager fm, Context context) {
+    public TabsListener(FragmentManager fm, Context context) {
         super(fm);
         Resources res = context.getResources();
         titulos = res.getStringArray(R.array.androidstrings);
@@ -32,13 +30,13 @@ public class tabListener extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                MarcarPontos marcar = new MarcarPontos();
+                GpsData marcar = new GpsData();
                 return (Fragment) marcar;
             case 1:
                 MapActivity mapa_ = new MapActivity();
                 return (Fragment) mapa_;
             case 2:
-                ConverterCoordenadas converter = new ConverterCoordenadas();
+                ConvertCoordinates converter = new ConvertCoordinates();
                 return (Fragment) converter;
             default:
                 break;

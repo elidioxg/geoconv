@@ -1,4 +1,4 @@
-package geocodigos.geoconv.net.bgreco;
+package geocodigos.geoconv.Implementation;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -16,8 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.google.android.gms.internal.os;
 
 import geocodigos.geoconv.R;
 /**
@@ -64,7 +62,7 @@ public class DirectoryPicker extends ListActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         nome = extras.getString("nome_camada");
-        //Log.i("nome_camada: ", nome);
+
         param_camada = extras.getString("param");
 
         dir = Environment.getExternalStorageDirectory();

@@ -1,9 +1,13 @@
-package geocodigos.geoconv.implementation;
+package geocodigos.geoconv.Implementation;
 
 import java.util.Calendar;
 
-public class getTime {
+public class GetTime {
 
+    /**
+     *
+     * @return Formated Time HH:MM:SS
+     */
     public String returnTime() {
         Calendar c = Calendar.getInstance();
 
