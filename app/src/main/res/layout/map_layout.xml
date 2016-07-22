@@ -36,7 +36,7 @@
                 android:checked="true"
                 android:text="@string/pontos"
                 android:textColor="@color/preto"
-                android:textSize="@dimen/fonteNormal" />
+                android:textSize="@dimen/fontePequena" />
 
             <RadioButton
                 android:id="@+id/rb_linha"
@@ -45,7 +45,7 @@
                 android:layout_margin="@dimen/margem"
                 android:text="@string/linha"
                 android:textColor="@color/preto"
-                android:textSize="@dimen/fonteNormal" />
+                android:textSize="@dimen/fontePequena" />
 
             <RadioButton
                 android:id="@+id/rb_poligono"
@@ -54,7 +54,7 @@
                 android:layout_margin="@dimen/margem"
                 android:text="@string/poligono"
                 android:textColor="@color/preto"
-                android:textSize="@dimen/fonteNormal" />
+                android:textSize="@dimen/fontePequena" />
 
             <ImageButton
                 android:id="@+id/ib_pontos"

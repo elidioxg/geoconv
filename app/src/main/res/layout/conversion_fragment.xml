@@ -127,6 +127,8 @@
                     android:layout_height="@dimen/buttons"
                     android:layout_margin="@dimen/margem_grande"
                     android:text="@string/convert_utm"
+                    android:textColor="@color/branco"
+                    android:background="@color/preto"
                     />
 
             </LinearLayout>
@@ -169,7 +171,7 @@
                         android:hint="@string/latitude"
                         android:inputType="numberDecimal|numberSigned"
                         android:singleLine="true"
-                        android:textSize="@dimen/fonteGrande"
+                        android:textSize="@dimen/fonteNormal"
                         />
 
                 </LinearLayout>
@@ -197,7 +199,7 @@
                         android:hint="@string/longitude"
                         android:inputType="numberDecimal|numberSigned"
                         android:singleLine="true"
-                        android:textSize="@dimen/fonteGrande"
+                        android:textSize="@dimen/fonteNormal"
                         />
 
                 </LinearLayout>
@@ -208,6 +210,8 @@
                     android:layout_height="@dimen/buttons"
                     android:layout_margin="@dimen/margem_grande"
                     android:text="@string/convert_latlon"
+                    android:textColor="@color/branco"
+                    android:background="@color/preto"
                     />
 
             </LinearLayout>
@@ -281,6 +285,7 @@
                         android:inputType="number"
                         android:singleLine="true"
                         android:maxLength="2"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                     <TextView
@@ -299,6 +304,7 @@
                         android:inputType="number"
                         android:singleLine="true"
                         android:maxLength="2"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                     <TextView
@@ -317,6 +323,7 @@
                         android:inputType="number"
                         android:singleLine="true"
                         android:maxLength="2"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                     <TextView
@@ -392,6 +399,7 @@
                         android:inputType="number"
                         android:singleLine="true"
                         android:maxLength="3"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                     <TextView
@@ -410,6 +418,7 @@
                         android:inputType="number"
                         android:singleLine="true"
                         android:maxLength="2"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                     <TextView
@@ -428,6 +437,7 @@
                         android:inputType="number"
                         android:singleLine="true"
                         android:maxLength="2"
+                        android:textSize="@dimen/fonteGrande"
                         />
 
                     <TextView
@@ -447,6 +457,8 @@
                     android:layout_height="@dimen/buttons"
                     android:layout_margin="@dimen/margem_grande"
                     android:text="@string/convert_gms"
+                    android:textColor="@color/branco"
+                    android:background="@color/preto"
                     />
 
             </LinearLayout>

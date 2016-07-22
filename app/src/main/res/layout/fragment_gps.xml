@@ -39,7 +39,7 @@
                     android:layout_margin="@dimen/margem_grande"
                     android:text=""
                     android:textSize="@dimen/fonteGrande"
-                    android:textStyle="bold"
+                    android:textStyle="italic"
                     android:textColor="@color/yellow"
                     android:gravity="center_horizontal"/>
 

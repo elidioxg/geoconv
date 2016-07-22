@@ -277,6 +277,7 @@ public class VerPontos extends Fragment {
                     @Override
                     public void onClick(View v) {
                         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+                        Log.i("Position:", "Item clicked: " + String.valueOf(position));
                         databaseHelper.changeOrderUp(position);
                         refreshPoints();
                         listView.setAdapter(new ListAdapter(getActivity()));
@@ -291,6 +292,7 @@ public class VerPontos extends Fragment {
                     public void onClick(View v) {
                         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
                         databaseHelper.changeOrderDown(position);
+                        Log.i("Position:", "Item clicked: " + String.valueOf(position));
                         refreshPoints();
                         listView.setAdapter(new ListAdapter(getActivity()));
                         synchronized (listView) {

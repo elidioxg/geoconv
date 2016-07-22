@@ -122,8 +122,16 @@ public class DialogAddPoint extends AlertDialog.Builder {
                         }
                         pointModel.setSelecao("1");
                         pointModel.setDescricao(etDesc.getText().toString());
+                        pointModel.setOrder(String.valueOf(database.getSize()));
 
                         database.addPoint(pointModel);
+
+                        if (pointModel.getlatitude().trim().isEmpty()) {
+                            pointModel.setLatidude("0");
+                        }
+                        if (pointModel.getLongitude().trim().isEmpty()) {
+                            pointModel.setLongitude("0");
+                        }
                         database.close();
 
                         ViewGroup parent = (ViewGroup) view_marcar.getParent();
