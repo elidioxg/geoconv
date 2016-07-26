@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class GpsData extends Fragment implements LocationListener {
     private LocationManager locationManager;
     private String provider;
     private String strLatitude, strLongitude, strPrecisao, strAltitude, strDate, strTime;
-    private ImageButton ibMarcar;
+    private ImageButton ibMarcar, ibViewPoints;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
         tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms, tvGpsStatus;
 
@@ -92,6 +93,17 @@ public class GpsData extends Fragment implements LocationListener {
         tvGpsStatus = (TextView) view.findViewById(R.id.in_status);
 
         ibMarcar = (ImageButton) view.findViewById(R.id.ibmarcar);
+        ibViewPoints = (ImageButton) view.findViewById(R.id.ibViewPoints);
+
+        ibViewPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapView ver_pontos = new MapView();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.gps, ver_pontos);
+                transaction.commit();
+            }
+        });
 
         ibMarcar.setOnClickListener(new View.OnClickListener() {
 
@@ -251,9 +263,9 @@ public class GpsData extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        latitude = (double) (location.getLatitude());
-        longitude = (double) (location.getLongitude());
-        altitude = (double) (location.getAltitude());
+        latitude =  (location.getLatitude());
+        longitude = (location.getLongitude());
+        altitude =  (location.getAltitude());
         precisao = (double) (location.getAccuracy());
         GetTime time = new GetTime();
         strTime = time.returnTime();
