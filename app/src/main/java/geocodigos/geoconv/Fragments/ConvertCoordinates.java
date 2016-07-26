@@ -3,6 +3,7 @@ package geocodigos.geoconv.Fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class ConvertCoordinates extends android.support.v4.app.Fragment {
     private String lat, lon , set, nor, les;
     private View view;
     private String strFormat = "%.5f";
+    private ImageButton ibPoints;
 
     @Override
     public void onPause(){
@@ -78,6 +81,17 @@ public class ConvertCoordinates extends android.support.v4.app.Fragment {
         rbS = (RadioButton) view.findViewById(R.id.rb_S);
         rbE = (RadioButton) view.findViewById(R.id.rb_E);
         rbW = (RadioButton) view.findViewById(R.id.rb_W);
+
+        ibPoints = (ImageButton) view.findViewById(R.id.ibPoints);
+        ibPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapView ver_pontos = new MapView();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.convert, ver_pontos);
+                transaction.commit();
+            }
+        });
 
         etSet1.setOnKeyListener(new View.OnKeyListener() {
             @Override
