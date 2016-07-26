@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/convert"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/bottom_layout"
         android:background="@color/preto">
 
         <LinearLayout
@@ -475,4 +477,21 @@
 
     </ScrollView>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
+
+        <ImageButton
+            android:id="@+id/ibPoints"
+            android:layout_width="@dimen/buttons"
+            android:layout_height="@dimen/buttons"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/ic_view_records"
+            android:contentDescription="@string/pontos_marcados"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
