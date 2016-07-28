@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="csv_export">Export CSV</string>
+    <string name="str_separator">Separator</string>
+    <string name="file_name">File name</string>
     <string name="strMarkerName">Marker</string>
     <string name="strAddedTouch">Added on Map</string>
     <string name="converter">Convertir</string>
