@@ -1,7 +1,9 @@
 package geocodigos.geoconv.Map;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -66,7 +68,6 @@ public class MapActivity extends Fragment implements LocationListener {
     private RadioGroup rgGeometria;
     private RadioButton rbPoints, rbLines, rbPolygon;
     private ImageButton ibPontos;
-    private ToggleButton tbAddMarker;
     public SupportMapFragment supportFragment;
 
     public View onCreateView(LayoutInflater inflater,
@@ -76,6 +77,7 @@ public class MapActivity extends Fragment implements LocationListener {
         locationManager = (LocationManager) getActivity().
                 getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.GPS_PROVIDER;
+
         location = locationManager.getLastKnownLocation(provider);
         if (location != null) {
             onLocationChanged(location);
