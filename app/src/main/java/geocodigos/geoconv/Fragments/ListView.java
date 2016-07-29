@@ -18,7 +18,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,14 +33,14 @@ import geocodigos.geoconv.ViewPoint.ViewReccord;
 import geocodigos.geoconv.Models.PointModel;
 import geocodigos.geoconv.Implementation.DirectoryPicker;
 
-public class MapView extends Fragment {
+public class ListView extends Fragment {
 
     private DatabaseHelper database;
     private ImageButton ibExportar, ibExcluir, ibMapa;
     private TextView tvRegistro, tvData, tvHora, tvPontos;
-    public ListView listView;
+    public android.widget.ListView listView;
 
-    public ArrayList<PointModel> campos = new ArrayList<PointModel>();
+    public ArrayList<PointModel> campos = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,14 +57,14 @@ public class MapView extends Fragment {
         ibExcluir = (ImageButton) view.findViewById(R.id.ib_excluir);
         ibMapa = (ImageButton) view.findViewById(R.id.ib_mapa);
         tvPontos = (TextView) view.findViewById(R.id.tv_pontos);
-        listView = (ListView) view.findViewById(R.id.lv_registro);
+        listView = (android.widget.ListView) view.findViewById(R.id.lv_registro);
 
         refreshPoints();
         ibMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.remove(MapView.this);
+                transaction.remove(ListView.this);
                 transaction.commit();
             }
         });
