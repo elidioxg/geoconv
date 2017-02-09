@@ -24,7 +24,7 @@
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_marcar"
+                    android:background="@mipmap/ic_add_point"
                     android:layout_margin="@dimen/margem"
                     />
 
@@ -46,7 +46,7 @@
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/ic_view_records"
+                    android:background="@mipmap/ic_view_points"
                     android:layout_margin="@dimen/margem"
                     />
 

@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        final View viewAjuda = View.inflate(MainActivity.this, R.layout.documentacao, null);
+        final View viewAjuda = View.inflate(MainActivity.this, R.layout.documentation, null);
         final View viewLanguage = View.inflate(MainActivity.this,R.layout.choose_lang,null);
         final RadioButton rb1 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang1);
         final RadioButton rb2 = (RadioButton) viewLanguage.findViewById(R.id.rb_lang2);

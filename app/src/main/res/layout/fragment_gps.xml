@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gps"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,7 +8,6 @@
         android:id="@+id/scroll_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/adView1"
         android:background="@color/branco">
 
         <LinearLayout
@@ -46,14 +44,14 @@
                         android:id="@+id/ibmarcar"
                         android:layout_width="@dimen/buttons"
                         android:layout_height="@dimen/buttons"
-                        android:background="@mipmap/ic_mark"
+                        android:background="@mipmap/ic_add_point"
                         android:contentDescription="@string/marcar_ponto" />
 
                     <ImageButton
                         android:id="@+id/ibViewPoints"
                         android:layout_width="@dimen/buttons"
                         android:layout_height="@dimen/buttons"
-                        android:background="@mipmap/ic_view_records"
+                        android:background="@mipmap/ic_view_points"
                         android:contentDescription="@string/pontos_marcados" />
                 </LinearLayout>
 
@@ -301,7 +299,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margem"
                 android:columnCount="1"
-                android:rowCount="1"
+                android:rowCount="2"
                 android:background="@color/preto"
                 android:orientation="vertical">
 
@@ -343,13 +341,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/ad1"></com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

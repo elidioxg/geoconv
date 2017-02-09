@@ -1,10 +1,13 @@
 package geocodigos.geoconv.Conversion;
 
 public class ValidateConversion {
-    private double minNorth = 0;
-    private double maxNorth = 10000000;
-    private double minEast = 160000;
-    private double maxEast = 834000;
+    /**
+     * Parameters to be validated
+     */
+    private final double minNorth = 0;
+    private final double maxNorth = 10000000;
+    private final double minEast = 160000;
+    private final double maxEast = 834000;
 
     /**
      * Validate Lat/Lon coordinates

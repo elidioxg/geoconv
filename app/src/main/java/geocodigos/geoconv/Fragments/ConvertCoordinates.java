@@ -47,7 +47,13 @@ public class ConvertCoordinates extends android.support.v4.app.Fragment {
         super.onResume();
     }
 
-
+    /**
+     * Create a View for the fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.convert_coordinates,
@@ -86,7 +92,7 @@ public class ConvertCoordinates extends android.support.v4.app.Fragment {
         ibPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MapView ver_pontos = new MapView();
+                ListView ver_pontos = new ListView();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.convert, ver_pontos);
                 transaction.commit();

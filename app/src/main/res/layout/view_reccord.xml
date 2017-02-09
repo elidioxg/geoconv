@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/cinza_claro">
+        android:background="@color/preto">
 
         <ImageButton
             android:id="@+id/ib_anterior"
@@ -47,7 +47,6 @@
             android:orientation="vertical"
             android:rowCount="10"
             android:layout_margin="@dimen/margem_grande">
-
 
             <TextView
                 android:id="@+id/tvRegistro"

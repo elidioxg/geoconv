@@ -64,7 +64,7 @@
             android:layout_height="@dimen/buttons"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/margem"
-            android:background="@mipmap/ic_view_records" />
+            android:background="@mipmap/ic_view_points" />
 
     </RelativeLayout>
 

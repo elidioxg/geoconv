@@ -1,9 +1,7 @@
 package geocodigos.geoconv.Map;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,7 +39,7 @@ import geocodigos.geoconv.Dialogs.DialogAddPoint;
 import geocodigos.geoconv.Map.LayerType.mapType;
 import geocodigos.geoconv.R;
 import geocodigos.geoconv.Utils.CoordinatesArray;
-import geocodigos.geoconv.Fragments.MapView;
+import geocodigos.geoconv.Fragments.ListView;
 import geocodigos.geoconv.Implementation.GetDate;
 import geocodigos.geoconv.Implementation.GetTime;
 import geocodigos.geoconv.Models.PointModel;
@@ -96,7 +93,7 @@ public class MapActivity extends Fragment implements LocationListener {
         ibPontos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MapView ver_pontos = new MapView();
+                ListView ver_pontos = new ListView();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_map, ver_pontos);
                 transaction.commit();

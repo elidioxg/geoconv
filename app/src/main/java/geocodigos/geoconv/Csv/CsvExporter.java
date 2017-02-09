@@ -9,15 +9,15 @@ import geocodigos.geoconv.Models.PointModel;
  * Created by elidioxg on 05/05/16.
  */
 public class CsvExporter {
-    private static String strId = "id";
-    private static String strName = "Name";
-    private static String strLat = "Latitude";
-    private static String strLon = "Longitude";
-    private static String strSector = "Sector";
-    private static String strNorth = "North";
-    private static String strEast = "East";
-    private static String strDate = "Date";
-    private static String strDesc = "Description";
+    private final String strId = "id";
+    private final String strName = "Name";
+    private final String strLat = "Latitude";
+    private final String strLon = "Longitude";
+    private final String strSector = "Sector";
+    private final String strNorth = "North";
+    private final String strEast = "East";
+    private final String strDate = "Date";
+    private final String strDesc = "Description";
 
     /**
      *

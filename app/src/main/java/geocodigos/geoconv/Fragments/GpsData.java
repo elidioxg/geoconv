@@ -1,41 +1,43 @@
 package geocodigos.geoconv.Fragments;
 
 import android.app.AlertDialog;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import geocodigos.geoconv.Conversion.CoordinateConversion;
 import geocodigos.geoconv.Conversion.DMSConversion;
 import geocodigos.geoconv.Dialogs.DialogAddPoint;
-import geocodigos.geoconv.R;
-import geocodigos.geoconv.Utils.CoordinatesArray;
 import geocodigos.geoconv.Implementation.GetDate;
 import geocodigos.geoconv.Implementation.GetTime;
 import geocodigos.geoconv.Models.PointModel;
+import geocodigos.geoconv.R;
+import geocodigos.geoconv.Utils.CoordinatesArray;
 
 public class GpsData extends Fragment implements LocationListener {
+    /**
+     * Fragment for GPS view data
+     */
     private String strFormat = "%.5f";
     private int requests = 3000;
-    private int min_distance=1;
+    private int min_distance = 1;
     private Location location;
     private LocationManager locationManager;
     private String provider;
     private String strLatitude, strLongitude, strPrecisao, strAltitude, strDate, strTime;
     private ImageButton ibMarcar, ibViewPoints;
     private TextView tvLatitude, tvLongitude, tvPrecisao, tvAltitude,
-        tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms, tvGpsStatus;
+            tvSetor, tvNorte, tvLeste, tvData, tvLatgms, tvLongms, tvGpsStatus;
 
     private static boolean fragmentVisivel;
     private double latitude, longitude, altitude, precisao;
@@ -47,7 +49,7 @@ public class GpsData extends Fragment implements LocationListener {
     private final String keySector = "sec";
     private final String keyNorth = "north";
     private final String keyEast = "east";
-    private final String keyPrecision ="prec";
+    private final String keyPrecision = "prec";
     private final String keyAltitude = "alt";
     private final String keyDate = "date";
     private final String keyLatGms = "latgms";
@@ -68,16 +70,18 @@ public class GpsData extends Fragment implements LocationListener {
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Create View for the fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_gps,
                 container, false);
-
-        AdView av = (AdView) view.findViewById(R.id.adView1);
-        AdRequest ar = new AdRequest.Builder().build();
-                //.addTestDevice("DC230321FB9742079A931AC2BB5B27A5").build();
-        av.loadAd(ar);
 
         tvLatitude = (TextView) view.findViewById(R.id.in_latitude);
         tvLongitude = (TextView) view.findViewById(R.id.in_longitude);
@@ -98,7 +102,7 @@ public class GpsData extends Fragment implements LocationListener {
         ibViewPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MapView ver_pontos = new MapView();
+                ListView ver_pontos = new ListView();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.gps, ver_pontos);
                 transaction.commit();
@@ -142,44 +146,44 @@ public class GpsData extends Fragment implements LocationListener {
             }
 
         });
-        if(savedInstanceState!=null){
-            if(savedInstanceState.containsKey(keyLatitude)){
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(keyLatitude)) {
                 String str = savedInstanceState.getString(keyLatitude);
                 tvLatitude.setText(str);
             }
-            if(savedInstanceState.containsKey(keyLongitude)){
+            if (savedInstanceState.containsKey(keyLongitude)) {
                 String str = savedInstanceState.getString(keyLongitude);
                 tvLongitude.setText(str);
             }
-            if(savedInstanceState.containsKey(keySector)){
+            if (savedInstanceState.containsKey(keySector)) {
                 String str = savedInstanceState.getString(keySector);
                 tvSetor.setText(str);
             }
-            if(savedInstanceState.containsKey(keyNorth)){
+            if (savedInstanceState.containsKey(keyNorth)) {
                 String str = savedInstanceState.getString(keyNorth);
                 tvNorte.setText(str);
             }
-            if(savedInstanceState.containsKey(keyEast)){
+            if (savedInstanceState.containsKey(keyEast)) {
                 String str = savedInstanceState.getString(keyEast);
                 tvLeste.setText(str);
             }
-            if(savedInstanceState.containsKey(keyDate)){
+            if (savedInstanceState.containsKey(keyDate)) {
                 String str = savedInstanceState.getString(keyDate);
                 tvData.setText(str);
             }
-            if(savedInstanceState.containsKey(keyAltitude)){
+            if (savedInstanceState.containsKey(keyAltitude)) {
                 String str = savedInstanceState.getString(keyAltitude);
                 tvAltitude.setText(str);
             }
-            if(savedInstanceState.containsKey(keyPrecision)){
+            if (savedInstanceState.containsKey(keyPrecision)) {
                 String str = savedInstanceState.getString(keyPrecision);
                 tvPrecisao.setText(str);
             }
-            if(savedInstanceState.containsKey(keyLatGms)){
+            if (savedInstanceState.containsKey(keyLatGms)) {
                 String str = savedInstanceState.getString(keyLatGms);
                 tvLatgms.setText(str);
             }
-            if(savedInstanceState.containsKey(keyLonGms)){
+            if (savedInstanceState.containsKey(keyLonGms)) {
                 String str = savedInstanceState.getString(keyLonGms);
                 tvLongms.setText(str);
             }
@@ -199,7 +203,7 @@ public class GpsData extends Fragment implements LocationListener {
         if (location != null) {
             onLocationChanged(location);
         }
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             tvGpsStatus.setText(R.string.req_loc);
             tvGpsStatus.setTextColor(getResources().getColor(R.color.verde));
         } else {
@@ -209,8 +213,8 @@ public class GpsData extends Fragment implements LocationListener {
         locationManager.requestLocationUpdates(provider, requests, min_distance, this);
     }
 
-    public void preencheCampos(){
-        if(latitude!=0 && longitude!=0) {
+    public void setProperties() {
+        if (latitude != 0 && longitude != 0) {
             DMSConversion dms = new DMSConversion();
             String sLat = dms.convertFromDegrees(latitude);
             String sLon = dms.convertFromDegrees(longitude);
@@ -225,16 +229,16 @@ public class GpsData extends Fragment implements LocationListener {
                 leste = "W ";
             }
             CoordinatesArray formater = new CoordinatesArray();
-            strLatitude = formater.formatCoordinateToDMS(norte, coordLat[0], coordLat[1],coordLat[2]);
-            strLongitude =formater.formatCoordinateToDMS(leste, coordLat[3], coordLat[4],coordLat[5]);
+            strLatitude = formater.formatCoordinateToDMS(norte, coordLat[0], coordLat[1], coordLat[2]);
+            strLongitude = formater.formatCoordinateToDMS(leste, coordLat[3], coordLat[4], coordLat[5]);
             strPrecisao = String.format("%.1f", precisao);
             strAltitude = String.format("%.1f", altitude);
             tvLatitude.setText(String.format(strFormat, latitude));
             tvLongitude.setText(String.format(strFormat, longitude));
             tvLatgms.setText(strLatitude);
             tvLongms.setText(strLongitude);
-            tvPrecisao.setText(strPrecisao+" m");
-            tvAltitude.setText(strAltitude+" m");
+            tvPrecisao.setText(strPrecisao + " m");
+            tvAltitude.setText(strAltitude + " m");
             tvData.setText(strTime + "     -     " + strDate);
 
             CoordinateConversion cc = new CoordinateConversion();
@@ -247,7 +251,7 @@ public class GpsData extends Fragment implements LocationListener {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         locationManager.removeUpdates(this);
     }
@@ -257,7 +261,7 @@ public class GpsData extends Fragment implements LocationListener {
         // TODO Auto-generated method stub
         super.onResume();
         locationManager.requestLocationUpdates(provider, requests, min_distance, this);
-        preencheCampos();
+        setProperties();
         gpsStatus();
     }
 
@@ -272,7 +276,7 @@ public class GpsData extends Fragment implements LocationListener {
         GetDate date = new GetDate();
         strDate = date.returnDate();
         if (fragmentVisivel) {
-            preencheCampos();
+            setProperties();
         }
     }
 
@@ -280,7 +284,7 @@ public class GpsData extends Fragment implements LocationListener {
     public void setUserVisibleHint(boolean isVisibleToUser){
         super.setUserVisibleHint(isVisibleToUser);
         fragmentVisivel = isVisibleToUser;
-        //if(isVisibleToUser){preencheCampos();}
+        //if(isVisibleToUser){setProperties();}
     }
 
     @Override
